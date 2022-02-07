@@ -1,0 +1,1 @@
+# apicurio-registry-client-sdk-go
