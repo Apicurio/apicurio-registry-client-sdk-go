@@ -1,0 +1,39 @@
+name: Generate API clients
+on:
+  repository_dispatch: 
+    types: [openapi-update]
+
+jobs:
+  generate_go:
+    name: Generate Go client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: craicoverflow/openapi-generator-action@v1
+        with:
+          generator: go
+          input: https://raw.githubusercontent.com/Apicurio/apicurio-registry/master/${{github.event.client_payload.openapi_file_path}}
+          git-repo-id: apicurio-registry-client-sdk-go
+          git-user-id: Apicurio
+          package-name: registryclient
+          template: .github/templates
+
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            generated:
+              - '**'
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.generated == 'true'
+        uses: peter-evans/create-pull-request@v3
+        with:
+          delete-branch: true
+          branch-suffix: short-commit-hash
+          branch: generate-sdk
+          title: "[generated] Update API client"
+          commit-message: "chore: update API client"
+          body: |
+            Automated update of the Apicurio Registry SDK
