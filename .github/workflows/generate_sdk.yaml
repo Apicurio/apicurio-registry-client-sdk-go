@@ -16,7 +16,7 @@ jobs:
       - uses: craicoverflow/openapi-generator-action@v1
         with:
           generator: go
-          input: https://raw.githubusercontent.com/Apicurio/apicurio-registry/master/${{github.event.inputs.openapiSpecUrl}}
+          input: ${{github.event.inputs.openapiSpecUrl}}
           git-repo-id: apicurio-registry-client-sdk-go
           git-user-id: Apicurio
           package-name: registryclient
