@@ -1,11 +1,8 @@
 name: Generate API clients
 
 on:
-  workflow_call:
-    inputs:
-      openapiSpecUrl:
-        required: true
-        type: string
+  repository_dispatch:
+    types: [on-oas-updated]
 
 jobs:
   generate_go:
