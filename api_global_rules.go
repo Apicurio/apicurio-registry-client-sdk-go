@@ -28,18 +28,18 @@ var (
 // GlobalRulesApiService GlobalRulesApi service
 type GlobalRulesApiService service
 
-type ApiCreateGlobalRuleRequest struct {
+type GlobalRulesApiApiCreateGlobalRuleRequest struct {
 	ctx context.Context
 	ApiService *GlobalRulesApiService
 	rule *Rule
 }
 
-func (r ApiCreateGlobalRuleRequest) Rule(rule Rule) ApiCreateGlobalRuleRequest {
+func (r GlobalRulesApiApiCreateGlobalRuleRequest) Rule(rule Rule) GlobalRulesApiApiCreateGlobalRuleRequest {
 	r.rule = &rule
 	return r
 }
 
-func (r ApiCreateGlobalRuleRequest) Execute() (*http.Response, error) {
+func (r GlobalRulesApiApiCreateGlobalRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.CreateGlobalRuleExecute(r)
 }
 
@@ -56,17 +56,17 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateGlobalRuleRequest
+ @return GlobalRulesApiApiCreateGlobalRuleRequest
 */
-func (a *GlobalRulesApiService) CreateGlobalRule(ctx context.Context) ApiCreateGlobalRuleRequest {
-	return ApiCreateGlobalRuleRequest{
+func (a *GlobalRulesApiService) CreateGlobalRule(ctx context.Context) GlobalRulesApiApiCreateGlobalRuleRequest {
+	return GlobalRulesApiApiCreateGlobalRuleRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *GlobalRulesApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) (*http.Response, error) {
+func (a *GlobalRulesApiService) CreateGlobalRuleExecute(r GlobalRulesApiApiCreateGlobalRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -163,13 +163,13 @@ func (a *GlobalRulesApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleReq
 	return localVarHTTPResponse, nil
 }
 
-type ApiDeleteAllGlobalRulesRequest struct {
+type GlobalRulesApiApiDeleteAllGlobalRulesRequest struct {
 	ctx context.Context
 	ApiService *GlobalRulesApiService
 }
 
 
-func (r ApiDeleteAllGlobalRulesRequest) Execute() (*http.Response, error) {
+func (r GlobalRulesApiApiDeleteAllGlobalRulesRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteAllGlobalRulesExecute(r)
 }
 
@@ -184,17 +184,17 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiDeleteAllGlobalRulesRequest
+ @return GlobalRulesApiApiDeleteAllGlobalRulesRequest
 */
-func (a *GlobalRulesApiService) DeleteAllGlobalRules(ctx context.Context) ApiDeleteAllGlobalRulesRequest {
-	return ApiDeleteAllGlobalRulesRequest{
+func (a *GlobalRulesApiService) DeleteAllGlobalRules(ctx context.Context) GlobalRulesApiApiDeleteAllGlobalRulesRequest {
+	return GlobalRulesApiApiDeleteAllGlobalRulesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *GlobalRulesApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesRequest) (*http.Response, error) {
+func (a *GlobalRulesApiService) DeleteAllGlobalRulesExecute(r GlobalRulesApiApiDeleteAllGlobalRulesRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -266,14 +266,14 @@ func (a *GlobalRulesApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobal
 	return localVarHTTPResponse, nil
 }
 
-type ApiDeleteGlobalRuleRequest struct {
+type GlobalRulesApiApiDeleteGlobalRuleRequest struct {
 	ctx context.Context
 	ApiService *GlobalRulesApiService
 	rule RuleType
 }
 
 
-func (r ApiDeleteGlobalRuleRequest) Execute() (*http.Response, error) {
+func (r GlobalRulesApiApiDeleteGlobalRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteGlobalRuleExecute(r)
 }
 
@@ -293,10 +293,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rule The unique name/type of a rule.
- @return ApiDeleteGlobalRuleRequest
+ @return GlobalRulesApiApiDeleteGlobalRuleRequest
 */
-func (a *GlobalRulesApiService) DeleteGlobalRule(ctx context.Context, rule RuleType) ApiDeleteGlobalRuleRequest {
-	return ApiDeleteGlobalRuleRequest{
+func (a *GlobalRulesApiService) DeleteGlobalRule(ctx context.Context, rule RuleType) GlobalRulesApiApiDeleteGlobalRuleRequest {
+	return GlobalRulesApiApiDeleteGlobalRuleRequest{
 		ApiService: a,
 		ctx: ctx,
 		rule: rule,
@@ -304,7 +304,7 @@ func (a *GlobalRulesApiService) DeleteGlobalRule(ctx context.Context, rule RuleT
 }
 
 // Execute executes the request
-func (a *GlobalRulesApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) (*http.Response, error) {
+func (a *GlobalRulesApiService) DeleteGlobalRuleExecute(r GlobalRulesApiApiDeleteGlobalRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -387,14 +387,14 @@ func (a *GlobalRulesApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleReq
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetGlobalRuleConfigRequest struct {
+type GlobalRulesApiApiGetGlobalRuleConfigRequest struct {
 	ctx context.Context
 	ApiService *GlobalRulesApiService
 	rule RuleType
 }
 
 
-func (r ApiGetGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
+func (r GlobalRulesApiApiGetGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
 	return r.ApiService.GetGlobalRuleConfigExecute(r)
 }
 
@@ -412,10 +412,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rule The unique name/type of a rule.
- @return ApiGetGlobalRuleConfigRequest
+ @return GlobalRulesApiApiGetGlobalRuleConfigRequest
 */
-func (a *GlobalRulesApiService) GetGlobalRuleConfig(ctx context.Context, rule RuleType) ApiGetGlobalRuleConfigRequest {
-	return ApiGetGlobalRuleConfigRequest{
+func (a *GlobalRulesApiService) GetGlobalRuleConfig(ctx context.Context, rule RuleType) GlobalRulesApiApiGetGlobalRuleConfigRequest {
+	return GlobalRulesApiApiGetGlobalRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
 		rule: rule,
@@ -424,7 +424,7 @@ func (a *GlobalRulesApiService) GetGlobalRuleConfig(ctx context.Context, rule Ru
 
 // Execute executes the request
 //  @return Rule
-func (a *GlobalRulesApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *GlobalRulesApiService) GetGlobalRuleConfigExecute(r GlobalRulesApiApiGetGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -517,13 +517,13 @@ func (a *GlobalRulesApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleCon
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListGlobalRulesRequest struct {
+type GlobalRulesApiApiListGlobalRulesRequest struct {
 	ctx context.Context
 	ApiService *GlobalRulesApiService
 }
 
 
-func (r ApiListGlobalRulesRequest) Execute() ([]RuleType, *http.Response, error) {
+func (r GlobalRulesApiApiListGlobalRulesRequest) Execute() ([]RuleType, *http.Response, error) {
 	return r.ApiService.ListGlobalRulesExecute(r)
 }
 
@@ -538,10 +538,10 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListGlobalRulesRequest
+ @return GlobalRulesApiApiListGlobalRulesRequest
 */
-func (a *GlobalRulesApiService) ListGlobalRules(ctx context.Context) ApiListGlobalRulesRequest {
-	return ApiListGlobalRulesRequest{
+func (a *GlobalRulesApiService) ListGlobalRules(ctx context.Context) GlobalRulesApiApiListGlobalRulesRequest {
+	return GlobalRulesApiApiListGlobalRulesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -549,7 +549,7 @@ func (a *GlobalRulesApiService) ListGlobalRules(ctx context.Context) ApiListGlob
 
 // Execute executes the request
 //  @return []RuleType
-func (a *GlobalRulesApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([]RuleType, *http.Response, error) {
+func (a *GlobalRulesApiService) ListGlobalRulesExecute(r GlobalRulesApiApiListGlobalRulesRequest) ([]RuleType, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -631,19 +631,19 @@ func (a *GlobalRulesApiService) ListGlobalRulesExecute(r ApiListGlobalRulesReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateGlobalRuleConfigRequest struct {
+type GlobalRulesApiApiUpdateGlobalRuleConfigRequest struct {
 	ctx context.Context
 	ApiService *GlobalRulesApiService
 	rule RuleType
 	rule2 *Rule
 }
 
-func (r ApiUpdateGlobalRuleConfigRequest) Rule2(rule2 Rule) ApiUpdateGlobalRuleConfigRequest {
+func (r GlobalRulesApiApiUpdateGlobalRuleConfigRequest) Rule2(rule2 Rule) GlobalRulesApiApiUpdateGlobalRuleConfigRequest {
 	r.rule2 = &rule2
 	return r
 }
 
-func (r ApiUpdateGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
+func (r GlobalRulesApiApiUpdateGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
 	return r.ApiService.UpdateGlobalRuleConfigExecute(r)
 }
 
@@ -661,10 +661,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rule The unique name/type of a rule.
- @return ApiUpdateGlobalRuleConfigRequest
+ @return GlobalRulesApiApiUpdateGlobalRuleConfigRequest
 */
-func (a *GlobalRulesApiService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleType) ApiUpdateGlobalRuleConfigRequest {
-	return ApiUpdateGlobalRuleConfigRequest{
+func (a *GlobalRulesApiService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleType) GlobalRulesApiApiUpdateGlobalRuleConfigRequest {
+	return GlobalRulesApiApiUpdateGlobalRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
 		rule: rule,
@@ -673,7 +673,7 @@ func (a *GlobalRulesApiService) UpdateGlobalRuleConfig(ctx context.Context, rule
 
 // Execute executes the request
 //  @return Rule
-func (a *GlobalRulesApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *GlobalRulesApiService) UpdateGlobalRuleConfigExecute(r GlobalRulesApiApiUpdateGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
