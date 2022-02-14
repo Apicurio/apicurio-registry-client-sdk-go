@@ -29,7 +29,7 @@ var (
 // SearchApiService SearchApi service
 type SearchApiService service
 
-type ApiSearchArtifactsRequest struct {
+type SearchApiApiSearchArtifactsRequest struct {
 	ctx context.Context
 	ApiService *SearchApiService
 	name *string
@@ -44,52 +44,52 @@ type ApiSearchArtifactsRequest struct {
 }
 
 // Filter by artifact name.
-func (r ApiSearchArtifactsRequest) Name(name string) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Name(name string) SearchApiApiSearchArtifactsRequest {
 	r.name = &name
 	return r
 }
 // The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
-func (r ApiSearchArtifactsRequest) Offset(offset int32) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Offset(offset int32) SearchApiApiSearchArtifactsRequest {
 	r.offset = &offset
 	return r
 }
 // The number of artifacts to return.  Defaults to 20.
-func (r ApiSearchArtifactsRequest) Limit(limit int32) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Limit(limit int32) SearchApiApiSearchArtifactsRequest {
 	r.limit = &limit
 	return r
 }
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
-func (r ApiSearchArtifactsRequest) Order(order SortOrder) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Order(order SortOrder) SearchApiApiSearchArtifactsRequest {
 	r.order = &order
 	return r
 }
 // The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
-func (r ApiSearchArtifactsRequest) Orderby(orderby SortBy) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Orderby(orderby SortBy) SearchApiApiSearchArtifactsRequest {
 	r.orderby = &orderby
 	return r
 }
 // Filter by label.  Include one or more label to only return artifacts containing all of the specified labels.
-func (r ApiSearchArtifactsRequest) Labels(labels []string) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Labels(labels []string) SearchApiApiSearchArtifactsRequest {
 	r.labels = &labels
 	return r
 }
 // Filter by one or more name/value property.  Separate each name/value pair using a colon.  For example &#x60;properties&#x3D;foo:bar&#x60; will return only artifacts with a custom property named &#x60;foo&#x60; and value &#x60;bar&#x60;.
-func (r ApiSearchArtifactsRequest) Properties(properties []string) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Properties(properties []string) SearchApiApiSearchArtifactsRequest {
 	r.properties = &properties
 	return r
 }
 // Filter by description.
-func (r ApiSearchArtifactsRequest) Description(description string) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Description(description string) SearchApiApiSearchArtifactsRequest {
 	r.description = &description
 	return r
 }
 // Filter by artifact group.
-func (r ApiSearchArtifactsRequest) Group(group string) ApiSearchArtifactsRequest {
+func (r SearchApiApiSearchArtifactsRequest) Group(group string) SearchApiApiSearchArtifactsRequest {
 	r.group = &group
 	return r
 }
 
-func (r ApiSearchArtifactsRequest) Execute() (*ArtifactSearchResults, *http.Response, error) {
+func (r SearchApiApiSearchArtifactsRequest) Execute() (*ArtifactSearchResults, *http.Response, error) {
 	return r.ApiService.SearchArtifactsExecute(r)
 }
 
@@ -100,10 +100,10 @@ Returns a paginated list of all artifacts that match the provided filter criteri
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSearchArtifactsRequest
+ @return SearchApiApiSearchArtifactsRequest
 */
-func (a *SearchApiService) SearchArtifacts(ctx context.Context) ApiSearchArtifactsRequest {
-	return ApiSearchArtifactsRequest{
+func (a *SearchApiService) SearchArtifacts(ctx context.Context) SearchApiApiSearchArtifactsRequest {
+	return SearchApiApiSearchArtifactsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -111,7 +111,7 @@ func (a *SearchApiService) SearchArtifacts(ctx context.Context) ApiSearchArtifac
 
 // Execute executes the request
 //  @return ArtifactSearchResults
-func (a *SearchApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest) (*ArtifactSearchResults, *http.Response, error) {
+func (a *SearchApiService) SearchArtifactsExecute(r SearchApiApiSearchArtifactsRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -236,7 +236,7 @@ func (a *SearchApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest) (
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiSearchArtifactsByContentRequest struct {
+type SearchApiApiSearchArtifactsByContentRequest struct {
 	ctx context.Context
 	ApiService *SearchApiService
 	body **os.File
@@ -249,42 +249,42 @@ type ApiSearchArtifactsByContentRequest struct {
 }
 
 // The content to search for.
-func (r ApiSearchArtifactsByContentRequest) Body(body *os.File) ApiSearchArtifactsByContentRequest {
+func (r SearchApiApiSearchArtifactsByContentRequest) Body(body *os.File) SearchApiApiSearchArtifactsByContentRequest {
 	r.body = &body
 	return r
 }
 // Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
-func (r ApiSearchArtifactsByContentRequest) Canonical(canonical bool) ApiSearchArtifactsByContentRequest {
+func (r SearchApiApiSearchArtifactsByContentRequest) Canonical(canonical bool) SearchApiApiSearchArtifactsByContentRequest {
 	r.canonical = &canonical
 	return r
 }
 // Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
-func (r ApiSearchArtifactsByContentRequest) ArtifactType(artifactType ArtifactType) ApiSearchArtifactsByContentRequest {
+func (r SearchApiApiSearchArtifactsByContentRequest) ArtifactType(artifactType ArtifactType) SearchApiApiSearchArtifactsByContentRequest {
 	r.artifactType = &artifactType
 	return r
 }
 // The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
-func (r ApiSearchArtifactsByContentRequest) Offset(offset int32) ApiSearchArtifactsByContentRequest {
+func (r SearchApiApiSearchArtifactsByContentRequest) Offset(offset int32) SearchApiApiSearchArtifactsByContentRequest {
 	r.offset = &offset
 	return r
 }
 // The number of artifacts to return.  Defaults to 20.
-func (r ApiSearchArtifactsByContentRequest) Limit(limit int32) ApiSearchArtifactsByContentRequest {
+func (r SearchApiApiSearchArtifactsByContentRequest) Limit(limit int32) SearchApiApiSearchArtifactsByContentRequest {
 	r.limit = &limit
 	return r
 }
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
-func (r ApiSearchArtifactsByContentRequest) Order(order string) ApiSearchArtifactsByContentRequest {
+func (r SearchApiApiSearchArtifactsByContentRequest) Order(order string) SearchApiApiSearchArtifactsByContentRequest {
 	r.order = &order
 	return r
 }
 // The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
-func (r ApiSearchArtifactsByContentRequest) Orderby(orderby string) ApiSearchArtifactsByContentRequest {
+func (r SearchApiApiSearchArtifactsByContentRequest) Orderby(orderby string) SearchApiApiSearchArtifactsByContentRequest {
 	r.orderby = &orderby
 	return r
 }
 
-func (r ApiSearchArtifactsByContentRequest) Execute() (*ArtifactSearchResults, *http.Response, error) {
+func (r SearchApiApiSearchArtifactsByContentRequest) Execute() (*ArtifactSearchResults, *http.Response, error) {
 	return r.ApiService.SearchArtifactsByContentExecute(r)
 }
 
@@ -296,10 +296,10 @@ posted content.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSearchArtifactsByContentRequest
+ @return SearchApiApiSearchArtifactsByContentRequest
 */
-func (a *SearchApiService) SearchArtifactsByContent(ctx context.Context) ApiSearchArtifactsByContentRequest {
-	return ApiSearchArtifactsByContentRequest{
+func (a *SearchApiService) SearchArtifactsByContent(ctx context.Context) SearchApiApiSearchArtifactsByContentRequest {
+	return SearchApiApiSearchArtifactsByContentRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -307,7 +307,7 @@ func (a *SearchApiService) SearchArtifactsByContent(ctx context.Context) ApiSear
 
 // Execute executes the request
 //  @return ArtifactSearchResults
-func (a *SearchApiService) SearchArtifactsByContentExecute(r ApiSearchArtifactsByContentRequest) (*ArtifactSearchResults, *http.Response, error) {
+func (a *SearchApiService) SearchArtifactsByContentExecute(r SearchApiApiSearchArtifactsByContentRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
