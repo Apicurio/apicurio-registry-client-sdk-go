@@ -18,6 +18,7 @@ jobs:
           git-user-id: Apicurio
           package-name: registryclient
           template: .github/templates
+          additional-properties: "structPrefix=true"
       - uses: dorny/paths-filter@v2
         id: changes
         with:
