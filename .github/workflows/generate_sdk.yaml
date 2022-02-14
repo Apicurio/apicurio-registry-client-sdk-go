@@ -1,11 +1,8 @@
 name: Generate API clients
 
 on:
-  workflow_call:
-    inputs:
-      openapiSpecUrl:
-        required: true
-        type: string
+  repository_dispatch:
+    types: [on-oas-updated]
 
 jobs:
   generate_go:
@@ -16,7 +13,7 @@ jobs:
       - uses: craicoverflow/openapi-generator-action@v1
         with:
           generator: go
-          input: ${{github.event.inputs.openapiSpecUrl}}
+          input: ${{ github.event.client_payload.openapi_file_path }}
           git-repo-id: apicurio-registry-client-sdk-go
           git-user-id: Apicurio
           package-name: registryclient
