@@ -13,7 +13,6 @@ package registryclient
 
 import (
 	"encoding/json"
-	"time"
 )
 
 // ArtifactMetaData struct for ArtifactMetaData
@@ -21,9 +20,9 @@ type ArtifactMetaData struct {
 	Name *string `json:"name,omitempty"`
 	Description *string `json:"description,omitempty"`
 	CreatedBy string `json:"createdBy"`
-	CreatedOn time.Time `json:"createdOn"`
+	CreatedOn string `json:"createdOn"`
 	ModifiedBy string `json:"modifiedBy"`
-	ModifiedOn time.Time `json:"modifiedOn"`
+	ModifiedOn string `json:"modifiedOn"`
 	// The ID of a single artifact.
 	Id string `json:"id"`
 	Version string `json:"version"`
@@ -42,7 +41,7 @@ type ArtifactMetaData struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewArtifactMetaData(createdBy string, createdOn time.Time, modifiedBy string, modifiedOn time.Time, id string, version string, type_ ArtifactType, globalId int64, state ArtifactState, contentId int64) *ArtifactMetaData {
+func NewArtifactMetaData(createdBy string, createdOn string, modifiedBy string, modifiedOn string, id string, version string, type_ ArtifactType, globalId int64, state ArtifactState, contentId int64) *ArtifactMetaData {
 	this := ArtifactMetaData{}
 	this.CreatedBy = createdBy
 	this.CreatedOn = createdOn
@@ -154,9 +153,9 @@ func (o *ArtifactMetaData) SetCreatedBy(v string) {
 }
 
 // GetCreatedOn returns the CreatedOn field value
-func (o *ArtifactMetaData) GetCreatedOn() time.Time {
+func (o *ArtifactMetaData) GetCreatedOn() string {
 	if o == nil {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 
@@ -165,7 +164,7 @@ func (o *ArtifactMetaData) GetCreatedOn() time.Time {
 
 // GetCreatedOnOk returns a tuple with the CreatedOn field value
 // and a boolean to check if the value has been set.
-func (o *ArtifactMetaData) GetCreatedOnOk() (*time.Time, bool) {
+func (o *ArtifactMetaData) GetCreatedOnOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -173,7 +172,7 @@ func (o *ArtifactMetaData) GetCreatedOnOk() (*time.Time, bool) {
 }
 
 // SetCreatedOn sets field value
-func (o *ArtifactMetaData) SetCreatedOn(v time.Time) {
+func (o *ArtifactMetaData) SetCreatedOn(v string) {
 	o.CreatedOn = v
 }
 
@@ -202,9 +201,9 @@ func (o *ArtifactMetaData) SetModifiedBy(v string) {
 }
 
 // GetModifiedOn returns the ModifiedOn field value
-func (o *ArtifactMetaData) GetModifiedOn() time.Time {
+func (o *ArtifactMetaData) GetModifiedOn() string {
 	if o == nil {
-		var ret time.Time
+		var ret string
 		return ret
 	}
 
@@ -213,7 +212,7 @@ func (o *ArtifactMetaData) GetModifiedOn() time.Time {
 
 // GetModifiedOnOk returns a tuple with the ModifiedOn field value
 // and a boolean to check if the value has been set.
-func (o *ArtifactMetaData) GetModifiedOnOk() (*time.Time, bool) {
+func (o *ArtifactMetaData) GetModifiedOnOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
@@ -221,7 +220,7 @@ func (o *ArtifactMetaData) GetModifiedOnOk() (*time.Time, bool) {
 }
 
 // SetModifiedOn sets field value
-func (o *ArtifactMetaData) SetModifiedOn(v time.Time) {
+func (o *ArtifactMetaData) SetModifiedOn(v string) {
 	o.ModifiedOn = v
 }
 
