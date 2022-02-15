@@ -10,15 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Download OpenAPI schema document
+        run: | 
+          mkdir tmp
+          curl https://raw.githubusercontent.com/Apicurio/apicurio-registry/master/${{ github.event.client_payload.openapi_file_path }} > tmp/input-schema.json
+      - name: Modify input schema
+        run: |
+          sed -i 's/"date-time"/"utc-date"/g' tmp/input-schema.json
       - uses: craicoverflow/openapi-generator-action@v1
         with:
           generator: go
-          input: https://raw.githubusercontent.com/Apicurio/apicurio-registry/master/${{ github.event.client_payload.openapi_file_path }}
+          input: tmp/input-schema.json
           git-repo-id: apicurio-registry-client-sdk-go
           git-user-id: Apicurio
           package-name: registryclient
           template: .github/templates
           additional-properties: "structPrefix=true"
+      - name: Preprocess input schema
+        run: rm -r tmp
       - uses: dorny/paths-filter@v2
         id: changes
         with:
