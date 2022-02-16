@@ -56,11 +56,7 @@ type APIClient struct {
 
 	ArtifactsApi *ArtifactsApiService
 
-	GlobalRulesApi *GlobalRulesApiService
-
 	MetadataApi *MetadataApiService
-
-	SearchApi *SearchApiService
 
 	SystemApi *SystemApiService
 
@@ -88,9 +84,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AdminApi = (*AdminApiService)(&c.common)
 	c.ArtifactRulesApi = (*ArtifactRulesApiService)(&c.common)
 	c.ArtifactsApi = (*ArtifactsApiService)(&c.common)
-	c.GlobalRulesApi = (*GlobalRulesApiService)(&c.common)
 	c.MetadataApi = (*MetadataApiService)(&c.common)
-	c.SearchApi = (*SearchApiService)(&c.common)
 	c.SystemApi = (*SystemApiService)(&c.common)
 	c.UsersApi = (*UsersApiService)(&c.common)
 	c.VersionsApi = (*VersionsApiService)(&c.common)

@@ -27,13 +27,13 @@ var (
 // SystemApiService SystemApi service
 type SystemApiService service
 
-type SystemApiApiGetSystemInfoRequest struct {
+type ApiGetSystemInfoRequest struct {
 	ctx context.Context
 	ApiService *SystemApiService
 }
 
 
-func (r SystemApiApiGetSystemInfoRequest) Execute() (*SystemInfo, *http.Response, error) {
+func (r ApiGetSystemInfoRequest) Execute() (*SystemInfo, *http.Response, error) {
 	return r.ApiService.GetSystemInfoExecute(r)
 }
 
@@ -44,10 +44,10 @@ This operation retrieves information about the running registry system, such as 
 of the software and when it was built.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return SystemApiApiGetSystemInfoRequest
+ @return ApiGetSystemInfoRequest
 */
-func (a *SystemApiService) GetSystemInfo(ctx context.Context) SystemApiApiGetSystemInfoRequest {
-	return SystemApiApiGetSystemInfoRequest{
+func (a *SystemApiService) GetSystemInfo(ctx context.Context) ApiGetSystemInfoRequest {
+	return ApiGetSystemInfoRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -55,7 +55,7 @@ func (a *SystemApiService) GetSystemInfo(ctx context.Context) SystemApiApiGetSys
 
 // Execute executes the request
 //  @return SystemInfo
-func (a *SystemApiService) GetSystemInfoExecute(r SystemApiApiGetSystemInfoRequest) (*SystemInfo, *http.Response, error) {
+func (a *SystemApiService) GetSystemInfoExecute(r ApiGetSystemInfoRequest) (*SystemInfo, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
