@@ -139,20 +139,12 @@ Class | Method | HTTP request | Description
 *ArtifactsApi* | [**SearchArtifactsByContent**](docs/ArtifactsApi.md#searchartifactsbycontent) | **Post** /search/artifacts | Search for artifacts by content
 *ArtifactsApi* | [**UpdateArtifact**](docs/ArtifactsApi.md#updateartifact) | **Put** /groups/{groupId}/artifacts/{artifactId} | Update artifact
 *ArtifactsApi* | [**UpdateArtifactState**](docs/ArtifactsApi.md#updateartifactstate) | **Put** /groups/{groupId}/artifacts/{artifactId}/state | Update artifact state
-*GlobalRulesApi* | [**CreateGlobalRule**](docs/GlobalRulesApi.md#createglobalrule) | **Post** /admin/rules | Create global rule
-*GlobalRulesApi* | [**DeleteAllGlobalRules**](docs/GlobalRulesApi.md#deleteallglobalrules) | **Delete** /admin/rules | Delete all global rules
-*GlobalRulesApi* | [**DeleteGlobalRule**](docs/GlobalRulesApi.md#deleteglobalrule) | **Delete** /admin/rules/{rule} | Delete global rule
-*GlobalRulesApi* | [**GetGlobalRuleConfig**](docs/GlobalRulesApi.md#getglobalruleconfig) | **Get** /admin/rules/{rule} | Get global rule configuration
-*GlobalRulesApi* | [**ListGlobalRules**](docs/GlobalRulesApi.md#listglobalrules) | **Get** /admin/rules | List global rules
-*GlobalRulesApi* | [**UpdateGlobalRuleConfig**](docs/GlobalRulesApi.md#updateglobalruleconfig) | **Put** /admin/rules/{rule} | Update global rule configuration
 *MetadataApi* | [**DeleteArtifactVersionMetaData**](docs/MetadataApi.md#deleteartifactversionmetadata) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Delete artifact version metadata
 *MetadataApi* | [**GetArtifactMetaData**](docs/MetadataApi.md#getartifactmetadata) | **Get** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact metadata
 *MetadataApi* | [**GetArtifactVersionMetaData**](docs/MetadataApi.md#getartifactversionmetadata) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Get artifact version metadata
 *MetadataApi* | [**GetArtifactVersionMetaDataByContent**](docs/MetadataApi.md#getartifactversionmetadatabycontent) | **Post** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact version metadata by content
 *MetadataApi* | [**UpdateArtifactMetaData**](docs/MetadataApi.md#updateartifactmetadata) | **Put** /groups/{groupId}/artifacts/{artifactId}/meta | Update artifact metadata
 *MetadataApi* | [**UpdateArtifactVersionMetaData**](docs/MetadataApi.md#updateartifactversionmetadata) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Update artifact version metadata
-*SearchApi* | [**SearchArtifacts**](docs/SearchApi.md#searchartifacts) | **Get** /search/artifacts | Search for artifacts
-*SearchApi* | [**SearchArtifactsByContent**](docs/SearchApi.md#searchartifactsbycontent) | **Post** /search/artifacts | Search for artifacts by content
 *SystemApi* | [**GetSystemInfo**](docs/SystemApi.md#getsysteminfo) | **Get** /system/info | Get system information
 *UsersApi* | [**GetCurrentUserInfo**](docs/UsersApi.md#getcurrentuserinfo) | **Get** /users/me | Get current user
 *VersionsApi* | [**CreateArtifactVersion**](docs/VersionsApi.md#createartifactversion) | **Post** /groups/{groupId}/artifacts/{artifactId}/versions | Create artifact version

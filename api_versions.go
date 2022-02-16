@@ -29,7 +29,7 @@ var (
 // VersionsApiService VersionsApi service
 type VersionsApiService service
 
-type VersionsApiApiCreateArtifactVersionRequest struct {
+type ApiCreateArtifactVersionRequest struct {
 	ctx context.Context
 	ApiService *VersionsApiService
 	groupId string
@@ -43,37 +43,37 @@ type VersionsApiApiCreateArtifactVersionRequest struct {
 }
 
 // The content of the artifact version being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
-func (r VersionsApiApiCreateArtifactVersionRequest) Body(body *os.File) VersionsApiApiCreateArtifactVersionRequest {
+func (r ApiCreateArtifactVersionRequest) Body(body *os.File) ApiCreateArtifactVersionRequest {
 	r.body = &body
 	return r
 }
 // Specifies the version number of this new version of the artifact content.  This would typically be a simple integer or a SemVer value.  It must be unique within the artifact.  If this is not provided, the server will generate a new, unique version number for this new updated content.
-func (r VersionsApiApiCreateArtifactVersionRequest) XRegistryVersion(xRegistryVersion string) VersionsApiApiCreateArtifactVersionRequest {
+func (r ApiCreateArtifactVersionRequest) XRegistryVersion(xRegistryVersion string) ApiCreateArtifactVersionRequest {
 	r.xRegistryVersion = &xRegistryVersion
 	return r
 }
 // Specifies the artifact name of this new version of the artifact content. Name must be ASCII-only string. If this is not provided, the server will extract the name from the artifact content.
-func (r VersionsApiApiCreateArtifactVersionRequest) XRegistryName(xRegistryName string) VersionsApiApiCreateArtifactVersionRequest {
+func (r ApiCreateArtifactVersionRequest) XRegistryName(xRegistryName string) ApiCreateArtifactVersionRequest {
 	r.xRegistryName = &xRegistryName
 	return r
 }
 // Specifies the artifact description of this new version of the artifact content. Description must be ASCII-only string. If this is not provided, the server will extract the description from the artifact content.
-func (r VersionsApiApiCreateArtifactVersionRequest) XRegistryDescription(xRegistryDescription string) VersionsApiApiCreateArtifactVersionRequest {
+func (r ApiCreateArtifactVersionRequest) XRegistryDescription(xRegistryDescription string) ApiCreateArtifactVersionRequest {
 	r.xRegistryDescription = &xRegistryDescription
 	return r
 }
 // Specifies the artifact description of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the description from the artifact content.
-func (r VersionsApiApiCreateArtifactVersionRequest) XRegistryDescriptionEncoded(xRegistryDescriptionEncoded string) VersionsApiApiCreateArtifactVersionRequest {
+func (r ApiCreateArtifactVersionRequest) XRegistryDescriptionEncoded(xRegistryDescriptionEncoded string) ApiCreateArtifactVersionRequest {
 	r.xRegistryDescriptionEncoded = &xRegistryDescriptionEncoded
 	return r
 }
 // Specifies the artifact name of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the name from the artifact content.
-func (r VersionsApiApiCreateArtifactVersionRequest) XRegistryNameEncoded(xRegistryNameEncoded string) VersionsApiApiCreateArtifactVersionRequest {
+func (r ApiCreateArtifactVersionRequest) XRegistryNameEncoded(xRegistryNameEncoded string) ApiCreateArtifactVersionRequest {
 	r.xRegistryNameEncoded = &xRegistryNameEncoded
 	return r
 }
 
-func (r VersionsApiApiCreateArtifactVersionRequest) Execute() (*VersionMetaData, *http.Response, error) {
+func (r ApiCreateArtifactVersionRequest) Execute() (*VersionMetaData, *http.Response, error) {
 	return r.ApiService.CreateArtifactVersionExecute(r)
 }
 
@@ -99,10 +99,10 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
- @return VersionsApiApiCreateArtifactVersionRequest
+ @return ApiCreateArtifactVersionRequest
 */
-func (a *VersionsApiService) CreateArtifactVersion(ctx context.Context, groupId string, artifactId string) VersionsApiApiCreateArtifactVersionRequest {
-	return VersionsApiApiCreateArtifactVersionRequest{
+func (a *VersionsApiService) CreateArtifactVersion(ctx context.Context, groupId string, artifactId string) ApiCreateArtifactVersionRequest {
+	return ApiCreateArtifactVersionRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -112,7 +112,7 @@ func (a *VersionsApiService) CreateArtifactVersion(ctx context.Context, groupId 
 
 // Execute executes the request
 //  @return VersionMetaData
-func (a *VersionsApiService) CreateArtifactVersionExecute(r VersionsApiApiCreateArtifactVersionRequest) (*VersionMetaData, *http.Response, error) {
+func (a *VersionsApiService) CreateArtifactVersionExecute(r ApiCreateArtifactVersionRequest) (*VersionMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -236,7 +236,7 @@ func (a *VersionsApiService) CreateArtifactVersionExecute(r VersionsApiApiCreate
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type VersionsApiApiGetArtifactVersionRequest struct {
+type ApiGetArtifactVersionRequest struct {
 	ctx context.Context
 	ApiService *VersionsApiService
 	groupId string
@@ -245,7 +245,7 @@ type VersionsApiApiGetArtifactVersionRequest struct {
 }
 
 
-func (r VersionsApiApiGetArtifactVersionRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiGetArtifactVersionRequest) Execute() (**os.File, *http.Response, error) {
 	return r.ApiService.GetArtifactVersionExecute(r)
 }
 
@@ -268,10 +268,10 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @param version The unique identifier of a specific version of the artifact content.
- @return VersionsApiApiGetArtifactVersionRequest
+ @return ApiGetArtifactVersionRequest
 */
-func (a *VersionsApiService) GetArtifactVersion(ctx context.Context, groupId string, artifactId string, version string) VersionsApiApiGetArtifactVersionRequest {
-	return VersionsApiApiGetArtifactVersionRequest{
+func (a *VersionsApiService) GetArtifactVersion(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionRequest {
+	return ApiGetArtifactVersionRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -282,7 +282,7 @@ func (a *VersionsApiService) GetArtifactVersion(ctx context.Context, groupId str
 
 // Execute executes the request
 //  @return *os.File
-func (a *VersionsApiService) GetArtifactVersionExecute(r VersionsApiApiGetArtifactVersionRequest) (**os.File, *http.Response, error) {
+func (a *VersionsApiService) GetArtifactVersionExecute(r ApiGetArtifactVersionRequest) (**os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -378,7 +378,7 @@ func (a *VersionsApiService) GetArtifactVersionExecute(r VersionsApiApiGetArtifa
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type VersionsApiApiListArtifactVersionsRequest struct {
+type ApiListArtifactVersionsRequest struct {
 	ctx context.Context
 	ApiService *VersionsApiService
 	groupId string
@@ -388,17 +388,17 @@ type VersionsApiApiListArtifactVersionsRequest struct {
 }
 
 // The number of versions to skip before starting to collect the result set.  Defaults to 0.
-func (r VersionsApiApiListArtifactVersionsRequest) Offset(offset int32) VersionsApiApiListArtifactVersionsRequest {
+func (r ApiListArtifactVersionsRequest) Offset(offset int32) ApiListArtifactVersionsRequest {
 	r.offset = &offset
 	return r
 }
 // The number of versions to return.  Defaults to 20.
-func (r VersionsApiApiListArtifactVersionsRequest) Limit(limit int32) VersionsApiApiListArtifactVersionsRequest {
+func (r ApiListArtifactVersionsRequest) Limit(limit int32) ApiListArtifactVersionsRequest {
 	r.limit = &limit
 	return r
 }
 
-func (r VersionsApiApiListArtifactVersionsRequest) Execute() (*VersionSearchResults, *http.Response, error) {
+func (r ApiListArtifactVersionsRequest) Execute() (*VersionSearchResults, *http.Response, error) {
 	return r.ApiService.ListArtifactVersionsExecute(r)
 }
 
@@ -416,10 +416,10 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
- @return VersionsApiApiListArtifactVersionsRequest
+ @return ApiListArtifactVersionsRequest
 */
-func (a *VersionsApiService) ListArtifactVersions(ctx context.Context, groupId string, artifactId string) VersionsApiApiListArtifactVersionsRequest {
-	return VersionsApiApiListArtifactVersionsRequest{
+func (a *VersionsApiService) ListArtifactVersions(ctx context.Context, groupId string, artifactId string) ApiListArtifactVersionsRequest {
+	return ApiListArtifactVersionsRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -429,7 +429,7 @@ func (a *VersionsApiService) ListArtifactVersions(ctx context.Context, groupId s
 
 // Execute executes the request
 //  @return VersionSearchResults
-func (a *VersionsApiService) ListArtifactVersionsExecute(r VersionsApiApiListArtifactVersionsRequest) (*VersionSearchResults, *http.Response, error) {
+func (a *VersionsApiService) ListArtifactVersionsExecute(r ApiListArtifactVersionsRequest) (*VersionSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -529,7 +529,7 @@ func (a *VersionsApiService) ListArtifactVersionsExecute(r VersionsApiApiListArt
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type VersionsApiApiUpdateArtifactVersionStateRequest struct {
+type ApiUpdateArtifactVersionStateRequest struct {
 	ctx context.Context
 	ApiService *VersionsApiService
 	groupId string
@@ -538,12 +538,12 @@ type VersionsApiApiUpdateArtifactVersionStateRequest struct {
 	updateState *UpdateState
 }
 
-func (r VersionsApiApiUpdateArtifactVersionStateRequest) UpdateState(updateState UpdateState) VersionsApiApiUpdateArtifactVersionStateRequest {
+func (r ApiUpdateArtifactVersionStateRequest) UpdateState(updateState UpdateState) ApiUpdateArtifactVersionStateRequest {
 	r.updateState = &updateState
 	return r
 }
 
-func (r VersionsApiApiUpdateArtifactVersionStateRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateArtifactVersionStateRequest) Execute() (*http.Response, error) {
 	return r.ApiService.UpdateArtifactVersionStateExecute(r)
 }
 
@@ -564,10 +564,10 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @param version The unique identifier of a specific version of the artifact content.
- @return VersionsApiApiUpdateArtifactVersionStateRequest
+ @return ApiUpdateArtifactVersionStateRequest
 */
-func (a *VersionsApiService) UpdateArtifactVersionState(ctx context.Context, groupId string, artifactId string, version string) VersionsApiApiUpdateArtifactVersionStateRequest {
-	return VersionsApiApiUpdateArtifactVersionStateRequest{
+func (a *VersionsApiService) UpdateArtifactVersionState(ctx context.Context, groupId string, artifactId string, version string) ApiUpdateArtifactVersionStateRequest {
+	return ApiUpdateArtifactVersionStateRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -577,7 +577,7 @@ func (a *VersionsApiService) UpdateArtifactVersionState(ctx context.Context, gro
 }
 
 // Execute executes the request
-func (a *VersionsApiService) UpdateArtifactVersionStateExecute(r VersionsApiApiUpdateArtifactVersionStateRequest) (*http.Response, error) {
+func (a *VersionsApiService) UpdateArtifactVersionStateExecute(r ApiUpdateArtifactVersionStateRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}

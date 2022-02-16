@@ -29,18 +29,18 @@ var (
 // AdminApiService AdminApi service
 type AdminApiService service
 
-type AdminApiApiCreateGlobalRuleRequest struct {
+type ApiCreateGlobalRuleRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	rule *Rule
 }
 
-func (r AdminApiApiCreateGlobalRuleRequest) Rule(rule Rule) AdminApiApiCreateGlobalRuleRequest {
+func (r ApiCreateGlobalRuleRequest) Rule(rule Rule) ApiCreateGlobalRuleRequest {
 	r.rule = &rule
 	return r
 }
 
-func (r AdminApiApiCreateGlobalRuleRequest) Execute() (*http.Response, error) {
+func (r ApiCreateGlobalRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.CreateGlobalRuleExecute(r)
 }
 
@@ -57,17 +57,17 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiCreateGlobalRuleRequest
+ @return ApiCreateGlobalRuleRequest
 */
-func (a *AdminApiService) CreateGlobalRule(ctx context.Context) AdminApiApiCreateGlobalRuleRequest {
-	return AdminApiApiCreateGlobalRuleRequest{
+func (a *AdminApiService) CreateGlobalRule(ctx context.Context) ApiCreateGlobalRuleRequest {
+	return ApiCreateGlobalRuleRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *AdminApiService) CreateGlobalRuleExecute(r AdminApiApiCreateGlobalRuleRequest) (*http.Response, error) {
+func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -164,18 +164,18 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r AdminApiApiCreateGlobalRuleR
 	return localVarHTTPResponse, nil
 }
 
-type AdminApiApiCreateRoleMappingRequest struct {
+type ApiCreateRoleMappingRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	roleMapping *RoleMapping
 }
 
-func (r AdminApiApiCreateRoleMappingRequest) RoleMapping(roleMapping RoleMapping) AdminApiApiCreateRoleMappingRequest {
+func (r ApiCreateRoleMappingRequest) RoleMapping(roleMapping RoleMapping) ApiCreateRoleMappingRequest {
 	r.roleMapping = &roleMapping
 	return r
 }
 
-func (r AdminApiApiCreateRoleMappingRequest) Execute() (*http.Response, error) {
+func (r ApiCreateRoleMappingRequest) Execute() (*http.Response, error) {
 	return r.ApiService.CreateRoleMappingExecute(r)
 }
 
@@ -191,17 +191,17 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiCreateRoleMappingRequest
+ @return ApiCreateRoleMappingRequest
 */
-func (a *AdminApiService) CreateRoleMapping(ctx context.Context) AdminApiApiCreateRoleMappingRequest {
-	return AdminApiApiCreateRoleMappingRequest{
+func (a *AdminApiService) CreateRoleMapping(ctx context.Context) ApiCreateRoleMappingRequest {
+	return ApiCreateRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *AdminApiService) CreateRoleMappingExecute(r AdminApiApiCreateRoleMappingRequest) (*http.Response, error) {
+func (a *AdminApiService) CreateRoleMappingExecute(r ApiCreateRoleMappingRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -278,13 +278,13 @@ func (a *AdminApiService) CreateRoleMappingExecute(r AdminApiApiCreateRoleMappin
 	return localVarHTTPResponse, nil
 }
 
-type AdminApiApiDeleteAllGlobalRulesRequest struct {
+type ApiDeleteAllGlobalRulesRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
 
 
-func (r AdminApiApiDeleteAllGlobalRulesRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteAllGlobalRulesRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteAllGlobalRulesExecute(r)
 }
 
@@ -299,17 +299,17 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiDeleteAllGlobalRulesRequest
+ @return ApiDeleteAllGlobalRulesRequest
 */
-func (a *AdminApiService) DeleteAllGlobalRules(ctx context.Context) AdminApiApiDeleteAllGlobalRulesRequest {
-	return AdminApiApiDeleteAllGlobalRulesRequest{
+func (a *AdminApiService) DeleteAllGlobalRules(ctx context.Context) ApiDeleteAllGlobalRulesRequest {
+	return ApiDeleteAllGlobalRulesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *AdminApiService) DeleteAllGlobalRulesExecute(r AdminApiApiDeleteAllGlobalRulesRequest) (*http.Response, error) {
+func (a *AdminApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -381,14 +381,14 @@ func (a *AdminApiService) DeleteAllGlobalRulesExecute(r AdminApiApiDeleteAllGlob
 	return localVarHTTPResponse, nil
 }
 
-type AdminApiApiDeleteGlobalRuleRequest struct {
+type ApiDeleteGlobalRuleRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	rule RuleType
 }
 
 
-func (r AdminApiApiDeleteGlobalRuleRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteGlobalRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteGlobalRuleExecute(r)
 }
 
@@ -408,10 +408,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rule The unique name/type of a rule.
- @return AdminApiApiDeleteGlobalRuleRequest
+ @return ApiDeleteGlobalRuleRequest
 */
-func (a *AdminApiService) DeleteGlobalRule(ctx context.Context, rule RuleType) AdminApiApiDeleteGlobalRuleRequest {
-	return AdminApiApiDeleteGlobalRuleRequest{
+func (a *AdminApiService) DeleteGlobalRule(ctx context.Context, rule RuleType) ApiDeleteGlobalRuleRequest {
+	return ApiDeleteGlobalRuleRequest{
 		ApiService: a,
 		ctx: ctx,
 		rule: rule,
@@ -419,7 +419,7 @@ func (a *AdminApiService) DeleteGlobalRule(ctx context.Context, rule RuleType) A
 }
 
 // Execute executes the request
-func (a *AdminApiService) DeleteGlobalRuleExecute(r AdminApiApiDeleteGlobalRuleRequest) (*http.Response, error) {
+func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -502,14 +502,14 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r AdminApiApiDeleteGlobalRuleR
 	return localVarHTTPResponse, nil
 }
 
-type AdminApiApiDeleteRoleMappingRequest struct {
+type ApiDeleteRoleMappingRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	principalId string
 }
 
 
-func (r AdminApiApiDeleteRoleMappingRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteRoleMappingRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteRoleMappingExecute(r)
 }
 
@@ -526,10 +526,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param principalId Unique id of a principal (typically either a user or service account).
- @return AdminApiApiDeleteRoleMappingRequest
+ @return ApiDeleteRoleMappingRequest
 */
-func (a *AdminApiService) DeleteRoleMapping(ctx context.Context, principalId string) AdminApiApiDeleteRoleMappingRequest {
-	return AdminApiApiDeleteRoleMappingRequest{
+func (a *AdminApiService) DeleteRoleMapping(ctx context.Context, principalId string) ApiDeleteRoleMappingRequest {
+	return ApiDeleteRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
 		principalId: principalId,
@@ -537,7 +537,7 @@ func (a *AdminApiService) DeleteRoleMapping(ctx context.Context, principalId str
 }
 
 // Execute executes the request
-func (a *AdminApiService) DeleteRoleMappingExecute(r AdminApiApiDeleteRoleMappingRequest) (*http.Response, error) {
+func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -620,13 +620,13 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r AdminApiApiDeleteRoleMappin
 	return localVarHTTPResponse, nil
 }
 
-type AdminApiApiExportDataRequest struct {
+type ApiExportDataRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
 
 
-func (r AdminApiApiExportDataRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiExportDataRequest) Execute() (**os.File, *http.Response, error) {
 	return r.ApiService.ExportDataExecute(r)
 }
 
@@ -636,10 +636,10 @@ ExportData Export registry data
 Exports registry data as a ZIP archive.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiExportDataRequest
+ @return ApiExportDataRequest
 */
-func (a *AdminApiService) ExportData(ctx context.Context) AdminApiApiExportDataRequest {
-	return AdminApiApiExportDataRequest{
+func (a *AdminApiService) ExportData(ctx context.Context) ApiExportDataRequest {
+	return ApiExportDataRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -647,7 +647,7 @@ func (a *AdminApiService) ExportData(ctx context.Context) AdminApiApiExportDataR
 
 // Execute executes the request
 //  @return *os.File
-func (a *AdminApiService) ExportDataExecute(r AdminApiApiExportDataRequest) (**os.File, *http.Response, error) {
+func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (**os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -729,14 +729,14 @@ func (a *AdminApiService) ExportDataExecute(r AdminApiApiExportDataRequest) (**o
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiGetGlobalRuleConfigRequest struct {
+type ApiGetGlobalRuleConfigRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	rule RuleType
 }
 
 
-func (r AdminApiApiGetGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
+func (r ApiGetGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
 	return r.ApiService.GetGlobalRuleConfigExecute(r)
 }
 
@@ -754,10 +754,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rule The unique name/type of a rule.
- @return AdminApiApiGetGlobalRuleConfigRequest
+ @return ApiGetGlobalRuleConfigRequest
 */
-func (a *AdminApiService) GetGlobalRuleConfig(ctx context.Context, rule RuleType) AdminApiApiGetGlobalRuleConfigRequest {
-	return AdminApiApiGetGlobalRuleConfigRequest{
+func (a *AdminApiService) GetGlobalRuleConfig(ctx context.Context, rule RuleType) ApiGetGlobalRuleConfigRequest {
+	return ApiGetGlobalRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
 		rule: rule,
@@ -766,7 +766,7 @@ func (a *AdminApiService) GetGlobalRuleConfig(ctx context.Context, rule RuleType
 
 // Execute executes the request
 //  @return Rule
-func (a *AdminApiService) GetGlobalRuleConfigExecute(r AdminApiApiGetGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -859,14 +859,14 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r AdminApiApiGetGlobalRuleC
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiGetLogConfigurationRequest struct {
+type ApiGetLogConfigurationRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	logger string
 }
 
 
-func (r AdminApiApiGetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
+func (r ApiGetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.GetLogConfigurationExecute(r)
 }
 
@@ -877,10 +877,10 @@ Returns the configured logger configuration for the provided logger name, if no 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param logger The name of a single logger.
- @return AdminApiApiGetLogConfigurationRequest
+ @return ApiGetLogConfigurationRequest
 */
-func (a *AdminApiService) GetLogConfiguration(ctx context.Context, logger string) AdminApiApiGetLogConfigurationRequest {
-	return AdminApiApiGetLogConfigurationRequest{
+func (a *AdminApiService) GetLogConfiguration(ctx context.Context, logger string) ApiGetLogConfigurationRequest {
+	return ApiGetLogConfigurationRequest{
 		ApiService: a,
 		ctx: ctx,
 		logger: logger,
@@ -889,7 +889,7 @@ func (a *AdminApiService) GetLogConfiguration(ctx context.Context, logger string
 
 // Execute executes the request
 //  @return NamedLogConfiguration
-func (a *AdminApiService) GetLogConfigurationExecute(r AdminApiApiGetLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
+func (a *AdminApiService) GetLogConfigurationExecute(r ApiGetLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -972,14 +972,14 @@ func (a *AdminApiService) GetLogConfigurationExecute(r AdminApiApiGetLogConfigur
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiGetRoleMappingRequest struct {
+type ApiGetRoleMappingRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	principalId string
 }
 
 
-func (r AdminApiApiGetRoleMappingRequest) Execute() (*RoleMapping, *http.Response, error) {
+func (r ApiGetRoleMappingRequest) Execute() (*RoleMapping, *http.Response, error) {
 	return r.ApiService.GetRoleMappingExecute(r)
 }
 
@@ -996,10 +996,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param principalId Unique id of a principal (typically either a user or service account).
- @return AdminApiApiGetRoleMappingRequest
+ @return ApiGetRoleMappingRequest
 */
-func (a *AdminApiService) GetRoleMapping(ctx context.Context, principalId string) AdminApiApiGetRoleMappingRequest {
-	return AdminApiApiGetRoleMappingRequest{
+func (a *AdminApiService) GetRoleMapping(ctx context.Context, principalId string) ApiGetRoleMappingRequest {
+	return ApiGetRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
 		principalId: principalId,
@@ -1008,7 +1008,7 @@ func (a *AdminApiService) GetRoleMapping(ctx context.Context, principalId string
 
 // Execute executes the request
 //  @return RoleMapping
-func (a *AdminApiService) GetRoleMappingExecute(r AdminApiApiGetRoleMappingRequest) (*RoleMapping, *http.Response, error) {
+func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*RoleMapping, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1101,19 +1101,19 @@ func (a *AdminApiService) GetRoleMappingExecute(r AdminApiApiGetRoleMappingReque
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiImportDataRequest struct {
+type ApiImportDataRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	body **os.File
 }
 
 // The ZIP file representing the previously exported registry data.
-func (r AdminApiApiImportDataRequest) Body(body *os.File) AdminApiApiImportDataRequest {
+func (r ApiImportDataRequest) Body(body *os.File) ApiImportDataRequest {
 	r.body = &body
 	return r
 }
 
-func (r AdminApiApiImportDataRequest) Execute() (*http.Response, error) {
+func (r ApiImportDataRequest) Execute() (*http.Response, error) {
 	return r.ApiService.ImportDataExecute(r)
 }
 
@@ -1123,17 +1123,17 @@ ImportData Import registry data
 Imports registry data that was previously exported using the `/admin/export` operation.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiImportDataRequest
+ @return ApiImportDataRequest
 */
-func (a *AdminApiService) ImportData(ctx context.Context) AdminApiApiImportDataRequest {
-	return AdminApiApiImportDataRequest{
+func (a *AdminApiService) ImportData(ctx context.Context) ApiImportDataRequest {
+	return ApiImportDataRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-func (a *AdminApiService) ImportDataExecute(r AdminApiApiImportDataRequest) (*http.Response, error) {
+func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1210,13 +1210,13 @@ func (a *AdminApiService) ImportDataExecute(r AdminApiApiImportDataRequest) (*ht
 	return localVarHTTPResponse, nil
 }
 
-type AdminApiApiListGlobalRulesRequest struct {
+type ApiListGlobalRulesRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
 
 
-func (r AdminApiApiListGlobalRulesRequest) Execute() ([]RuleType, *http.Response, error) {
+func (r ApiListGlobalRulesRequest) Execute() ([]RuleType, *http.Response, error) {
 	return r.ApiService.ListGlobalRulesExecute(r)
 }
 
@@ -1231,10 +1231,10 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiListGlobalRulesRequest
+ @return ApiListGlobalRulesRequest
 */
-func (a *AdminApiService) ListGlobalRules(ctx context.Context) AdminApiApiListGlobalRulesRequest {
-	return AdminApiApiListGlobalRulesRequest{
+func (a *AdminApiService) ListGlobalRules(ctx context.Context) ApiListGlobalRulesRequest {
+	return ApiListGlobalRulesRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -1242,7 +1242,7 @@ func (a *AdminApiService) ListGlobalRules(ctx context.Context) AdminApiApiListGl
 
 // Execute executes the request
 //  @return []RuleType
-func (a *AdminApiService) ListGlobalRulesExecute(r AdminApiApiListGlobalRulesRequest) ([]RuleType, *http.Response, error) {
+func (a *AdminApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([]RuleType, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1324,13 +1324,13 @@ func (a *AdminApiService) ListGlobalRulesExecute(r AdminApiApiListGlobalRulesReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiListLogConfigurationsRequest struct {
+type ApiListLogConfigurationsRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
 
 
-func (r AdminApiApiListLogConfigurationsRequest) Execute() ([]NamedLogConfiguration, *http.Response, error) {
+func (r ApiListLogConfigurationsRequest) Execute() ([]NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.ListLogConfigurationsExecute(r)
 }
 
@@ -1341,10 +1341,10 @@ List all of the configured logging levels.  These override the default
 logging configuration.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiListLogConfigurationsRequest
+ @return ApiListLogConfigurationsRequest
 */
-func (a *AdminApiService) ListLogConfigurations(ctx context.Context) AdminApiApiListLogConfigurationsRequest {
-	return AdminApiApiListLogConfigurationsRequest{
+func (a *AdminApiService) ListLogConfigurations(ctx context.Context) ApiListLogConfigurationsRequest {
+	return ApiListLogConfigurationsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -1352,7 +1352,7 @@ func (a *AdminApiService) ListLogConfigurations(ctx context.Context) AdminApiApi
 
 // Execute executes the request
 //  @return []NamedLogConfiguration
-func (a *AdminApiService) ListLogConfigurationsExecute(r AdminApiApiListLogConfigurationsRequest) ([]NamedLogConfiguration, *http.Response, error) {
+func (a *AdminApiService) ListLogConfigurationsExecute(r ApiListLogConfigurationsRequest) ([]NamedLogConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1434,13 +1434,13 @@ func (a *AdminApiService) ListLogConfigurationsExecute(r AdminApiApiListLogConfi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiListRoleMappingsRequest struct {
+type ApiListRoleMappingsRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
 
 
-func (r AdminApiApiListRoleMappingsRequest) Execute() ([]RoleMapping, *http.Response, error) {
+func (r ApiListRoleMappingsRequest) Execute() ([]RoleMapping, *http.Response, error) {
 	return r.ApiService.ListRoleMappingsExecute(r)
 }
 
@@ -1455,10 +1455,10 @@ This operation can fail for the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return AdminApiApiListRoleMappingsRequest
+ @return ApiListRoleMappingsRequest
 */
-func (a *AdminApiService) ListRoleMappings(ctx context.Context) AdminApiApiListRoleMappingsRequest {
-	return AdminApiApiListRoleMappingsRequest{
+func (a *AdminApiService) ListRoleMappings(ctx context.Context) ApiListRoleMappingsRequest {
+	return ApiListRoleMappingsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -1466,7 +1466,7 @@ func (a *AdminApiService) ListRoleMappings(ctx context.Context) AdminApiApiListR
 
 // Execute executes the request
 //  @return []RoleMapping
-func (a *AdminApiService) ListRoleMappingsExecute(r AdminApiApiListRoleMappingsRequest) ([]RoleMapping, *http.Response, error) {
+func (a *AdminApiService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) ([]RoleMapping, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1548,14 +1548,14 @@ func (a *AdminApiService) ListRoleMappingsExecute(r AdminApiApiListRoleMappingsR
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiRemoveLogConfigurationRequest struct {
+type ApiRemoveLogConfigurationRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	logger string
 }
 
 
-func (r AdminApiApiRemoveLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
+func (r ApiRemoveLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.RemoveLogConfigurationExecute(r)
 }
 
@@ -1566,10 +1566,10 @@ Removes the configured logger configuration (if any) for the given logger.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param logger The name of a single logger.
- @return AdminApiApiRemoveLogConfigurationRequest
+ @return ApiRemoveLogConfigurationRequest
 */
-func (a *AdminApiService) RemoveLogConfiguration(ctx context.Context, logger string) AdminApiApiRemoveLogConfigurationRequest {
-	return AdminApiApiRemoveLogConfigurationRequest{
+func (a *AdminApiService) RemoveLogConfiguration(ctx context.Context, logger string) ApiRemoveLogConfigurationRequest {
+	return ApiRemoveLogConfigurationRequest{
 		ApiService: a,
 		ctx: ctx,
 		logger: logger,
@@ -1578,7 +1578,7 @@ func (a *AdminApiService) RemoveLogConfiguration(ctx context.Context, logger str
 
 // Execute executes the request
 //  @return NamedLogConfiguration
-func (a *AdminApiService) RemoveLogConfigurationExecute(r AdminApiApiRemoveLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
+func (a *AdminApiService) RemoveLogConfigurationExecute(r ApiRemoveLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -1661,7 +1661,7 @@ func (a *AdminApiService) RemoveLogConfigurationExecute(r AdminApiApiRemoveLogCo
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiSetLogConfigurationRequest struct {
+type ApiSetLogConfigurationRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	logger string
@@ -1669,12 +1669,12 @@ type AdminApiApiSetLogConfigurationRequest struct {
 }
 
 // The new logger configuration.
-func (r AdminApiApiSetLogConfigurationRequest) LogConfiguration(logConfiguration LogConfiguration) AdminApiApiSetLogConfigurationRequest {
+func (r ApiSetLogConfigurationRequest) LogConfiguration(logConfiguration LogConfiguration) ApiSetLogConfigurationRequest {
 	r.logConfiguration = &logConfiguration
 	return r
 }
 
-func (r AdminApiApiSetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
+func (r ApiSetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.SetLogConfigurationExecute(r)
 }
 
@@ -1685,10 +1685,10 @@ Configures the logger referenced by the provided logger name with the given conf
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param logger The name of a single logger.
- @return AdminApiApiSetLogConfigurationRequest
+ @return ApiSetLogConfigurationRequest
 */
-func (a *AdminApiService) SetLogConfiguration(ctx context.Context, logger string) AdminApiApiSetLogConfigurationRequest {
-	return AdminApiApiSetLogConfigurationRequest{
+func (a *AdminApiService) SetLogConfiguration(ctx context.Context, logger string) ApiSetLogConfigurationRequest {
+	return ApiSetLogConfigurationRequest{
 		ApiService: a,
 		ctx: ctx,
 		logger: logger,
@@ -1697,7 +1697,7 @@ func (a *AdminApiService) SetLogConfiguration(ctx context.Context, logger string
 
 // Execute executes the request
 //  @return NamedLogConfiguration
-func (a *AdminApiService) SetLogConfigurationExecute(r AdminApiApiSetLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
+func (a *AdminApiService) SetLogConfigurationExecute(r ApiSetLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -1785,19 +1785,19 @@ func (a *AdminApiService) SetLogConfigurationExecute(r AdminApiApiSetLogConfigur
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiUpdateGlobalRuleConfigRequest struct {
+type ApiUpdateGlobalRuleConfigRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	rule RuleType
 	rule2 *Rule
 }
 
-func (r AdminApiApiUpdateGlobalRuleConfigRequest) Rule2(rule2 Rule) AdminApiApiUpdateGlobalRuleConfigRequest {
+func (r ApiUpdateGlobalRuleConfigRequest) Rule2(rule2 Rule) ApiUpdateGlobalRuleConfigRequest {
 	r.rule2 = &rule2
 	return r
 }
 
-func (r AdminApiApiUpdateGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
+func (r ApiUpdateGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
 	return r.ApiService.UpdateGlobalRuleConfigExecute(r)
 }
 
@@ -1815,10 +1815,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param rule The unique name/type of a rule.
- @return AdminApiApiUpdateGlobalRuleConfigRequest
+ @return ApiUpdateGlobalRuleConfigRequest
 */
-func (a *AdminApiService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleType) AdminApiApiUpdateGlobalRuleConfigRequest {
-	return AdminApiApiUpdateGlobalRuleConfigRequest{
+func (a *AdminApiService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleType) ApiUpdateGlobalRuleConfigRequest {
+	return ApiUpdateGlobalRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
 		rule: rule,
@@ -1827,7 +1827,7 @@ func (a *AdminApiService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleT
 
 // Execute executes the request
 //  @return Rule
-func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r AdminApiApiUpdateGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -1925,19 +1925,19 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r AdminApiApiUpdateGloba
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type AdminApiApiUpdateRoleMappingRequest struct {
+type ApiUpdateRoleMappingRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 	principalId string
 	updateRole *UpdateRole
 }
 
-func (r AdminApiApiUpdateRoleMappingRequest) UpdateRole(updateRole UpdateRole) AdminApiApiUpdateRoleMappingRequest {
+func (r ApiUpdateRoleMappingRequest) UpdateRole(updateRole UpdateRole) ApiUpdateRoleMappingRequest {
 	r.updateRole = &updateRole
 	return r
 }
 
-func (r AdminApiApiUpdateRoleMappingRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateRoleMappingRequest) Execute() (*http.Response, error) {
 	return r.ApiService.UpdateRoleMappingExecute(r)
 }
 
@@ -1954,10 +1954,10 @@ This operation can fail for the following reasons:
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param principalId Unique id of a principal (typically either a user or service account).
- @return AdminApiApiUpdateRoleMappingRequest
+ @return ApiUpdateRoleMappingRequest
 */
-func (a *AdminApiService) UpdateRoleMapping(ctx context.Context, principalId string) AdminApiApiUpdateRoleMappingRequest {
-	return AdminApiApiUpdateRoleMappingRequest{
+func (a *AdminApiService) UpdateRoleMapping(ctx context.Context, principalId string) ApiUpdateRoleMappingRequest {
+	return ApiUpdateRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
 		principalId: principalId,
@@ -1965,7 +1965,7 @@ func (a *AdminApiService) UpdateRoleMapping(ctx context.Context, principalId str
 }
 
 // Execute executes the request
-func (a *AdminApiService) UpdateRoleMappingExecute(r AdminApiApiUpdateRoleMappingRequest) (*http.Response, error) {
+func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}

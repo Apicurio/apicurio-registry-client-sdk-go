@@ -29,7 +29,7 @@ var (
 // MetadataApiService MetadataApi service
 type MetadataApiService service
 
-type MetadataApiApiDeleteArtifactVersionMetaDataRequest struct {
+type ApiDeleteArtifactVersionMetaDataRequest struct {
 	ctx context.Context
 	ApiService *MetadataApiService
 	groupId string
@@ -38,7 +38,7 @@ type MetadataApiApiDeleteArtifactVersionMetaDataRequest struct {
 }
 
 
-func (r MetadataApiApiDeleteArtifactVersionMetaDataRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteArtifactVersionMetaDataRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteArtifactVersionMetaDataExecute(r)
 }
 
@@ -59,10 +59,10 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @param version The unique identifier of a specific version of the artifact content.
- @return MetadataApiApiDeleteArtifactVersionMetaDataRequest
+ @return ApiDeleteArtifactVersionMetaDataRequest
 */
-func (a *MetadataApiService) DeleteArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) MetadataApiApiDeleteArtifactVersionMetaDataRequest {
-	return MetadataApiApiDeleteArtifactVersionMetaDataRequest{
+func (a *MetadataApiService) DeleteArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiDeleteArtifactVersionMetaDataRequest {
+	return ApiDeleteArtifactVersionMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -72,7 +72,7 @@ func (a *MetadataApiService) DeleteArtifactVersionMetaData(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *MetadataApiService) DeleteArtifactVersionMetaDataExecute(r MetadataApiApiDeleteArtifactVersionMetaDataRequest) (*http.Response, error) {
+func (a *MetadataApiService) DeleteArtifactVersionMetaDataExecute(r ApiDeleteArtifactVersionMetaDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
@@ -157,7 +157,7 @@ func (a *MetadataApiService) DeleteArtifactVersionMetaDataExecute(r MetadataApiA
 	return localVarHTTPResponse, nil
 }
 
-type MetadataApiApiGetArtifactMetaDataRequest struct {
+type ApiGetArtifactMetaDataRequest struct {
 	ctx context.Context
 	ApiService *MetadataApiService
 	groupId string
@@ -165,7 +165,7 @@ type MetadataApiApiGetArtifactMetaDataRequest struct {
 }
 
 
-func (r MetadataApiApiGetArtifactMetaDataRequest) Execute() (*ArtifactMetaData, *http.Response, error) {
+func (r ApiGetArtifactMetaDataRequest) Execute() (*ArtifactMetaData, *http.Response, error) {
 	return r.ApiService.GetArtifactMetaDataExecute(r)
 }
 
@@ -183,10 +183,10 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
- @return MetadataApiApiGetArtifactMetaDataRequest
+ @return ApiGetArtifactMetaDataRequest
 */
-func (a *MetadataApiService) GetArtifactMetaData(ctx context.Context, groupId string, artifactId string) MetadataApiApiGetArtifactMetaDataRequest {
-	return MetadataApiApiGetArtifactMetaDataRequest{
+func (a *MetadataApiService) GetArtifactMetaData(ctx context.Context, groupId string, artifactId string) ApiGetArtifactMetaDataRequest {
+	return ApiGetArtifactMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -196,7 +196,7 @@ func (a *MetadataApiService) GetArtifactMetaData(ctx context.Context, groupId st
 
 // Execute executes the request
 //  @return ArtifactMetaData
-func (a *MetadataApiService) GetArtifactMetaDataExecute(r MetadataApiApiGetArtifactMetaDataRequest) (*ArtifactMetaData, *http.Response, error) {
+func (a *MetadataApiService) GetArtifactMetaDataExecute(r ApiGetArtifactMetaDataRequest) (*ArtifactMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -290,7 +290,7 @@ func (a *MetadataApiService) GetArtifactMetaDataExecute(r MetadataApiApiGetArtif
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type MetadataApiApiGetArtifactVersionMetaDataRequest struct {
+type ApiGetArtifactVersionMetaDataRequest struct {
 	ctx context.Context
 	ApiService *MetadataApiService
 	groupId string
@@ -299,7 +299,7 @@ type MetadataApiApiGetArtifactVersionMetaDataRequest struct {
 }
 
 
-func (r MetadataApiApiGetArtifactVersionMetaDataRequest) Execute() (*VersionMetaData, *http.Response, error) {
+func (r ApiGetArtifactVersionMetaDataRequest) Execute() (*VersionMetaData, *http.Response, error) {
 	return r.ApiService.GetArtifactVersionMetaDataExecute(r)
 }
 
@@ -321,10 +321,10 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @param version The unique identifier of a specific version of the artifact content.
- @return MetadataApiApiGetArtifactVersionMetaDataRequest
+ @return ApiGetArtifactVersionMetaDataRequest
 */
-func (a *MetadataApiService) GetArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) MetadataApiApiGetArtifactVersionMetaDataRequest {
-	return MetadataApiApiGetArtifactVersionMetaDataRequest{
+func (a *MetadataApiService) GetArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionMetaDataRequest {
+	return ApiGetArtifactVersionMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -335,7 +335,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaData(ctx context.Context, gro
 
 // Execute executes the request
 //  @return VersionMetaData
-func (a *MetadataApiService) GetArtifactVersionMetaDataExecute(r MetadataApiApiGetArtifactVersionMetaDataRequest) (*VersionMetaData, *http.Response, error) {
+func (a *MetadataApiService) GetArtifactVersionMetaDataExecute(r ApiGetArtifactVersionMetaDataRequest) (*VersionMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -430,7 +430,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataExecute(r MetadataApiApiG
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type MetadataApiApiGetArtifactVersionMetaDataByContentRequest struct {
+type ApiGetArtifactVersionMetaDataByContentRequest struct {
 	ctx context.Context
 	ApiService *MetadataApiService
 	groupId string
@@ -440,17 +440,17 @@ type MetadataApiApiGetArtifactVersionMetaDataByContentRequest struct {
 }
 
 // The content of an artifact version.
-func (r MetadataApiApiGetArtifactVersionMetaDataByContentRequest) Body(body *os.File) MetadataApiApiGetArtifactVersionMetaDataByContentRequest {
+func (r ApiGetArtifactVersionMetaDataByContentRequest) Body(body *os.File) ApiGetArtifactVersionMetaDataByContentRequest {
 	r.body = &body
 	return r
 }
 // Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for a matching version.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.
-func (r MetadataApiApiGetArtifactVersionMetaDataByContentRequest) Canonical(canonical bool) MetadataApiApiGetArtifactVersionMetaDataByContentRequest {
+func (r ApiGetArtifactVersionMetaDataByContentRequest) Canonical(canonical bool) ApiGetArtifactVersionMetaDataByContentRequest {
 	r.canonical = &canonical
 	return r
 }
 
-func (r MetadataApiApiGetArtifactVersionMetaDataByContentRequest) Execute() (*VersionMetaData, *http.Response, error) {
+func (r ApiGetArtifactVersionMetaDataByContentRequest) Execute() (*VersionMetaData, *http.Response, error) {
 	return r.ApiService.GetArtifactVersionMetaDataByContentExecute(r)
 }
 
@@ -472,10 +472,10 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
- @return MetadataApiApiGetArtifactVersionMetaDataByContentRequest
+ @return ApiGetArtifactVersionMetaDataByContentRequest
 */
-func (a *MetadataApiService) GetArtifactVersionMetaDataByContent(ctx context.Context, groupId string, artifactId string) MetadataApiApiGetArtifactVersionMetaDataByContentRequest {
-	return MetadataApiApiGetArtifactVersionMetaDataByContentRequest{
+func (a *MetadataApiService) GetArtifactVersionMetaDataByContent(ctx context.Context, groupId string, artifactId string) ApiGetArtifactVersionMetaDataByContentRequest {
+	return ApiGetArtifactVersionMetaDataByContentRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -485,7 +485,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataByContent(ctx context.Con
 
 // Execute executes the request
 //  @return VersionMetaData
-func (a *MetadataApiService) GetArtifactVersionMetaDataByContentExecute(r MetadataApiApiGetArtifactVersionMetaDataByContentRequest) (*VersionMetaData, *http.Response, error) {
+func (a *MetadataApiService) GetArtifactVersionMetaDataByContentExecute(r ApiGetArtifactVersionMetaDataByContentRequest) (*VersionMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -587,7 +587,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataByContentExecute(r Metada
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type MetadataApiApiUpdateArtifactMetaDataRequest struct {
+type ApiUpdateArtifactMetaDataRequest struct {
 	ctx context.Context
 	ApiService *MetadataApiService
 	groupId string
@@ -596,12 +596,12 @@ type MetadataApiApiUpdateArtifactMetaDataRequest struct {
 }
 
 // Updated artifact metadata.
-func (r MetadataApiApiUpdateArtifactMetaDataRequest) EditableMetaData(editableMetaData EditableMetaData) MetadataApiApiUpdateArtifactMetaDataRequest {
+func (r ApiUpdateArtifactMetaDataRequest) EditableMetaData(editableMetaData EditableMetaData) ApiUpdateArtifactMetaDataRequest {
 	r.editableMetaData = &editableMetaData
 	return r
 }
 
-func (r MetadataApiApiUpdateArtifactMetaDataRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateArtifactMetaDataRequest) Execute() (*http.Response, error) {
 	return r.ApiService.UpdateArtifactMetaDataExecute(r)
 }
 
@@ -619,10 +619,10 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
- @return MetadataApiApiUpdateArtifactMetaDataRequest
+ @return ApiUpdateArtifactMetaDataRequest
 */
-func (a *MetadataApiService) UpdateArtifactMetaData(ctx context.Context, groupId string, artifactId string) MetadataApiApiUpdateArtifactMetaDataRequest {
-	return MetadataApiApiUpdateArtifactMetaDataRequest{
+func (a *MetadataApiService) UpdateArtifactMetaData(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactMetaDataRequest {
+	return ApiUpdateArtifactMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -631,7 +631,7 @@ func (a *MetadataApiService) UpdateArtifactMetaData(ctx context.Context, groupId
 }
 
 // Execute executes the request
-func (a *MetadataApiService) UpdateArtifactMetaDataExecute(r MetadataApiApiUpdateArtifactMetaDataRequest) (*http.Response, error) {
+func (a *MetadataApiService) UpdateArtifactMetaDataExecute(r ApiUpdateArtifactMetaDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -720,7 +720,7 @@ func (a *MetadataApiService) UpdateArtifactMetaDataExecute(r MetadataApiApiUpdat
 	return localVarHTTPResponse, nil
 }
 
-type MetadataApiApiUpdateArtifactVersionMetaDataRequest struct {
+type ApiUpdateArtifactVersionMetaDataRequest struct {
 	ctx context.Context
 	ApiService *MetadataApiService
 	groupId string
@@ -729,12 +729,12 @@ type MetadataApiApiUpdateArtifactVersionMetaDataRequest struct {
 	editableMetaData *EditableMetaData
 }
 
-func (r MetadataApiApiUpdateArtifactVersionMetaDataRequest) EditableMetaData(editableMetaData EditableMetaData) MetadataApiApiUpdateArtifactVersionMetaDataRequest {
+func (r ApiUpdateArtifactVersionMetaDataRequest) EditableMetaData(editableMetaData EditableMetaData) ApiUpdateArtifactVersionMetaDataRequest {
 	r.editableMetaData = &editableMetaData
 	return r
 }
 
-func (r MetadataApiApiUpdateArtifactVersionMetaDataRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateArtifactVersionMetaDataRequest) Execute() (*http.Response, error) {
 	return r.ApiService.UpdateArtifactVersionMetaDataExecute(r)
 }
 
@@ -756,10 +756,10 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @param version The unique identifier of a specific version of the artifact content.
- @return MetadataApiApiUpdateArtifactVersionMetaDataRequest
+ @return ApiUpdateArtifactVersionMetaDataRequest
 */
-func (a *MetadataApiService) UpdateArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) MetadataApiApiUpdateArtifactVersionMetaDataRequest {
-	return MetadataApiApiUpdateArtifactVersionMetaDataRequest{
+func (a *MetadataApiService) UpdateArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiUpdateArtifactVersionMetaDataRequest {
+	return ApiUpdateArtifactVersionMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -769,7 +769,7 @@ func (a *MetadataApiService) UpdateArtifactVersionMetaData(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *MetadataApiService) UpdateArtifactVersionMetaDataExecute(r MetadataApiApiUpdateArtifactVersionMetaDataRequest) (*http.Response, error) {
+func (a *MetadataApiService) UpdateArtifactVersionMetaDataExecute(r ApiUpdateArtifactVersionMetaDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
