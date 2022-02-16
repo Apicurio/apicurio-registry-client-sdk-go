@@ -15,8 +15,7 @@ jobs:
           mkdir tmp
           curl https://raw.githubusercontent.com/Apicurio/apicurio-registry/master/${{ github.event.client_payload.openapi_file_path }} > tmp/input-schema.json
       - name: Modify input schema
-        run: |
-          sed -i 's/"date-time"/"utc-date"/g' tmp/input-schema.json
+        run: ./hack/scripts/preprocess-schema.sh
       - uses: craicoverflow/openapi-generator-action@v1
         with:
           generator: go
@@ -25,8 +24,7 @@ jobs:
           git-user-id: Apicurio
           package-name: registryclient
           template: .github/templates
-          additional-properties: "structPrefix=true"
-      - name: Preprocess input schema
+      - name: Clean up temporary files
         run: rm -r tmp
       - uses: dorny/paths-filter@v2
         id: changes
