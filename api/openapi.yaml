@@ -24,7 +24,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   title: Apicurio Registry API [v2]
-  version: 2.2.0.Final
+  version: 2.2.1.Final
 servers:
 - url: /
 tags:
@@ -806,6 +806,24 @@ paths:
         schema:
           type: string
         style: form
+      - description: Filter by globalId.
+        explode: true
+        in: query
+        name: globalId
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: Filter by contentId.
+        explode: true
+        in: query
+        name: contentId
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
       responses:
         "200":
           content:
@@ -940,6 +958,18 @@ paths:
     get:
       description: Exports registry data as a ZIP archive.
       operationId: exportData
+      parameters:
+      - description: Indicates if the operation is done for a browser.  If true, the
+          response will be a JSON payload with a property called `href`.  This `href`
+          will be a single-use, naked download link suitable for use by a web browser
+          to download the content.
+        explode: true
+        in: query
+        name: forBrowser
+        required: false
+        schema:
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -968,6 +998,28 @@ paths:
       description: Imports registry data that was previously exported using the `/admin/export`
         operation.
       operationId: importData
+      parameters:
+      - description: If this header is set to false, global ids of imported data will
+          be ignored and replaced by next id in global id sequence. This allows to
+          import any data even thought the global ids would cause a conflict.
+        explode: false
+        in: header
+        name: X-Registry-Preserve-GlobalId
+        required: false
+        schema:
+          type: boolean
+        style: simple
+      - description: If this header is set to false, content ids of imported data
+          will be ignored and replaced by next id in content id sequence. The mapping
+          between content and artifacts will be preserved. This allows to import any
+          data even thought the content ids would cause a conflict.
+        explode: false
+        in: header
+        name: X-Registry-Preserve-ContentId
+        required: false
+        schema:
+          type: boolean
+        style: simple
       requestBody:
         content:
           application/zip:
@@ -3417,6 +3469,198 @@ paths:
       tags:
       - Users
     summary: Retrieves information about the current user
+  /admin/config/properties:
+    get:
+      description: |
+        Returns a list of all configuration properties that have been set.  The list is not paged.
+
+        This operation may fail for one of the following reasons:
+
+        * A server error occurred (HTTP error `500`)
+      operationId: listConfigProperties
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConfigurationProperty'
+                type: array
+          description: On a successful response, returns a list of configuration properties.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+      summary: List all configuration properties
+      tags:
+      - Admin
+    summary: Manage configuration properties.
+  /admin/config/properties/{propertyName}:
+    delete:
+      description: |
+        Resets the value of a single configuration property.  This will return the property to
+        its default value (see external documentation for supported properties and their default
+        values).
+
+        This operation may fail for one of the following reasons:
+
+        * Property not found or not configured (HTTP error `404`)
+        * A server error occurred (HTTP error `500`)
+      operationId: resetConfigProperty
+      parameters:
+      - description: The name of a configuration property.
+        explode: false
+        in: path
+        name: propertyName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: The configuration property was deleted.
+        "404":
+          content:
+            application/json:
+              examples:
+                NotFoundExample:
+                  value:
+                    error_code: 404
+                    message: No artifact with id 'Topic-1/Inbound' could be found.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can return a `404`
+            error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+      summary: Reset a configuration property
+      tags:
+      - Admin
+    get:
+      description: |
+        Returns the value of a single configuration property.
+
+        This operation may fail for one of the following reasons:
+
+        * Property not found or not configured (HTTP error `404`)
+        * A server error occurred (HTTP error `500`)
+      operationId: getConfigProperty
+      parameters:
+      - description: The name of a configuration property.
+        explode: false
+        in: path
+        name: propertyName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationProperty'
+          description: The configuration property value.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+        "404":
+          content:
+            application/json:
+              examples:
+                NotFoundExample:
+                  value:
+                    error_code: 404
+                    message: No artifact with id 'Topic-1/Inbound' could be found.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can return a `404`
+            error.
+      summary: Get the value of a configuration property
+      tags:
+      - Admin
+    put:
+      description: |
+        Updates the value of a single configuration property.
+
+        This operation may fail for one of the following reasons:
+
+        * Property not found or not configured (HTTP error `404`)
+        * A server error occurred (HTTP error `500`)
+      operationId: updateConfigProperty
+      parameters:
+      - description: The name of a configuration property.
+        explode: false
+        in: path
+        name: propertyName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConfigurationProperty'
+        required: true
+      responses:
+        "204":
+          description: The configuration property was updated.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+        "404":
+          content:
+            application/json:
+              examples:
+                NotFoundExample:
+                  value:
+                    error_code: 404
+                    message: No artifact with id 'Topic-1/Inbound' could be found.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can return a `404`
+            error.
+      summary: Update a configuration property
+      tags:
+      - Admin
+    summary: Manage a single configuration property (by name).
 components:
   responses:
     NotFound:
@@ -3517,75 +3761,6 @@ components:
           x-codegen-inline: true
           x-codegen-type: StringMap
       title: Root Type for EditableArtifactMetaData
-      type: object
-    VersionMetaData:
-      example:
-        groupId: My-Group
-        id: my-artifact-id
-        version: 1221432
-        type: PROTOBUF
-        name: Artifact Name
-        description: The description of the artifact
-        createdBy: user1
-        createdOn: 2019-05-17T12:00:00Z
-        globalId: 183282932983
-        contentId: 12347
-        labels:
-        - label-1
-        - label-2
-        properties:
-          custom-1: foo
-          custom-2: bar
-      properties:
-        version:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        createdBy:
-          type: string
-        createdOn:
-          format: utc-date
-          type: string
-        type:
-          $ref: '#/components/schemas/ArtifactType'
-        globalId:
-          format: int64
-          type: integer
-        state:
-          $ref: '#/components/schemas/ArtifactState'
-        id:
-          description: The ID of a single artifact.
-          example: example-artifact
-          type: string
-        labels:
-          items:
-            type: string
-          type: array
-        properties:
-          additionalProperties:
-            type: string
-          description: User-defined name-value pairs. Name and value must be strings.
-          type: object
-          x-codegen-inline: true
-          x-codegen-type: StringMap
-        groupId:
-          description: An ID of a single artifact group.
-          example: my-group
-          type: string
-        contentId:
-          format: int64
-          type: integer
-      required:
-      - contentId
-      - createdBy
-      - createdOn
-      - globalId
-      - id
-      - type
-      - version
-      title: Root Type for ArtifactVersionMetaData
       type: object
     Rule:
       example:
@@ -3765,82 +3940,6 @@ components:
       - count
       - versions
       type: object
-    SearchedVersion:
-      description: Models a single artifact from the result set returned when searching
-        for artifacts.
-      example:
-        name: Artifact Version Name
-        description: Description of the artifact version
-        labels:
-        - current
-        - internal
-        type: AVRO
-        state: ENABLED
-        createdOn: 2018-02-10T09:30Z
-        createdBy: some text
-        globalId: 37
-        version: 85
-        properties: {}
-        contentId: 62
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        createdOn:
-          format: utc-date
-          type: string
-        createdBy:
-          type: string
-        type:
-          $ref: '#/components/schemas/ArtifactType'
-        labels:
-          items:
-            type: string
-          type: array
-        state:
-          $ref: '#/components/schemas/ArtifactState'
-        globalId:
-          format: int64
-          type: integer
-        version:
-          type: string
-        properties:
-          additionalProperties:
-            type: string
-          description: User-defined name-value pairs. Name and value must be strings.
-          type: object
-          x-codegen-inline: true
-          x-codegen-type: StringMap
-        contentId:
-          format: int64
-          type: integer
-      required:
-      - contentId
-      - createdBy
-      - createdOn
-      - globalId
-      - state
-      - type
-      - version
-      type: object
-    RuleViolationError:
-      allOf:
-      - $ref: '#/components/schemas/RuleViolationError_allOf'
-      - $ref: '#/components/schemas/Error'
-      description: |-
-        All error responses, whether `4xx` or `5xx` will include one of these as the response
-        body.
-      example:
-        error_code: 409
-        message: Artifact failed validation
-        causes:
-        - description: API is missing a title
-          context: /info[title]
-        - description: Operation IDs must be unique
-          context: /paths[/invoices]/put[operationId]
-      title: Root Type for Error
-      type: object
     RuleViolationCause:
       example:
         description: External documentation URL is not valid (it must be formatted
@@ -3868,140 +3967,6 @@ components:
         recommended to use a simple integer or a semver value.
       example: 3.1.6
       type: string
-    SearchedArtifact:
-      description: Models a single artifact from the result set returned when searching
-        for artifacts.
-      example:
-        groupId: My-Group
-        id: Procurement-Invoice
-        name: Artifact Name
-        description: Description of the artifact
-        labels:
-        - current
-        - internal
-        type: AVRO
-        state: ENABLED
-        createdBy: user1
-        createdOn: 2019-03-22T12:51:19Z
-      properties:
-        id:
-          description: The ID of a single artifact.
-          example: example-artifact
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        createdOn:
-          format: utc-date
-          type: string
-        createdBy:
-          type: string
-        type:
-          $ref: '#/components/schemas/ArtifactType'
-        labels:
-          items:
-            type: string
-          type: array
-        state:
-          $ref: '#/components/schemas/ArtifactState'
-        modifiedOn:
-          format: utc-date
-          type: string
-        modifiedBy:
-          type: string
-        groupId:
-          description: An ID of a single artifact group.
-          example: my-group
-          type: string
-      required:
-      - createdBy
-      - createdOn
-      - group
-      - id
-      - state
-      - type
-      type: object
-    ArtifactMetaData:
-      example:
-        groupId: My-Group
-        id: Procurement-Invoice
-        name: Artifact Name
-        description: Description of the artifact
-        type: AVRO
-        version: 18
-        createdBy: user1
-        createdOn: 2019-03-22T12:51:19Z
-        modifiedBy: user2
-        modifiedOn: 2019-07-19T15:09:00Z
-        globalId: 12984719247
-        contentId: 82736
-        labels:
-        - label-1
-        - label-2
-        properties:
-          custom-1: foo
-          custom-2: bar
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        createdBy:
-          type: string
-        createdOn:
-          format: utc-date
-          type: string
-        modifiedBy:
-          type: string
-        modifiedOn:
-          format: utc-date
-          type: string
-        id:
-          description: The ID of a single artifact.
-          example: example-artifact
-          type: string
-        version:
-          type: string
-        type:
-          $ref: '#/components/schemas/ArtifactType'
-        globalId:
-          format: int64
-          type: integer
-        state:
-          $ref: '#/components/schemas/ArtifactState'
-        labels:
-          items:
-            type: string
-          type: array
-        properties:
-          additionalProperties:
-            type: string
-          description: User-defined name-value pairs. Name and value must be strings.
-          type: object
-          x-codegen-inline: true
-          x-codegen-type: StringMap
-        groupId:
-          description: An ID of a single artifact group.
-          example: my-group
-          type: string
-        contentId:
-          format: int64
-          type: integer
-      required:
-      - contentId
-      - createdBy
-      - createdOn
-      - globalId
-      - group
-      - id
-      - modifiedBy
-      - modifiedOn
-      - state
-      - type
-      - version
-      title: Root Type for ArtifactMetaData
-      type: object
     LogConfiguration:
       example: {}
       properties:
@@ -4147,6 +4112,350 @@ components:
       example: Artifact description
       type: string
       x-codegen-inline: true
+    DownloadRef:
+      description: Models a download "link".  Useful for browser use-cases.
+      example:
+        downloadId: 247-4987490-297845
+        href: https://54321.registry.examples.org/apis/registry/v2/downloads/247-4987490-297845
+      properties:
+        downloadId:
+          type: string
+        href:
+          type: string
+      required:
+      - downloadId
+      title: Root Type for Download
+      type: object
+    ArtifactMetaData:
+      example:
+        groupId: My-Group
+        id: Procurement-Invoice
+        name: Artifact Name
+        description: Description of the artifact
+        type: AVRO
+        version: 18
+        createdBy: user1
+        createdOn: 2019-03-22T12:51:19Z
+        modifiedBy: user2
+        modifiedOn: 2019-07-19T15:09:00Z
+        globalId: 12984719247
+        contentId: 82736
+        labels:
+        - label-1
+        - label-2
+        properties:
+          custom-1: foo
+          custom-2: bar
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        createdBy:
+          type: string
+        createdOn:
+          format: utc-date
+          type: string
+          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
+        modifiedBy:
+          type: string
+        modifiedOn:
+          format: utc-date
+          type: string
+          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
+        id:
+          description: The ID of a single artifact.
+          example: example-artifact
+          type: string
+        version:
+          type: string
+        type:
+          $ref: '#/components/schemas/ArtifactType'
+        globalId:
+          format: int64
+          type: integer
+        state:
+          $ref: '#/components/schemas/ArtifactState'
+        labels:
+          items:
+            type: string
+          type: array
+        properties:
+          additionalProperties:
+            type: string
+          description: User-defined name-value pairs. Name and value must be strings.
+          type: object
+          x-codegen-inline: true
+          x-codegen-type: StringMap
+        groupId:
+          description: An ID of a single artifact group.
+          example: my-group
+          type: string
+        contentId:
+          format: int64
+          type: integer
+      required:
+      - contentId
+      - createdBy
+      - createdOn
+      - globalId
+      - group
+      - id
+      - modifiedBy
+      - modifiedOn
+      - state
+      - type
+      - version
+      title: Root Type for ArtifactMetaData
+      type: object
+    SearchedArtifact:
+      description: Models a single artifact from the result set returned when searching
+        for artifacts.
+      example:
+        groupId: My-Group
+        id: Procurement-Invoice
+        name: Artifact Name
+        description: Description of the artifact
+        labels:
+        - current
+        - internal
+        type: AVRO
+        state: ENABLED
+        createdBy: user1
+        createdOn: 2019-03-22T12:51:19Z
+      properties:
+        id:
+          description: The ID of a single artifact.
+          example: example-artifact
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        createdOn:
+          format: utc-date
+          type: string
+          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
+        createdBy:
+          type: string
+        type:
+          $ref: '#/components/schemas/ArtifactType'
+        labels:
+          items:
+            type: string
+          type: array
+        state:
+          $ref: '#/components/schemas/ArtifactState'
+        modifiedOn:
+          format: utc-date
+          type: string
+          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
+        modifiedBy:
+          type: string
+        groupId:
+          description: An ID of a single artifact group.
+          example: my-group
+          type: string
+      required:
+      - createdBy
+      - createdOn
+      - group
+      - id
+      - state
+      - type
+      type: object
+    VersionMetaData:
+      example:
+        groupId: My-Group
+        id: my-artifact-id
+        version: 1221432
+        type: PROTOBUF
+        name: Artifact Name
+        description: The description of the artifact
+        createdBy: user1
+        createdOn: 2019-05-17T12:00:00Z
+        globalId: 183282932983
+        contentId: 12347
+        labels:
+        - label-1
+        - label-2
+        properties:
+          custom-1: foo
+          custom-2: bar
+      properties:
+        version:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        createdBy:
+          type: string
+        createdOn:
+          format: utc-date
+          type: string
+          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
+        type:
+          $ref: '#/components/schemas/ArtifactType'
+        globalId:
+          format: int64
+          type: integer
+        state:
+          $ref: '#/components/schemas/ArtifactState'
+        id:
+          description: The ID of a single artifact.
+          example: example-artifact
+          type: string
+        labels:
+          items:
+            type: string
+          type: array
+        properties:
+          additionalProperties:
+            type: string
+          description: User-defined name-value pairs. Name and value must be strings.
+          type: object
+          x-codegen-inline: true
+          x-codegen-type: StringMap
+        groupId:
+          description: An ID of a single artifact group.
+          example: my-group
+          type: string
+        contentId:
+          format: int64
+          type: integer
+      required:
+      - contentId
+      - createdBy
+      - createdOn
+      - globalId
+      - id
+      - type
+      - version
+      title: Root Type for ArtifactVersionMetaData
+      type: object
+    SearchedVersion:
+      description: Models a single artifact from the result set returned when searching
+        for artifacts.
+      example:
+        name: Artifact Version Name
+        description: Description of the artifact version
+        labels:
+        - current
+        - internal
+        type: AVRO
+        state: ENABLED
+        createdOn: 2018-02-10T09:30Z
+        createdBy: some text
+        globalId: 37
+        version: 85
+        properties: {}
+        contentId: 62
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        createdOn:
+          format: utc-date
+          type: string
+          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
+        createdBy:
+          type: string
+        type:
+          $ref: '#/components/schemas/ArtifactType'
+        labels:
+          items:
+            type: string
+          type: array
+        state:
+          $ref: '#/components/schemas/ArtifactState'
+        globalId:
+          format: int64
+          type: integer
+        version:
+          type: string
+        properties:
+          additionalProperties:
+            type: string
+          description: User-defined name-value pairs. Name and value must be strings.
+          type: object
+          x-codegen-inline: true
+          x-codegen-type: StringMap
+        contentId:
+          format: int64
+          type: integer
+      required:
+      - contentId
+      - createdBy
+      - createdOn
+      - globalId
+      - state
+      - type
+      - version
+      type: object
+    RuleViolationError:
+      allOf:
+      - $ref: '#/components/schemas/RuleViolationError_allOf'
+      - $ref: '#/components/schemas/Error'
+      description: |-
+        All error responses, whether `4xx` or `5xx` will include one of these as the response
+        body.
+      example:
+        error_code: 409
+        message: Artifact failed validation
+        causes:
+        - description: API is missing a title
+          context: /info[title]
+        - description: Operation IDs must be unique
+          context: /paths[/invoices]/put[operationId]
+      title: Root Type for Error
+      type: object
+      x-codegen-extendsClass: io.apicurio.registry.rest.v2.beans.Error
+    ConfigurationProperty:
+      example:
+        name: registry.auth.owner-only-authorization
+        value: "true"
+        type: boolean
+        label: Owner Only Authorization
+        description: When enabled, the registry will allow only the artifact owner
+          (creator) to modify an artifact.
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        description:
+          type: string
+      required:
+      - description
+      - label
+      - name
+      - type
+      - value
+      title: Root Type for ConfigurationProperty
+      type: object
+    UpdateConfigurationProperty:
+      example:
+        value: "true"
+      properties:
+        value:
+          type: string
+      required:
+      - value
+      title: Root Type for UpdateConfigurationProperty
+      type: object
+    NamedLogConfiguration_allOf:
+      properties:
+        name:
+          type: string
+      required:
+      - name
+      type: object
     RuleViolationError_allOf:
       properties:
         causes:
@@ -4157,13 +4466,8 @@ components:
       required:
       - causes
       type: object
-    NamedLogConfiguration_allOf:
-      properties:
-        name:
-          type: string
-      required:
-      - name
-      type: object
 x-codegen:
   bean-annotations:
   - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.ToString
+    excludeEnums: true

@@ -15,129 +15,129 @@ import (
 	"encoding/json"
 )
 
-// Rule struct for Rule
-type Rule struct {
-	Config string `json:"config"`
-	Type *RuleType `json:"type,omitempty"`
+// DownloadRef Models a download \"link\".  Useful for browser use-cases.
+type DownloadRef struct {
+	DownloadId string `json:"downloadId"`
+	Href *string `json:"href,omitempty"`
 }
 
-// NewRule instantiates a new Rule object
+// NewDownloadRef instantiates a new DownloadRef object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRule(config string) *Rule {
-	this := Rule{}
-	this.Config = config
+func NewDownloadRef(downloadId string) *DownloadRef {
+	this := DownloadRef{}
+	this.DownloadId = downloadId
 	return &this
 }
 
-// NewRuleWithDefaults instantiates a new Rule object
+// NewDownloadRefWithDefaults instantiates a new DownloadRef object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewRuleWithDefaults() *Rule {
-	this := Rule{}
+func NewDownloadRefWithDefaults() *DownloadRef {
+	this := DownloadRef{}
 	return &this
 }
 
-// GetConfig returns the Config field value
-func (o *Rule) GetConfig() string {
+// GetDownloadId returns the DownloadId field value
+func (o *DownloadRef) GetDownloadId() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Config
+	return o.DownloadId
 }
 
-// GetConfigOk returns a tuple with the Config field value
+// GetDownloadIdOk returns a tuple with the DownloadId field value
 // and a boolean to check if the value has been set.
-func (o *Rule) GetConfigOk() (*string, bool) {
+func (o *DownloadRef) GetDownloadIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.Config, true
+	return &o.DownloadId, true
 }
 
-// SetConfig sets field value
-func (o *Rule) SetConfig(v string) {
-	o.Config = v
+// SetDownloadId sets field value
+func (o *DownloadRef) SetDownloadId(v string) {
+	o.DownloadId = v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
-func (o *Rule) GetType() RuleType {
-	if o == nil || o.Type == nil {
-		var ret RuleType
+// GetHref returns the Href field value if set, zero value otherwise.
+func (o *DownloadRef) GetHref() string {
+	if o == nil || o.Href == nil {
+		var ret string
 		return ret
 	}
-	return *o.Type
+	return *o.Href
 }
 
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// GetHrefOk returns a tuple with the Href field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Rule) GetTypeOk() (*RuleType, bool) {
-	if o == nil || o.Type == nil {
+func (o *DownloadRef) GetHrefOk() (*string, bool) {
+	if o == nil || o.Href == nil {
 		return nil, false
 	}
-	return o.Type, true
+	return o.Href, true
 }
 
-// HasType returns a boolean if a field has been set.
-func (o *Rule) HasType() bool {
-	if o != nil && o.Type != nil {
+// HasHref returns a boolean if a field has been set.
+func (o *DownloadRef) HasHref() bool {
+	if o != nil && o.Href != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetType gets a reference to the given RuleType and assigns it to the Type field.
-func (o *Rule) SetType(v RuleType) {
-	o.Type = &v
+// SetHref gets a reference to the given string and assigns it to the Href field.
+func (o *DownloadRef) SetHref(v string) {
+	o.Href = &v
 }
 
-func (o Rule) MarshalJSON() ([]byte, error) {
+func (o DownloadRef) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["config"] = o.Config
+		toSerialize["downloadId"] = o.DownloadId
 	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
+	if o.Href != nil {
+		toSerialize["href"] = o.Href
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableRule struct {
-	value *Rule
+type NullableDownloadRef struct {
+	value *DownloadRef
 	isSet bool
 }
 
-func (v NullableRule) Get() *Rule {
+func (v NullableDownloadRef) Get() *DownloadRef {
 	return v.value
 }
 
-func (v *NullableRule) Set(val *Rule) {
+func (v *NullableDownloadRef) Set(val *DownloadRef) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableRule) IsSet() bool {
+func (v NullableDownloadRef) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableRule) Unset() {
+func (v *NullableDownloadRef) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableRule(val *Rule) *NullableRule {
-	return &NullableRule{value: val, isSet: true}
+func NewNullableDownloadRef(val *DownloadRef) *NullableDownloadRef {
+	return &NullableDownloadRef{value: val, isSet: true}
 }
 
-func (v NullableRule) MarshalJSON() ([]byte, error) {
+func (v NullableDownloadRef) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableRule) UnmarshalJSON(src []byte) error {
+func (v *NullableDownloadRef) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

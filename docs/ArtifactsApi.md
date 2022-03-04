@@ -611,7 +611,7 @@ No authorization required
 
 ## SearchArtifacts
 
-> ArtifactSearchResults SearchArtifacts(ctx).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).Execute()
+> ArtifactSearchResults SearchArtifacts(ctx).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).GlobalId(globalId).ContentId(contentId).Execute()
 
 Search for artifacts
 
@@ -639,10 +639,12 @@ func main() {
     properties := []string{"Inner_example"} // []string | Filter by one or more name/value property.  Separate each name/value pair using a colon.  For example `properties=foo:bar` will return only artifacts with a custom property named `foo` and value `bar`. (optional)
     description := "description_example" // string | Filter by description. (optional)
     group := "group_example" // string | Filter by artifact group. (optional)
+    globalId := int64(789) // int64 | Filter by globalId. (optional)
+    contentId := int64(789) // int64 | Filter by contentId. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.SearchArtifacts(context.Background()).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).Execute()
+    resp, r, err := apiClient.ArtifactsApi.SearchArtifacts(context.Background()).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).GlobalId(globalId).ContentId(contentId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.SearchArtifacts``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -672,6 +674,8 @@ Name | Type | Description  | Notes
  **properties** | **[]string** | Filter by one or more name/value property.  Separate each name/value pair using a colon.  For example &#x60;properties&#x3D;foo:bar&#x60; will return only artifacts with a custom property named &#x60;foo&#x60; and value &#x60;bar&#x60;. | 
  **description** | **string** | Filter by description. | 
  **group** | **string** | Filter by artifact group. | 
+ **globalId** | **int64** | Filter by globalId. | 
+ **contentId** | **int64** | Filter by contentId. | 
 
 ### Return type
 
