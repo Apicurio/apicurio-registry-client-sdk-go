@@ -15,93 +15,93 @@ import (
 	"encoding/json"
 )
 
-// LogConfiguration struct for LogConfiguration
-type LogConfiguration struct {
-	Level LogLevel `json:"level"`
+// UpdateConfigurationProperty struct for UpdateConfigurationProperty
+type UpdateConfigurationProperty struct {
+	Value string `json:"value"`
 }
 
-// NewLogConfiguration instantiates a new LogConfiguration object
+// NewUpdateConfigurationProperty instantiates a new UpdateConfigurationProperty object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLogConfiguration(level LogLevel) *LogConfiguration {
-	this := LogConfiguration{}
-	this.Level = level
+func NewUpdateConfigurationProperty(value string) *UpdateConfigurationProperty {
+	this := UpdateConfigurationProperty{}
+	this.Value = value
 	return &this
 }
 
-// NewLogConfigurationWithDefaults instantiates a new LogConfiguration object
+// NewUpdateConfigurationPropertyWithDefaults instantiates a new UpdateConfigurationProperty object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewLogConfigurationWithDefaults() *LogConfiguration {
-	this := LogConfiguration{}
+func NewUpdateConfigurationPropertyWithDefaults() *UpdateConfigurationProperty {
+	this := UpdateConfigurationProperty{}
 	return &this
 }
 
-// GetLevel returns the Level field value
-func (o *LogConfiguration) GetLevel() LogLevel {
+// GetValue returns the Value field value
+func (o *UpdateConfigurationProperty) GetValue() string {
 	if o == nil {
-		var ret LogLevel
+		var ret string
 		return ret
 	}
 
-	return o.Level
+	return o.Value
 }
 
-// GetLevelOk returns a tuple with the Level field value
+// GetValueOk returns a tuple with the Value field value
 // and a boolean to check if the value has been set.
-func (o *LogConfiguration) GetLevelOk() (*LogLevel, bool) {
+func (o *UpdateConfigurationProperty) GetValueOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.Level, true
+	return &o.Value, true
 }
 
-// SetLevel sets field value
-func (o *LogConfiguration) SetLevel(v LogLevel) {
-	o.Level = v
+// SetValue sets field value
+func (o *UpdateConfigurationProperty) SetValue(v string) {
+	o.Value = v
 }
 
-func (o LogConfiguration) MarshalJSON() ([]byte, error) {
+func (o UpdateConfigurationProperty) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["level"] = o.Level
+		toSerialize["value"] = o.Value
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableLogConfiguration struct {
-	value *LogConfiguration
+type NullableUpdateConfigurationProperty struct {
+	value *UpdateConfigurationProperty
 	isSet bool
 }
 
-func (v NullableLogConfiguration) Get() *LogConfiguration {
+func (v NullableUpdateConfigurationProperty) Get() *UpdateConfigurationProperty {
 	return v.value
 }
 
-func (v *NullableLogConfiguration) Set(val *LogConfiguration) {
+func (v *NullableUpdateConfigurationProperty) Set(val *UpdateConfigurationProperty) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableLogConfiguration) IsSet() bool {
+func (v NullableUpdateConfigurationProperty) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableLogConfiguration) Unset() {
+func (v *NullableUpdateConfigurationProperty) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableLogConfiguration(val *LogConfiguration) *NullableLogConfiguration {
-	return &NullableLogConfiguration{value: val, isSet: true}
+func NewNullableUpdateConfigurationProperty(val *UpdateConfigurationProperty) *NullableUpdateConfigurationProperty {
+	return &NullableUpdateConfigurationProperty{value: val, isSet: true}
 }
 
-func (v NullableLogConfiguration) MarshalJSON() ([]byte, error) {
+func (v NullableUpdateConfigurationProperty) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableLogConfiguration) UnmarshalJSON(src []byte) error {
+func (v *NullableUpdateConfigurationProperty) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

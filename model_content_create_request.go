@@ -15,129 +15,124 @@ import (
 	"encoding/json"
 )
 
-// Rule struct for Rule
-type Rule struct {
-	Config string `json:"config"`
-	Type *RuleType `json:"type,omitempty"`
+// ContentCreateRequest struct for ContentCreateRequest
+type ContentCreateRequest struct {
+	// Raw content of the artifact.
+	Content string `json:"content"`
+	// Collection of references to other artifacts.
+	References []ArtifactReference `json:"references"`
 }
 
-// NewRule instantiates a new Rule object
+// NewContentCreateRequest instantiates a new ContentCreateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRule(config string) *Rule {
-	this := Rule{}
-	this.Config = config
+func NewContentCreateRequest(content string, references []ArtifactReference) *ContentCreateRequest {
+	this := ContentCreateRequest{}
+	this.Content = content
+	this.References = references
 	return &this
 }
 
-// NewRuleWithDefaults instantiates a new Rule object
+// NewContentCreateRequestWithDefaults instantiates a new ContentCreateRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewRuleWithDefaults() *Rule {
-	this := Rule{}
+func NewContentCreateRequestWithDefaults() *ContentCreateRequest {
+	this := ContentCreateRequest{}
 	return &this
 }
 
-// GetConfig returns the Config field value
-func (o *Rule) GetConfig() string {
+// GetContent returns the Content field value
+func (o *ContentCreateRequest) GetContent() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Config
+	return o.Content
 }
 
-// GetConfigOk returns a tuple with the Config field value
+// GetContentOk returns a tuple with the Content field value
 // and a boolean to check if the value has been set.
-func (o *Rule) GetConfigOk() (*string, bool) {
+func (o *ContentCreateRequest) GetContentOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.Config, true
+	return &o.Content, true
 }
 
-// SetConfig sets field value
-func (o *Rule) SetConfig(v string) {
-	o.Config = v
+// SetContent sets field value
+func (o *ContentCreateRequest) SetContent(v string) {
+	o.Content = v
 }
 
-// GetType returns the Type field value if set, zero value otherwise.
-func (o *Rule) GetType() RuleType {
-	if o == nil || o.Type == nil {
-		var ret RuleType
+// GetReferences returns the References field value
+func (o *ContentCreateRequest) GetReferences() []ArtifactReference {
+	if o == nil {
+		var ret []ArtifactReference
 		return ret
 	}
-	return *o.Type
+
+	return o.References
 }
 
-// GetTypeOk returns a tuple with the Type field value if set, nil otherwise
+// GetReferencesOk returns a tuple with the References field value
 // and a boolean to check if the value has been set.
-func (o *Rule) GetTypeOk() (*RuleType, bool) {
-	if o == nil || o.Type == nil {
+func (o *ContentCreateRequest) GetReferencesOk() ([]ArtifactReference, bool) {
+	if o == nil  {
 		return nil, false
 	}
-	return o.Type, true
+	return o.References, true
 }
 
-// HasType returns a boolean if a field has been set.
-func (o *Rule) HasType() bool {
-	if o != nil && o.Type != nil {
-		return true
-	}
-
-	return false
+// SetReferences sets field value
+func (o *ContentCreateRequest) SetReferences(v []ArtifactReference) {
+	o.References = v
 }
 
-// SetType gets a reference to the given RuleType and assigns it to the Type field.
-func (o *Rule) SetType(v RuleType) {
-	o.Type = &v
-}
-
-func (o Rule) MarshalJSON() ([]byte, error) {
+func (o ContentCreateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["config"] = o.Config
+		toSerialize["content"] = o.Content
 	}
-	if o.Type != nil {
-		toSerialize["type"] = o.Type
+	if true {
+		toSerialize["references"] = o.References
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableRule struct {
-	value *Rule
+type NullableContentCreateRequest struct {
+	value *ContentCreateRequest
 	isSet bool
 }
 
-func (v NullableRule) Get() *Rule {
+func (v NullableContentCreateRequest) Get() *ContentCreateRequest {
 	return v.value
 }
 
-func (v *NullableRule) Set(val *Rule) {
+func (v *NullableContentCreateRequest) Set(val *ContentCreateRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableRule) IsSet() bool {
+func (v NullableContentCreateRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableRule) Unset() {
+func (v *NullableContentCreateRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableRule(val *Rule) *NullableRule {
-	return &NullableRule{value: val, isSet: true}
+func NewNullableContentCreateRequest(val *ContentCreateRequest) *NullableContentCreateRequest {
+	return &NullableContentCreateRequest{value: val, isSet: true}
 }
 
-func (v NullableRule) MarshalJSON() ([]byte, error) {
+func (v NullableContentCreateRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableRule) UnmarshalJSON(src []byte) error {
+func (v *NullableContentCreateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

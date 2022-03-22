@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateArtifactVersion**](VersionsApi.md#CreateArtifactVersion) | **Post** /groups/{groupId}/artifacts/{artifactId}/versions | Create artifact version
 [**GetArtifactVersion**](VersionsApi.md#GetArtifactVersion) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version} | Get artifact version
+[**GetArtifactVersionReferences**](VersionsApi.md#GetArtifactVersionReferences) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/references | Get artifact version
 [**ListArtifactVersions**](VersionsApi.md#ListArtifactVersions) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions | List artifact versions
 [**UpdateArtifactVersionState**](VersionsApi.md#UpdateArtifactVersionState) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/state | Update artifact version state
 
@@ -98,7 +99,7 @@ No authorization required
 
 ## GetArtifactVersion
 
-> *os.File GetArtifactVersion(ctx, groupId, artifactId, version).Execute()
+> *os.File GetArtifactVersion(ctx, groupId, artifactId, version).Dereference(dereference).Execute()
 
 Get artifact version
 
@@ -120,10 +121,11 @@ func main() {
     groupId := "groupId_example" // string | The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
     artifactId := "artifactId_example" // string | The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
     version := "version_example" // string | The unique identifier of a specific version of the artifact content.
+    dereference := true // bool | Allows the user to specify if the content should be dereferenced when being returned (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.VersionsApi.GetArtifactVersion(context.Background(), groupId, artifactId, version).Execute()
+    resp, r, err := apiClient.VersionsApi.GetArtifactVersion(context.Background(), groupId, artifactId, version).Dereference(dereference).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `VersionsApi.GetArtifactVersion``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -153,6 +155,7 @@ Name | Type | Description  | Notes
 
 
 
+ **dereference** | **bool** | Allows the user to specify if the content should be dereferenced when being returned | 
 
 ### Return type
 
@@ -166,6 +169,82 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetArtifactVersionReferences
+
+> []ArtifactReference GetArtifactVersionReferences(ctx, groupId, artifactId, version).Execute()
+
+Get artifact version
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    groupId := "groupId_example" // string | The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
+    artifactId := "artifactId_example" // string | The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
+    version := "version_example" // string | The unique identifier of a specific version of the artifact content.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.VersionsApi.GetArtifactVersionReferences(context.Background(), groupId, artifactId, version).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `VersionsApi.GetArtifactVersionReferences``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetArtifactVersionReferences`: []ArtifactReference
+    fmt.Fprintf(os.Stdout, "Response from `VersionsApi.GetArtifactVersionReferences`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**groupId** | **string** | The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. | 
+**artifactId** | **string** | The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. | 
+**version** | **string** | The unique identifier of a specific version of the artifact content. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetArtifactVersionReferencesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+
+### Return type
+
+[**[]ArtifactReference**](ArtifactReference.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

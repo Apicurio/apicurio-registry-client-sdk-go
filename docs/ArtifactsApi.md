@@ -250,7 +250,7 @@ No authorization required
 
 ## GetContentByGlobalId
 
-> *os.File GetContentByGlobalId(ctx, globalId).Execute()
+> *os.File GetContentByGlobalId(ctx, globalId).Dereference(dereference).Execute()
 
 Get artifact by global ID
 
@@ -270,10 +270,11 @@ import (
 
 func main() {
     globalId := int64(789) // int64 | Global identifier for an artifact version.
+    dereference := true // bool | Allows the user to specify if the content should be dereferenced when being returned (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.GetContentByGlobalId(context.Background(), globalId).Execute()
+    resp, r, err := apiClient.ArtifactsApi.GetContentByGlobalId(context.Background(), globalId).Dereference(dereference).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.GetContentByGlobalId``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -299,6 +300,7 @@ Other parameters are passed through a pointer to a apiGetContentByGlobalIdReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **dereference** | **bool** | Allows the user to specify if the content should be dereferenced when being returned | 
 
 ### Return type
 
@@ -460,7 +462,7 @@ No authorization required
 
 ## GetLatestArtifact
 
-> *os.File GetLatestArtifact(ctx, groupId, artifactId).Execute()
+> *os.File GetLatestArtifact(ctx, groupId, artifactId).Dereference(dereference).Execute()
 
 Get latest artifact
 
@@ -481,10 +483,11 @@ import (
 func main() {
     groupId := "groupId_example" // string | The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
     artifactId := "artifactId_example" // string | The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
+    dereference := true // bool | Allows the user to specify if the content should be dereferenced when being returned (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.GetLatestArtifact(context.Background(), groupId, artifactId).Execute()
+    resp, r, err := apiClient.ArtifactsApi.GetLatestArtifact(context.Background(), groupId, artifactId).Dereference(dereference).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.GetLatestArtifact``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -512,6 +515,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **dereference** | **bool** | Allows the user to specify if the content should be dereferenced when being returned | 
 
 ### Return type
 
@@ -611,7 +615,7 @@ No authorization required
 
 ## SearchArtifacts
 
-> ArtifactSearchResults SearchArtifacts(ctx).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).Execute()
+> ArtifactSearchResults SearchArtifacts(ctx).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).GlobalId(globalId).ContentId(contentId).Execute()
 
 Search for artifacts
 
@@ -639,10 +643,12 @@ func main() {
     properties := []string{"Inner_example"} // []string | Filter by one or more name/value property.  Separate each name/value pair using a colon.  For example `properties=foo:bar` will return only artifacts with a custom property named `foo` and value `bar`. (optional)
     description := "description_example" // string | Filter by description. (optional)
     group := "group_example" // string | Filter by artifact group. (optional)
+    globalId := int64(789) // int64 | Filter by globalId. (optional)
+    contentId := int64(789) // int64 | Filter by contentId. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.SearchArtifacts(context.Background()).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).Execute()
+    resp, r, err := apiClient.ArtifactsApi.SearchArtifacts(context.Background()).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).GlobalId(globalId).ContentId(contentId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.SearchArtifacts``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -672,6 +678,8 @@ Name | Type | Description  | Notes
  **properties** | **[]string** | Filter by one or more name/value property.  Separate each name/value pair using a colon.  For example &#x60;properties&#x3D;foo:bar&#x60; will return only artifacts with a custom property named &#x60;foo&#x60; and value &#x60;bar&#x60;. | 
  **description** | **string** | Filter by description. | 
  **group** | **string** | Filter by artifact group. | 
+ **globalId** | **int64** | Filter by globalId. | 
+ **contentId** | **int64** | Filter by contentId. | 
 
 ### Return type
 

@@ -15,93 +15,129 @@ import (
 	"encoding/json"
 )
 
-// LogConfiguration struct for LogConfiguration
-type LogConfiguration struct {
-	Level LogLevel `json:"level"`
+// DownloadRef Models a download \"link\".  Useful for browser use-cases.
+type DownloadRef struct {
+	DownloadId string `json:"downloadId"`
+	Href *string `json:"href,omitempty"`
 }
 
-// NewLogConfiguration instantiates a new LogConfiguration object
+// NewDownloadRef instantiates a new DownloadRef object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLogConfiguration(level LogLevel) *LogConfiguration {
-	this := LogConfiguration{}
-	this.Level = level
+func NewDownloadRef(downloadId string) *DownloadRef {
+	this := DownloadRef{}
+	this.DownloadId = downloadId
 	return &this
 }
 
-// NewLogConfigurationWithDefaults instantiates a new LogConfiguration object
+// NewDownloadRefWithDefaults instantiates a new DownloadRef object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewLogConfigurationWithDefaults() *LogConfiguration {
-	this := LogConfiguration{}
+func NewDownloadRefWithDefaults() *DownloadRef {
+	this := DownloadRef{}
 	return &this
 }
 
-// GetLevel returns the Level field value
-func (o *LogConfiguration) GetLevel() LogLevel {
+// GetDownloadId returns the DownloadId field value
+func (o *DownloadRef) GetDownloadId() string {
 	if o == nil {
-		var ret LogLevel
+		var ret string
 		return ret
 	}
 
-	return o.Level
+	return o.DownloadId
 }
 
-// GetLevelOk returns a tuple with the Level field value
+// GetDownloadIdOk returns a tuple with the DownloadId field value
 // and a boolean to check if the value has been set.
-func (o *LogConfiguration) GetLevelOk() (*LogLevel, bool) {
+func (o *DownloadRef) GetDownloadIdOk() (*string, bool) {
 	if o == nil  {
 		return nil, false
 	}
-	return &o.Level, true
+	return &o.DownloadId, true
 }
 
-// SetLevel sets field value
-func (o *LogConfiguration) SetLevel(v LogLevel) {
-	o.Level = v
+// SetDownloadId sets field value
+func (o *DownloadRef) SetDownloadId(v string) {
+	o.DownloadId = v
 }
 
-func (o LogConfiguration) MarshalJSON() ([]byte, error) {
+// GetHref returns the Href field value if set, zero value otherwise.
+func (o *DownloadRef) GetHref() string {
+	if o == nil || o.Href == nil {
+		var ret string
+		return ret
+	}
+	return *o.Href
+}
+
+// GetHrefOk returns a tuple with the Href field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DownloadRef) GetHrefOk() (*string, bool) {
+	if o == nil || o.Href == nil {
+		return nil, false
+	}
+	return o.Href, true
+}
+
+// HasHref returns a boolean if a field has been set.
+func (o *DownloadRef) HasHref() bool {
+	if o != nil && o.Href != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetHref gets a reference to the given string and assigns it to the Href field.
+func (o *DownloadRef) SetHref(v string) {
+	o.Href = &v
+}
+
+func (o DownloadRef) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if true {
-		toSerialize["level"] = o.Level
+		toSerialize["downloadId"] = o.DownloadId
+	}
+	if o.Href != nil {
+		toSerialize["href"] = o.Href
 	}
 	return json.Marshal(toSerialize)
 }
 
-type NullableLogConfiguration struct {
-	value *LogConfiguration
+type NullableDownloadRef struct {
+	value *DownloadRef
 	isSet bool
 }
 
-func (v NullableLogConfiguration) Get() *LogConfiguration {
+func (v NullableDownloadRef) Get() *DownloadRef {
 	return v.value
 }
 
-func (v *NullableLogConfiguration) Set(val *LogConfiguration) {
+func (v *NullableDownloadRef) Set(val *DownloadRef) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableLogConfiguration) IsSet() bool {
+func (v NullableDownloadRef) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableLogConfiguration) Unset() {
+func (v *NullableDownloadRef) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableLogConfiguration(val *LogConfiguration) *NullableLogConfiguration {
-	return &NullableLogConfiguration{value: val, isSet: true}
+func NewNullableDownloadRef(val *DownloadRef) *NullableDownloadRef {
+	return &NullableDownloadRef{value: val, isSet: true}
 }
 
-func (v NullableLogConfiguration) MarshalJSON() ([]byte, error) {
+func (v NullableDownloadRef) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableLogConfiguration) UnmarshalJSON(src []byte) error {
+func (v *NullableDownloadRef) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
