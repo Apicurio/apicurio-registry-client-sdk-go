@@ -349,7 +349,7 @@ No authorization required
 
 ## ExportData
 
-> *os.File ExportData(ctx).Execute()
+> interface{} ExportData(ctx).Execute()
 
 Export registry data
 
@@ -376,7 +376,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ExportData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ExportData`: *os.File
+    // response from `ExportData`: interface{}
     fmt.Fprintf(os.Stdout, "Response from `AdminApi.ExportData`: %v\n", resp)
 }
 ```
@@ -392,7 +392,7 @@ Other parameters are passed through a pointer to a apiExportDataRequest struct v
 
 ### Return type
 
-[***os.File**](*os.File.md)
+**interface{}**
 
 ### Authorization
 
