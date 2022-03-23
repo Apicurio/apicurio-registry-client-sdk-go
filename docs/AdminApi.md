@@ -10,15 +10,19 @@ Method | HTTP request | Description
 [**DeleteGlobalRule**](AdminApi.md#DeleteGlobalRule) | **Delete** /admin/rules/{rule} | Delete global rule
 [**DeleteRoleMapping**](AdminApi.md#DeleteRoleMapping) | **Delete** /admin/roleMappings/{principalId} | Delete a role mapping
 [**ExportData**](AdminApi.md#ExportData) | **Get** /admin/export | Export registry data
+[**GetConfigProperty**](AdminApi.md#GetConfigProperty) | **Get** /admin/config/properties/{propertyName} | Get the value of a configuration property
 [**GetGlobalRuleConfig**](AdminApi.md#GetGlobalRuleConfig) | **Get** /admin/rules/{rule} | Get global rule configuration
 [**GetLogConfiguration**](AdminApi.md#GetLogConfiguration) | **Get** /admin/loggers/{logger} | Get a single logger configuration
 [**GetRoleMapping**](AdminApi.md#GetRoleMapping) | **Get** /admin/roleMappings/{principalId} | Return a single role mapping
 [**ImportData**](AdminApi.md#ImportData) | **Post** /admin/import | Import registry data
+[**ListConfigProperties**](AdminApi.md#ListConfigProperties) | **Get** /admin/config/properties | List all configuration properties
 [**ListGlobalRules**](AdminApi.md#ListGlobalRules) | **Get** /admin/rules | List global rules
 [**ListLogConfigurations**](AdminApi.md#ListLogConfigurations) | **Get** /admin/loggers | List logging configurations
 [**ListRoleMappings**](AdminApi.md#ListRoleMappings) | **Get** /admin/roleMappings | List all role mappings
 [**RemoveLogConfiguration**](AdminApi.md#RemoveLogConfiguration) | **Delete** /admin/loggers/{logger} | Removes logger configuration
+[**ResetConfigProperty**](AdminApi.md#ResetConfigProperty) | **Delete** /admin/config/properties/{propertyName} | Reset a configuration property
 [**SetLogConfiguration**](AdminApi.md#SetLogConfiguration) | **Put** /admin/loggers/{logger} | Set a logger&#39;s configuration
+[**UpdateConfigProperty**](AdminApi.md#UpdateConfigProperty) | **Put** /admin/config/properties/{propertyName} | Update a configuration property
 [**UpdateGlobalRuleConfig**](AdminApi.md#UpdateGlobalRuleConfig) | **Put** /admin/rules/{rule} | Update global rule configuration
 [**UpdateRoleMapping**](AdminApi.md#UpdateRoleMapping) | **Put** /admin/roleMappings/{principalId} | Update a role mapping
 
@@ -349,7 +353,7 @@ No authorization required
 
 ## ExportData
 
-> *os.File ExportData(ctx).Execute()
+> *os.File ExportData(ctx).ForBrowser(forBrowser).Execute()
 
 Export registry data
 
@@ -368,10 +372,11 @@ import (
 )
 
 func main() {
+    forBrowser := true // bool | Indicates if the operation is done for a browser.  If true, the response will be a JSON payload with a property called `href`.  This `href` will be a single-use, naked download link suitable for use by a web browser to download the content. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.ExportData(context.Background()).Execute()
+    resp, r, err := apiClient.AdminApi.ExportData(context.Background()).ForBrowser(forBrowser).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ExportData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -383,12 +388,16 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiExportDataRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **forBrowser** | **bool** | Indicates if the operation is done for a browser.  If true, the response will be a JSON payload with a property called &#x60;href&#x60;.  This &#x60;href&#x60; will be a single-use, naked download link suitable for use by a web browser to download the content. | 
 
 ### Return type
 
@@ -402,6 +411,76 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: application/zip, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetConfigProperty
+
+> ConfigurationProperty GetConfigProperty(ctx, propertyName).Execute()
+
+Get the value of a configuration property
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    propertyName := "propertyName_example" // string | The name of a configuration property.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.AdminApi.GetConfigProperty(context.Background(), propertyName).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.GetConfigProperty``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `GetConfigProperty`: ConfigurationProperty
+    fmt.Fprintf(os.Stdout, "Response from `AdminApi.GetConfigProperty`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**propertyName** | **string** | The name of a configuration property. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetConfigPropertyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ConfigurationProperty**](ConfigurationProperty.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -620,7 +699,7 @@ No authorization required
 
 ## ImportData
 
-> ImportData(ctx).Body(body).Execute()
+> ImportData(ctx).Body(body).XRegistryPreserveGlobalId(xRegistryPreserveGlobalId).XRegistryPreserveContentId(xRegistryPreserveContentId).Execute()
 
 Import registry data
 
@@ -640,10 +719,12 @@ import (
 
 func main() {
     body := os.NewFile(1234, "some_file") // *os.File | The ZIP file representing the previously exported registry data.
+    xRegistryPreserveGlobalId := true // bool | If this header is set to false, global ids of imported data will be ignored and replaced by next id in global id sequence. This allows to import any data even thought the global ids would cause a conflict. (optional)
+    xRegistryPreserveContentId := true // bool | If this header is set to false, content ids of imported data will be ignored and replaced by next id in content id sequence. The mapping between content and artifacts will be preserved. This allows to import any data even thought the content ids would cause a conflict. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.ImportData(context.Background()).Body(body).Execute()
+    resp, r, err := apiClient.AdminApi.ImportData(context.Background()).Body(body).XRegistryPreserveGlobalId(xRegistryPreserveGlobalId).XRegistryPreserveContentId(xRegistryPreserveContentId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ImportData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -663,6 +744,8 @@ Other parameters are passed through a pointer to a apiImportDataRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | ***os.File** | The ZIP file representing the previously exported registry data. | 
+ **xRegistryPreserveGlobalId** | **bool** | If this header is set to false, global ids of imported data will be ignored and replaced by next id in global id sequence. This allows to import any data even thought the global ids would cause a conflict. | 
+ **xRegistryPreserveContentId** | **bool** | If this header is set to false, content ids of imported data will be ignored and replaced by next id in content id sequence. The mapping between content and artifacts will be preserved. This allows to import any data even thought the content ids would cause a conflict. | 
 
 ### Return type
 
@@ -675,6 +758,67 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/zip
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListConfigProperties
+
+> []ConfigurationProperty ListConfigProperties(ctx).Execute()
+
+List all configuration properties
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.AdminApi.ListConfigProperties(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ListConfigProperties``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ListConfigProperties`: []ConfigurationProperty
+    fmt.Fprintf(os.Stdout, "Response from `AdminApi.ListConfigProperties`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListConfigPropertiesRequest struct via the builder pattern
+
+
+### Return type
+
+[**[]ConfigurationProperty**](ConfigurationProperty.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -935,6 +1079,74 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## ResetConfigProperty
+
+> ResetConfigProperty(ctx, propertyName).Execute()
+
+Reset a configuration property
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    propertyName := "propertyName_example" // string | The name of a configuration property.
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.AdminApi.ResetConfigProperty(context.Background(), propertyName).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ResetConfigProperty``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**propertyName** | **string** | The name of a configuration property. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiResetConfigPropertyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## SetLogConfiguration
 
 > NamedLogConfiguration SetLogConfiguration(ctx, logger).LogConfiguration(logConfiguration).Execute()
@@ -992,6 +1204,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**NamedLogConfiguration**](NamedLogConfiguration.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateConfigProperty
+
+> UpdateConfigProperty(ctx, propertyName).UpdateConfigurationProperty(updateConfigurationProperty).Execute()
+
+Update a configuration property
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    propertyName := "propertyName_example" // string | The name of a configuration property.
+    updateConfigurationProperty := *openapiclient.NewUpdateConfigurationProperty("Value_example") // UpdateConfigurationProperty | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.AdminApi.UpdateConfigProperty(context.Background(), propertyName).UpdateConfigurationProperty(updateConfigurationProperty).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.UpdateConfigProperty``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**propertyName** | **string** | The name of a configuration property. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateConfigPropertyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateConfigurationProperty** | [**UpdateConfigurationProperty**](UpdateConfigurationProperty.md) |  | 
+
+### Return type
+
+ (empty response body)
 
 ### Authorization
 
