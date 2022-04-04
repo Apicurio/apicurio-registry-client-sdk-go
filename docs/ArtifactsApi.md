@@ -12,6 +12,9 @@ Method | HTTP request | Description
 [**GetContentById**](ArtifactsApi.md#GetContentById) | **Get** /ids/contentIds/{contentId}/ | Get artifact content by ID
 [**GetLatestArtifact**](ArtifactsApi.md#GetLatestArtifact) | **Get** /groups/{groupId}/artifacts/{artifactId} | Get latest artifact
 [**ListArtifactsInGroup**](ArtifactsApi.md#ListArtifactsInGroup) | **Get** /groups/{groupId}/artifacts | List artifacts in group
+[**ReferencesByContentHash**](ArtifactsApi.md#ReferencesByContentHash) | **Get** /ids/contentHashes/{contentHash}/references | Returns a list with all the references for the artifact with the given hash
+[**ReferencesByContentId**](ArtifactsApi.md#ReferencesByContentId) | **Get** /ids/contentIds/{contentId}/references | Returns a list with all the references for the artifact with the given content id.
+[**ReferencesByGlobalId**](ArtifactsApi.md#ReferencesByGlobalId) | **Get** /ids/globalIds/{globalId}/references | Returns a list with all the references for the artifact with the given global id.
 [**SearchArtifacts**](ArtifactsApi.md#SearchArtifacts) | **Get** /search/artifacts | Search for artifacts
 [**SearchArtifactsByContent**](ArtifactsApi.md#SearchArtifactsByContent) | **Post** /search/artifacts | Search for artifacts by content
 [**UpdateArtifact**](ArtifactsApi.md#UpdateArtifact) | **Put** /groups/{groupId}/artifacts/{artifactId} | Update artifact
@@ -101,7 +104,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/create.extended+json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -613,6 +616,216 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## ReferencesByContentHash
+
+> []ArtifactReference ReferencesByContentHash(ctx, UNKNOWN_PARAMETER_NAME).Execute()
+
+Returns a list with all the references for the artifact with the given hash
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    UNKNOWN_PARAMETER_NAME := TODO //  | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ArtifactsApi.ReferencesByContentHash(context.Background(), UNKNOWN_PARAMETER_NAME).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.ReferencesByContentHash``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ReferencesByContentHash`: []ArtifactReference
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.ReferencesByContentHash`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**UNKNOWN_PARAMETER_NAME** | [****](.md) |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReferencesByContentHashRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ArtifactReference**](ArtifactReference.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReferencesByContentId
+
+> []ArtifactReference ReferencesByContentId(ctx, UNKNOWN_PARAMETER_NAME).Execute()
+
+Returns a list with all the references for the artifact with the given content id.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    UNKNOWN_PARAMETER_NAME := TODO //  | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ArtifactsApi.ReferencesByContentId(context.Background(), UNKNOWN_PARAMETER_NAME).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.ReferencesByContentId``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ReferencesByContentId`: []ArtifactReference
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.ReferencesByContentId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**UNKNOWN_PARAMETER_NAME** | [****](.md) |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReferencesByContentIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ArtifactReference**](ArtifactReference.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ReferencesByGlobalId
+
+> []ArtifactReference ReferencesByGlobalId(ctx, UNKNOWN_PARAMETER_NAME).Execute()
+
+Returns a list with all the references for the artifact with the given global id.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    UNKNOWN_PARAMETER_NAME := TODO //  | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ArtifactsApi.ReferencesByGlobalId(context.Background(), UNKNOWN_PARAMETER_NAME).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.ReferencesByGlobalId``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ReferencesByGlobalId`: []ArtifactReference
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.ReferencesByGlobalId`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**UNKNOWN_PARAMETER_NAME** | [****](.md) |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiReferencesByGlobalIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**[]ArtifactReference**](ArtifactReference.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## SearchArtifacts
 
 > ArtifactSearchResults SearchArtifacts(ctx).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).GlobalId(globalId).ContentId(contentId).Execute()
@@ -854,7 +1067,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: application/create.extended+json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
