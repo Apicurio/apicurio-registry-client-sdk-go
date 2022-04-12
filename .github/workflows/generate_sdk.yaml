@@ -41,6 +41,7 @@ jobs:
           branch-suffix: short-commit-hash
           branch: generate-sdk
           title: "[generated] Update API client"
+          reviewers: Apicurio/developers
           commit-message: "chore: update API client"
           body: |
             Automated update of the Apicurio Registry SDK
