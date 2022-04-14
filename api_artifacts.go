@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.2-SNAPSHOT
+API version: 2.2.3.Final
 Contact: apicurio@lists.jboss.org
 */
 
@@ -201,7 +201,7 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 		localVarQueryParams.Add("canonical", parameterToString(*r.canonical, ""))
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/create.extended+json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -633,7 +633,7 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 500 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -643,7 +643,7 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -764,7 +764,7 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 500 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -774,7 +774,7 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -895,7 +895,7 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 500 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -905,7 +905,7 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v Error
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1206,6 +1206,331 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiReferencesByContentHashRequest struct {
+	ctx context.Context
+	ApiService *ArtifactsApiService
+	contentHash string
+}
+
+
+func (r ApiReferencesByContentHashRequest) Execute() ([]ArtifactReference, *http.Response, error) {
+	return r.ApiService.ReferencesByContentHashExecute(r)
+}
+
+/*
+ReferencesByContentHash Returns a list with all the references for the artifact with the given hash
+
+Returns a list containing all the artifact references using the artifact content hash.
+
+This operation may fail for one of the following reasons:
+
+* A server error occurred (HTTP error `500`)
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param contentHash SHA-256 content hash for a single artifact content.
+ @return ApiReferencesByContentHashRequest
+*/
+func (a *ArtifactsApiService) ReferencesByContentHash(ctx context.Context, contentHash string) ApiReferencesByContentHashRequest {
+	return ApiReferencesByContentHashRequest{
+		ApiService: a,
+		ctx: ctx,
+		contentHash: contentHash,
+	}
+}
+
+// Execute executes the request
+//  @return []ArtifactReference
+func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByContentHashRequest) ([]ArtifactReference, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ArtifactReference
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByContentHash")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/ids/contentHashes/{contentHash}/references"
+	localVarPath = strings.Replace(localVarPath, "{"+"contentHash"+"}", url.PathEscape(parameterToString(r.contentHash, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiReferencesByContentIdRequest struct {
+	ctx context.Context
+	ApiService *ArtifactsApiService
+	contentId int64
+}
+
+
+func (r ApiReferencesByContentIdRequest) Execute() ([]ArtifactReference, *http.Response, error) {
+	return r.ApiService.ReferencesByContentIdExecute(r)
+}
+
+/*
+ReferencesByContentId Returns a list with all the references for the artifact with the given content id.
+
+Returns a list containing all the artifact references using the artifact contentId.
+
+This operation may fail for one of the following reasons:
+
+* A server error occurred (HTTP error `500`)
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param contentId Global identifier for a single artifact content.
+ @return ApiReferencesByContentIdRequest
+*/
+func (a *ArtifactsApiService) ReferencesByContentId(ctx context.Context, contentId int64) ApiReferencesByContentIdRequest {
+	return ApiReferencesByContentIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		contentId: contentId,
+	}
+}
+
+// Execute executes the request
+//  @return []ArtifactReference
+func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByContentIdRequest) ([]ArtifactReference, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ArtifactReference
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByContentId")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/ids/contentIds/{contentId}/references"
+	localVarPath = strings.Replace(localVarPath, "{"+"contentId"+"}", url.PathEscape(parameterToString(r.contentId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiReferencesByGlobalIdRequest struct {
+	ctx context.Context
+	ApiService *ArtifactsApiService
+	globalId int64
+}
+
+
+func (r ApiReferencesByGlobalIdRequest) Execute() ([]ArtifactReference, *http.Response, error) {
+	return r.ApiService.ReferencesByGlobalIdExecute(r)
+}
+
+/*
+ReferencesByGlobalId Returns a list with all the references for the artifact with the given global id.
+
+Returns a list containing all the artifact references using the artifact global id.
+
+This operation may fail for one of the following reasons:
+
+* A server error occurred (HTTP error `500`)
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param globalId Global identifier for an artifact version.
+ @return ApiReferencesByGlobalIdRequest
+*/
+func (a *ArtifactsApiService) ReferencesByGlobalId(ctx context.Context, globalId int64) ApiReferencesByGlobalIdRequest {
+	return ApiReferencesByGlobalIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		globalId: globalId,
+	}
+}
+
+// Execute executes the request
+//  @return []ArtifactReference
+func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGlobalIdRequest) ([]ArtifactReference, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ArtifactReference
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByGlobalId")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/ids/globalIds/{globalId}/references"
+	localVarPath = strings.Replace(localVarPath, "{"+"globalId"+"}", url.PathEscape(parameterToString(r.globalId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1674,8 +1999,9 @@ func (r ApiUpdateArtifactRequest) Execute() (*ArtifactMetaData, *http.Response, 
 /*
 UpdateArtifact Update artifact
 
-Updates an artifact by uploading new content.  The body of the request should
-be the raw content of the artifact.  This is typically in JSON format for *most*
+Updates an artifact by uploading new content.  The body of the request can
+be the raw content of the artifact or a JSON object containing both the raw content and
+a set of references to other artifacts..  This is typically in JSON format for *most*
 of the supported types, but may be in another format for a few (for example, `PROTOBUF`).
 The type of the content should be compatible with the artifact's type (it would be
 an error to update an `AVRO` artifact with new `OPENAPI` content, for example).
@@ -1731,7 +2057,7 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/create.extended+json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)

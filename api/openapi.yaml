@@ -24,7 +24,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   title: Apicurio Registry API [v2]
-  version: 2.2.2-SNAPSHOT
+  version: 2.2.3.Final
 servers:
 - url: /
 tags:
@@ -102,18 +102,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileContent'
           description: The content of one version of one artifact.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
         "404":
           content:
             application/json:
@@ -126,6 +114,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Common response for all operations that can return a `404`
             error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
       summary: Get artifact content by ID
       tags:
       - Artifacts
@@ -176,18 +176,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileContent'
           description: The content of one version of one artifact.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
         "404":
           content:
             application/json:
@@ -200,6 +188,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Common response for all operations that can return a `404`
             error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
       summary: Get artifact by global ID
       tags:
       - Artifacts
@@ -238,18 +238,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileContent'
           description: The content of one version of one artifact.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
         "404":
           content:
             application/json:
@@ -262,6 +250,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Common response for all operations that can return a `404`
             error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
       summary: Get artifact content by SHA-256 hash
       tags:
       - Artifacts
@@ -1638,6 +1638,20 @@ paths:
           type: boolean
         style: form
       responses:
+        "200":
+          content:
+            '*/*':
+              examples:
+                OpenAPI:
+                  value:
+                    openapi: 3.0.2
+                    info:
+                      title: Empty API
+                      version: 1.0.0
+                      description: An example API design using OpenAPI.
+              schema:
+                $ref: '#/components/schemas/FileContent'
+          description: The content of one version of one artifact.
         "404":
           content:
             application/json:
@@ -1662,20 +1676,6 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Common response for all operations that can fail with an unexpected
             server error.
-        "200":
-          content:
-            '*/*':
-              examples:
-                OpenAPI:
-                  value:
-                    openapi: 3.0.2
-                    info:
-                      title: Empty API
-                      version: 1.0.0
-                      description: An example API design using OpenAPI.
-              schema:
-                $ref: '#/components/schemas/FileContent'
-          description: The content of one version of one artifact.
       summary: Get artifact version
       tags:
       - Versions
@@ -2578,6 +2578,9 @@ paths:
                           property-2: true
             schema:
               $ref: '#/components/schemas/FileContent'
+          application/create.extended+json:
+            schema:
+              $ref: '#/components/schemas/ContentCreateRequest'
         description: |
           The content of the artifact being created. This is often, but not always, JSON data
           representing one of the supported artifact types:
@@ -2777,8 +2780,9 @@ paths:
       - Artifacts
     put:
       description: |-
-        Updates an artifact by uploading new content.  The body of the request should
-        be the raw content of the artifact.  This is typically in JSON format for *most*
+        Updates an artifact by uploading new content.  The body of the request can
+        be the raw content of the artifact or a JSON object containing both the raw content and
+        a set of references to other artifacts..  This is typically in JSON format for *most*
         of the supported types, but may be in another format for a few (for example, `PROTOBUF`).
         The type of the content should be compatible with the artifact's type (it would be
         an error to update an `AVRO` artifact with new `OPENAPI` content, for example).
@@ -2904,6 +2908,9 @@ paths:
                           property-2: true
             schema:
               $ref: '#/components/schemas/FileContent'
+          application/create.extended+json:
+            schema:
+              $ref: '#/components/schemas/ContentCreateRequest'
         description: |
           The new content of the artifact being updated. This is often, but not always, JSON data
           representing one of the supported artifact types:
@@ -3057,14 +3064,15 @@ paths:
         \  The configured rules for\nthe artifact are applied, and if they all pass,\
         \ the new content is added as the most recent \nversion of the artifact. \
         \ If any of the rules fail, an error is returned.\n\nThe body of the request\
-        \ should be the raw content of the new artifact version, and the type\nof\
-        \ that content should match the artifact's type (for example if the artifact\
-        \ type is `AVRO`\nthen the content of the request should be an Apache Avro\
-        \ document).\n\nThis operation can fail for the following reasons:\n\n* Provided\
-        \ content (request body) was empty (HTTP error `400`)\n* No artifact with\
-        \ this `artifactId` exists (HTTP error `404`)\n* The new content violates\
-        \ one of the rules configured for the artifact (HTTP error `409`)\n* A server\
-        \ error occurred (HTTP error `500`)\n"
+        \ can be the raw content of the new artifact version, or the raw content \n\
+        and a set of references pointing to other artifacts, and the type\nof that\
+        \ content should match the artifact's type (for example if the artifact type\
+        \ is `AVRO`\nthen the content of the request should be an Apache Avro document).\n\
+        \nThis operation can fail for the following reasons:\n\n* Provided content\
+        \ (request body) was empty (HTTP error `400`)\n* No artifact with this `artifactId`\
+        \ exists (HTTP error `404`)\n* The new content violates one of the rules configured\
+        \ for the artifact (HTTP error `409`)\n* A server error occurred (HTTP error\
+        \ `500`)\n"
       operationId: createArtifactVersion
       parameters:
       - description: The artifact group ID.  Must be a string provided by the client,
@@ -3177,8 +3185,11 @@ paths:
                           property-2: true
             schema:
               $ref: '#/components/schemas/FileContent'
+          application/create.extended+json:
+            schema:
+              $ref: '#/components/schemas/ContentCreateRequest'
         description: |
-          The content of the artifact version being created. This is often, but not always, JSON data
+          The content of the artifact version being created or the content and a set of references to other artifacts. This is often, but not always, JSON data
           representing one of the supported artifact types:
 
           * Avro (`AVRO`)
@@ -3506,10 +3517,13 @@ paths:
         * A server error occurred (HTTP error `500`)
       operationId: referencesByContentHash
       parameters:
-      - explode: false
+      - description: SHA-256 content hash for a single artifact content.
+        explode: false
         in: path
         name: contentHash
         required: true
+        schema:
+          type: string
         style: simple
       responses:
         "200":
@@ -3523,6 +3537,8 @@ paths:
             the given content hash.
       summary: Returns a list with all the references for the artifact with the given
         hash
+      tags:
+      - Artifacts
   /ids/contentIds/{contentId}/references:
     get:
       description: |-
@@ -3533,10 +3549,14 @@ paths:
         * A server error occurred (HTTP error `500`)
       operationId: referencesByContentId
       parameters:
-      - explode: false
+      - description: Global identifier for a single artifact content.
+        explode: false
         in: path
         name: contentId
         required: true
+        schema:
+          format: int64
+          type: integer
         style: simple
       responses:
         "200":
@@ -3550,6 +3570,8 @@ paths:
             the given content id.
       summary: Returns a list with all the references for the artifact with the given
         content id.
+      tags:
+      - Artifacts
   /ids/globalIds/{globalId}/references:
     get:
       description: |-
@@ -3560,10 +3582,14 @@ paths:
         * A server error occurred (HTTP error `500`)
       operationId: referencesByGlobalId
       parameters:
-      - explode: false
+      - description: Global identifier for an artifact version.
+        explode: false
         in: path
         name: globalId
         required: true
+        schema:
+          format: int64
+          type: integer
         style: simple
       responses:
         "200":
@@ -3577,6 +3603,8 @@ paths:
             the given global id.
       summary: Returns a list with all the references for the artifact with the given
         global id.
+      tags:
+      - Artifacts
   /groups/{groupId}/artifacts/{artifactId}/versions/{version}/references:
     get:
       description: "Retrieves a single version of the artifact content.  Both the\
@@ -3616,6 +3644,14 @@ paths:
           $ref: '#/components/schemas/Version'
         style: simple
       responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ArtifactReference'
+                type: array
+          description: List of all the artifact references for this artifact.
         "404":
           content:
             application/json:
@@ -3640,14 +3676,6 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Common response for all operations that can fail with an unexpected
             server error.
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/ArtifactReference'
-                type: array
-          description: List of all the artifact references for this artifact.
       summary: Get artifact version
       tags:
       - Versions
@@ -3762,18 +3790,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ConfigurationProperty'
           description: The configuration property value.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
         "404":
           content:
             application/json:
@@ -3786,6 +3802,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Common response for all operations that can return a `404`
             error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
       summary: Get the value of a configuration property
       tags:
       - Admin
@@ -3816,18 +3844,6 @@ paths:
       responses:
         "204":
           description: The configuration property was updated.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
         "404":
           content:
             application/json:
@@ -3840,10 +3856,50 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Common response for all operations that can return a `404`
             error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
       summary: Update a configuration property
       tags:
       - Admin
     summary: Manage a single configuration property (by name).
+  /system/limits:
+    get:
+      description: This operation retrieves the list of limitations on used resources,
+        that are applied on the current instance of Registry.
+      operationId: getResourceLimits
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Limits'
+          description: On success, returns resource limits
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+      summary: Get resource limits information
+      tags:
+      - System
+    summary: Retrieve resource limits information
 components:
   responses:
     NotFound:
@@ -4691,6 +4747,63 @@ components:
       required:
       - value
       title: Root Type for UpdateConfigurationProperty
+      type: object
+    Limits:
+      description: |-
+        List of limitations on used resources, that are applied on the current instance of Registry.
+        Keys represent the resource type and are suffixed by the corresponding unit.
+        Values are integers. Only non-negative values are allowed, with the exception of -1, which means that the limit is not applied.
+      example:
+        maxTotalSchemasCount: -1
+        maxSchemaSizeBytes: -1
+        maxArtifactsCount: -1
+        maxVersionsPerArtifactCount: -1
+        maxArtifactPropertiesCount: -1
+        maxPropertyKeySizeBytes: -1
+        maxPropertyValueSizeBytes: -1
+        maxArtifactLabelsCount: -1
+        maxLabelSizeBytes: -1
+        maxArtifactNameLengthChars: -1
+        maxArtifactDescriptionLengthChars: -1
+        maxRequestsPerSecondCount: -1
+      properties:
+        maxTotalSchemasCount:
+          format: int64
+          type: integer
+        maxSchemaSizeBytes:
+          format: int64
+          type: integer
+        maxArtifactsCount:
+          format: int64
+          type: integer
+        maxVersionsPerArtifactCount:
+          format: int64
+          type: integer
+        maxArtifactPropertiesCount:
+          format: int64
+          type: integer
+        maxPropertyKeySizeBytes:
+          format: int64
+          type: integer
+        maxPropertyValueSizeBytes:
+          format: int64
+          type: integer
+        maxArtifactLabelsCount:
+          format: int64
+          type: integer
+        maxLabelSizeBytes:
+          format: int64
+          type: integer
+        maxArtifactNameLengthChars:
+          format: int64
+          type: integer
+        maxArtifactDescriptionLengthChars:
+          format: int64
+          type: integer
+        maxRequestsPerSecondCount:
+          format: int64
+          type: integer
+      title: Root Type for Limits
       type: object
     NamedLogConfiguration_allOf:
       properties:
