@@ -3,7 +3,6 @@ api/openapi.yaml
 api_admin.go
 api_artifact_rules.go
 api_artifacts.go
-api_default.go
 api_metadata.go
 api_system.go
 api_users.go
@@ -20,11 +19,11 @@ docs/ArtifactType.md
 docs/ArtifactsApi.md
 docs/ConfigurationProperty.md
 docs/ContentCreateRequest.md
-docs/DefaultApi.md
 docs/DownloadRef.md
 docs/EditableMetaData.md
 docs/Error.md
 docs/IfExists.md
+docs/Limits.md
 docs/LogConfiguration.md
 docs/LogLevel.md
 docs/MetadataApi.md
@@ -63,6 +62,7 @@ model_download_ref.go
 model_editable_meta_data.go
 model_error.go
 model_if_exists.go
+model_limits.go
 model_log_configuration.go
 model_log_level.go
 model_named_log_configuration.go
