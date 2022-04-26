@@ -18,7 +18,7 @@ jobs:
         run: ./hack/scripts/preprocess-schema.sh
       - name: Delete old generated code
         run: |
-          rm -f *.go docs
+          rm -rf *.go docs
       - uses: craicoverflow/openapi-generator-action@v1
         with:
           generator: go
