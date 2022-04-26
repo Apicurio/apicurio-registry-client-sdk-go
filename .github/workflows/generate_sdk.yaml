@@ -1,8 +1,8 @@
 name: Generate API clients
 
 on:
-  repository_dispatch:
-    types: [on-oas-updated]
+  push:
+    branches: [testbranch]
 
 jobs:
   generate_go:
@@ -10,41 +10,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Download OpenAPI schema document
-        run: | 
-          mkdir tmp
-          curl https://raw.githubusercontent.com/Apicurio/apicurio-registry/master/${{ github.event.client_payload.openapi_file_path }} > tmp/input-schema.json
-      - name: Modify input schema
-        run: ./hack/scripts/preprocess-schema.sh
-      - name: Delete old generated code
-        run: |
-          rm -rf *.go docs
-      - uses: craicoverflow/openapi-generator-action@v1
-        with:
-          generator: go
-          input: tmp/input-schema.json
-          git-repo-id: apicurio-registry-client-sdk-go
-          git-user-id: Apicurio
-          package-name: registryclient
-          template: .github/templates
-      - name: Clean up temporary files
-        run: rm -r tmp
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            generated:
-              - '**'
+    #   - name: Download OpenAPI schema document
+    #     run: | 
+    #       mkdir tmp
+    #       curl https://raw.githubusercontent.com/Apicurio/apicurio-registry/master/${{ github.event.client_payload.openapi_file_path }} > tmp/input-schema.json
+    #   - name: Modify input schema
+    #     run: ./hack/scripts/preprocess-schema.sh
+    #   - name: Delete old generated code
+    #     run: |
+    #       rm -f *.go docs
+    #   - uses: craicoverflow/openapi-generator-action@v1
+    #     with:
+    #       generator: go
+    #       input: tmp/input-schema.json
+    #       git-repo-id: apicurio-registry-client-sdk-go
+    #       git-user-id: Apicurio
+    #       package-name: registryclient
+    #       template: .github/templates
+    #   - name: Clean up temporary files
+    #     run: rm -r tmp
+    #   - uses: dorny/paths-filter@v2
+    #     id: changes
+    #     with:
+    #       filters: |
+    #         generated:
+    #           - '**'
 
+      - name: jdfj
+        run: touch test.txt
       - name: Create Pull Request
-        if: steps.changes.outputs.generated == 'true'
+        # if: steps.changes.outputs.generated == 'true'
         uses: peter-evans/create-pull-request@v3
         with:
           delete-branch: true
           branch-suffix: short-commit-hash
           branch: generate-sdk
           title: "[generated] Update API client"
-          team-reviewers: '@Apicurio/developers'
+          team-reviewers: 'developers'
           commit-message: "chore: update API client"
           body: |
             Automated update of the Apicurio Registry SDK
