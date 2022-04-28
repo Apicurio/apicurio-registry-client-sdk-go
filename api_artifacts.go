@@ -239,7 +239,7 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 		localVarHeaderParams["X-Registry-Name-Encoded"] = parameterToString(*r.xRegistryNameEncoded, "")
 	}
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = *r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
