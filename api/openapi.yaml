@@ -24,7 +24,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   title: Apicurio Registry API [v2]
-  version: 2.2.4-SNAPSHOT
+  version: 2.2.4-RC1
 servers:
 - url: /
 tags:
