@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.2.5.Final
 Contact: apicurio@lists.jboss.org
 */
 
@@ -15,7 +15,7 @@ import (
 	"encoding/json"
 )
 
-// VersionMetaData struct for VersionMetaData
+// VersionMetaData 
 type VersionMetaData struct {
 	Version string `json:"version"`
 	Name *string `json:"name,omitempty"`
@@ -23,15 +23,18 @@ type VersionMetaData struct {
 	CreatedBy string `json:"createdBy"`
 	CreatedOn string `json:"createdOn"`
 	Type ArtifactType `json:"type"`
+	// 
 	GlobalId int64 `json:"globalId"`
 	State *ArtifactState `json:"state,omitempty"`
 	// The ID of a single artifact.
 	Id string `json:"id"`
+	// 
 	Labels []string `json:"labels,omitempty"`
 	// User-defined name-value pairs. Name and value must be strings.
 	Properties *map[string]string `json:"properties,omitempty"`
 	// An ID of a single artifact group.
 	GroupId *string `json:"groupId,omitempty"`
+	// 
 	ContentId int64 `json:"contentId"`
 }
 
@@ -72,7 +75,7 @@ func (o *VersionMetaData) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Version, true
@@ -160,7 +163,7 @@ func (o *VersionMetaData) GetCreatedBy() string {
 // GetCreatedByOk returns a tuple with the CreatedBy field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetCreatedByOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.CreatedBy, true
@@ -184,7 +187,7 @@ func (o *VersionMetaData) GetCreatedOn() string {
 // GetCreatedOnOk returns a tuple with the CreatedOn field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetCreatedOnOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.CreatedOn, true
@@ -208,7 +211,7 @@ func (o *VersionMetaData) GetType() ArtifactType {
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetTypeOk() (*ArtifactType, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Type, true
@@ -232,7 +235,7 @@ func (o *VersionMetaData) GetGlobalId() int64 {
 // GetGlobalIdOk returns a tuple with the GlobalId field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetGlobalIdOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.GlobalId, true
@@ -288,7 +291,7 @@ func (o *VersionMetaData) GetId() string {
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetIdOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Id, true
@@ -408,7 +411,7 @@ func (o *VersionMetaData) GetContentId() int64 {
 // GetContentIdOk returns a tuple with the ContentId field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetContentIdOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.ContentId, true

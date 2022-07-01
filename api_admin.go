@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.2.5.Final
 Contact: apicurio@lists.jboss.org
 */
 
@@ -21,10 +21,6 @@ import (
 	"os"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
 
 // AdminApiService AdminApi service
 type AdminApiService service
@@ -283,7 +279,6 @@ type ApiDeleteAllGlobalRulesRequest struct {
 	ApiService *AdminApiService
 }
 
-
 func (r ApiDeleteAllGlobalRulesRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteAllGlobalRulesExecute(r)
 }
@@ -386,7 +381,6 @@ type ApiDeleteGlobalRuleRequest struct {
 	ApiService *AdminApiService
 	rule RuleType
 }
-
 
 func (r ApiDeleteGlobalRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteGlobalRuleExecute(r)
@@ -507,7 +501,6 @@ type ApiDeleteRoleMappingRequest struct {
 	ApiService *AdminApiService
 	principalId string
 }
-
 
 func (r ApiDeleteRoleMappingRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteRoleMappingExecute(r)
@@ -744,7 +737,6 @@ type ApiGetConfigPropertyRequest struct {
 	propertyName string
 }
 
-
 func (r ApiGetConfigPropertyRequest) Execute() (*ConfigurationProperty, *http.Response, error) {
 	return r.ApiService.GetConfigPropertyExecute(r)
 }
@@ -872,7 +864,6 @@ type ApiGetGlobalRuleConfigRequest struct {
 	ApiService *AdminApiService
 	rule RuleType
 }
-
 
 func (r ApiGetGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
 	return r.ApiService.GetGlobalRuleConfigExecute(r)
@@ -1003,7 +994,6 @@ type ApiGetLogConfigurationRequest struct {
 	logger string
 }
 
-
 func (r ApiGetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.GetLogConfigurationExecute(r)
 }
@@ -1115,7 +1105,6 @@ type ApiGetRoleMappingRequest struct {
 	ApiService *AdminApiService
 	principalId string
 }
-
 
 func (r ApiGetRoleMappingRequest) Execute() (*RoleMapping, *http.Response, error) {
 	return r.ApiService.GetRoleMappingExecute(r)
@@ -1252,11 +1241,13 @@ func (r ApiImportDataRequest) Body(body *os.File) ApiImportDataRequest {
 	r.body = &body
 	return r
 }
+
 // If this header is set to false, global ids of imported data will be ignored and replaced by next id in global id sequence. This allows to import any data even thought the global ids would cause a conflict.
 func (r ApiImportDataRequest) XRegistryPreserveGlobalId(xRegistryPreserveGlobalId bool) ApiImportDataRequest {
 	r.xRegistryPreserveGlobalId = &xRegistryPreserveGlobalId
 	return r
 }
+
 // If this header is set to false, content ids of imported data will be ignored and replaced by next id in content id sequence. The mapping between content and artifacts will be preserved. This allows to import any data even thought the content ids would cause a conflict.
 func (r ApiImportDataRequest) XRegistryPreserveContentId(xRegistryPreserveContentId bool) ApiImportDataRequest {
 	r.xRegistryPreserveContentId = &xRegistryPreserveContentId
@@ -1371,7 +1362,6 @@ type ApiListConfigPropertiesRequest struct {
 	ApiService *AdminApiService
 }
 
-
 func (r ApiListConfigPropertiesRequest) Execute() ([]ConfigurationProperty, *http.Response, error) {
 	return r.ApiService.ListConfigPropertiesExecute(r)
 }
@@ -1484,7 +1474,6 @@ type ApiListGlobalRulesRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
-
 
 func (r ApiListGlobalRulesRequest) Execute() ([]RuleType, *http.Response, error) {
 	return r.ApiService.ListGlobalRulesExecute(r)
@@ -1599,7 +1588,6 @@ type ApiListLogConfigurationsRequest struct {
 	ApiService *AdminApiService
 }
 
-
 func (r ApiListLogConfigurationsRequest) Execute() ([]NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.ListLogConfigurationsExecute(r)
 }
@@ -1708,7 +1696,6 @@ type ApiListRoleMappingsRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
-
 
 func (r ApiListRoleMappingsRequest) Execute() ([]RoleMapping, *http.Response, error) {
 	return r.ApiService.ListRoleMappingsExecute(r)
@@ -1824,7 +1811,6 @@ type ApiRemoveLogConfigurationRequest struct {
 	logger string
 }
 
-
 func (r ApiRemoveLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.RemoveLogConfigurationExecute(r)
 }
@@ -1936,7 +1922,6 @@ type ApiResetConfigPropertyRequest struct {
 	ApiService *AdminApiService
 	propertyName string
 }
-
 
 func (r ApiResetConfigPropertyRequest) Execute() (*http.Response, error) {
 	return r.ApiService.ResetConfigPropertyExecute(r)
