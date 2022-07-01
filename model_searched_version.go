@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.2.5.Final
 Contact: apicurio@lists.jboss.org
 */
 
@@ -17,18 +17,27 @@ import (
 
 // SearchedVersion Models a single artifact from the result set returned when searching for artifacts.
 type SearchedVersion struct {
+	// 
 	Name *string `json:"name,omitempty"`
+	// 
 	Description *string `json:"description,omitempty"`
+	// 
 	CreatedOn string `json:"createdOn"`
+	// 
 	CreatedBy string `json:"createdBy"`
 	Type ArtifactType `json:"type"`
+	// 
 	Labels []string `json:"labels,omitempty"`
 	State ArtifactState `json:"state"`
+	// 
 	GlobalId int64 `json:"globalId"`
+	// 
 	Version string `json:"version"`
 	// User-defined name-value pairs. Name and value must be strings.
 	Properties *map[string]string `json:"properties,omitempty"`
+	// 
 	ContentId int64 `json:"contentId"`
+	// 
 	References []ArtifactReference `json:"references"`
 }
 
@@ -134,7 +143,7 @@ func (o *SearchedVersion) GetCreatedOn() string {
 // GetCreatedOnOk returns a tuple with the CreatedOn field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetCreatedOnOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.CreatedOn, true
@@ -158,7 +167,7 @@ func (o *SearchedVersion) GetCreatedBy() string {
 // GetCreatedByOk returns a tuple with the CreatedBy field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetCreatedByOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.CreatedBy, true
@@ -182,7 +191,7 @@ func (o *SearchedVersion) GetType() ArtifactType {
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetTypeOk() (*ArtifactType, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Type, true
@@ -238,7 +247,7 @@ func (o *SearchedVersion) GetState() ArtifactState {
 // GetStateOk returns a tuple with the State field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetStateOk() (*ArtifactState, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.State, true
@@ -262,7 +271,7 @@ func (o *SearchedVersion) GetGlobalId() int64 {
 // GetGlobalIdOk returns a tuple with the GlobalId field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetGlobalIdOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.GlobalId, true
@@ -286,7 +295,7 @@ func (o *SearchedVersion) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetVersionOk() (*string, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.Version, true
@@ -342,7 +351,7 @@ func (o *SearchedVersion) GetContentId() int64 {
 // GetContentIdOk returns a tuple with the ContentId field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetContentIdOk() (*int64, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return &o.ContentId, true
@@ -366,7 +375,7 @@ func (o *SearchedVersion) GetReferences() []ArtifactReference {
 // GetReferencesOk returns a tuple with the References field value
 // and a boolean to check if the value has been set.
 func (o *SearchedVersion) GetReferencesOk() ([]ArtifactReference, bool) {
-	if o == nil  {
+	if o == nil {
 		return nil, false
 	}
 	return o.References, true
