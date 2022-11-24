@@ -10,11 +10,12 @@ Method | HTTP request | Description
 [**DeleteGlobalRule**](AdminApi.md#DeleteGlobalRule) | **Delete** /admin/rules/{rule} | Delete global rule
 [**DeleteRoleMapping**](AdminApi.md#DeleteRoleMapping) | **Delete** /admin/roleMappings/{principalId} | Delete a role mapping
 [**ExportData**](AdminApi.md#ExportData) | **Get** /admin/export | Export registry data
-[**GetConfigProperty**](AdminApi.md#GetConfigProperty) | **Get** /admin/config/properties/{propertyName} | Get the value of a configuration property
+[**GetConfigProperty**](AdminApi.md#GetConfigProperty) | **Get** /admin/config/properties/{propertyName} | Get configuration property value
 [**GetGlobalRuleConfig**](AdminApi.md#GetGlobalRuleConfig) | **Get** /admin/rules/{rule} | Get global rule configuration
 [**GetLogConfiguration**](AdminApi.md#GetLogConfiguration) | **Get** /admin/loggers/{logger} | Get a single logger configuration
 [**GetRoleMapping**](AdminApi.md#GetRoleMapping) | **Get** /admin/roleMappings/{principalId} | Return a single role mapping
 [**ImportData**](AdminApi.md#ImportData) | **Post** /admin/import | Import registry data
+[**ListArtifactTypes**](AdminApi.md#ListArtifactTypes) | **Get** /admin/artifactTypes | List artifact types
 [**ListConfigProperties**](AdminApi.md#ListConfigProperties) | **Get** /admin/config/properties | List all configuration properties
 [**ListGlobalRules**](AdminApi.md#ListGlobalRules) | **Get** /admin/rules | List global rules
 [**ListLogConfigurations**](AdminApi.md#ListLogConfigurations) | **Get** /admin/loggers | List logging configurations
@@ -421,7 +422,7 @@ No authorization required
 
 > ConfigurationProperty GetConfigProperty(ctx, propertyName).Execute()
 
-Get the value of a configuration property
+Get configuration property value
 
 
 
@@ -758,6 +759,67 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/zip
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListArtifactTypes
+
+> []ArtifactTypeInfo ListArtifactTypes(ctx).Execute()
+
+List artifact types
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.AdminApi.ListArtifactTypes(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ListArtifactTypes``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ListArtifactTypes`: []ArtifactTypeInfo
+    fmt.Fprintf(os.Stdout, "Response from `AdminApi.ListArtifactTypes`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListArtifactTypesRequest struct via the builder pattern
+
+
+### Return type
+
+[**[]ArtifactTypeInfo**](ArtifactTypeInfo.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

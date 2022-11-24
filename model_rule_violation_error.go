@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.3.2-SNAPSHOT
 Contact: apicurio@lists.jboss.org
 */
 
@@ -60,8 +60,8 @@ func (o *RuleViolationError) GetCauses() []RuleViolationCause {
 // GetCausesOk returns a tuple with the Causes field value
 // and a boolean to check if the value has been set.
 func (o *RuleViolationError) GetCausesOk() ([]RuleViolationCause, bool) {
-	if o == nil  {
-		return nil, false
+	if o == nil {
+    return nil, false
 	}
 	return o.Causes, true
 }
@@ -73,7 +73,7 @@ func (o *RuleViolationError) SetCauses(v []RuleViolationCause) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *RuleViolationError) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || isNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -83,15 +83,15 @@ func (o *RuleViolationError) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RuleViolationError) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
-		return nil, false
+	if o == nil || isNil(o.Message) {
+    return nil, false
 	}
 	return o.Message, true
 }
 
 // HasMessage returns a boolean if a field has been set.
 func (o *RuleViolationError) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !isNil(o.Message) {
 		return true
 	}
 
@@ -105,7 +105,7 @@ func (o *RuleViolationError) SetMessage(v string) {
 
 // GetErrorCode returns the ErrorCode field value if set, zero value otherwise.
 func (o *RuleViolationError) GetErrorCode() int32 {
-	if o == nil || o.ErrorCode == nil {
+	if o == nil || isNil(o.ErrorCode) {
 		var ret int32
 		return ret
 	}
@@ -115,15 +115,15 @@ func (o *RuleViolationError) GetErrorCode() int32 {
 // GetErrorCodeOk returns a tuple with the ErrorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RuleViolationError) GetErrorCodeOk() (*int32, bool) {
-	if o == nil || o.ErrorCode == nil {
-		return nil, false
+	if o == nil || isNil(o.ErrorCode) {
+    return nil, false
 	}
 	return o.ErrorCode, true
 }
 
 // HasErrorCode returns a boolean if a field has been set.
 func (o *RuleViolationError) HasErrorCode() bool {
-	if o != nil && o.ErrorCode != nil {
+	if o != nil && !isNil(o.ErrorCode) {
 		return true
 	}
 
@@ -137,7 +137,7 @@ func (o *RuleViolationError) SetErrorCode(v int32) {
 
 // GetDetail returns the Detail field value if set, zero value otherwise.
 func (o *RuleViolationError) GetDetail() string {
-	if o == nil || o.Detail == nil {
+	if o == nil || isNil(o.Detail) {
 		var ret string
 		return ret
 	}
@@ -147,15 +147,15 @@ func (o *RuleViolationError) GetDetail() string {
 // GetDetailOk returns a tuple with the Detail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RuleViolationError) GetDetailOk() (*string, bool) {
-	if o == nil || o.Detail == nil {
-		return nil, false
+	if o == nil || isNil(o.Detail) {
+    return nil, false
 	}
 	return o.Detail, true
 }
 
 // HasDetail returns a boolean if a field has been set.
 func (o *RuleViolationError) HasDetail() bool {
-	if o != nil && o.Detail != nil {
+	if o != nil && !isNil(o.Detail) {
 		return true
 	}
 
@@ -169,7 +169,7 @@ func (o *RuleViolationError) SetDetail(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *RuleViolationError) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || isNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -179,15 +179,15 @@ func (o *RuleViolationError) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RuleViolationError) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
-		return nil, false
+	if o == nil || isNil(o.Name) {
+    return nil, false
 	}
 	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
 func (o *RuleViolationError) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !isNil(o.Name) {
 		return true
 	}
 
@@ -204,16 +204,16 @@ func (o RuleViolationError) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["causes"] = o.Causes
 	}
-	if o.Message != nil {
+	if !isNil(o.Message) {
 		toSerialize["message"] = o.Message
 	}
-	if o.ErrorCode != nil {
+	if !isNil(o.ErrorCode) {
 		toSerialize["error_code"] = o.ErrorCode
 	}
-	if o.Detail != nil {
+	if !isNil(o.Detail) {
 		toSerialize["detail"] = o.Detail
 	}
-	if o.Name != nil {
+	if !isNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
 	return json.Marshal(toSerialize)

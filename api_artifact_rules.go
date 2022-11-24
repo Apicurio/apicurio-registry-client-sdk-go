@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.3.2-SNAPSHOT
 Contact: apicurio@lists.jboss.org
 */
 
@@ -20,10 +20,6 @@ import (
 	"strings"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
 
 // ArtifactRulesApiService ArtifactRulesApi service
 type ArtifactRulesApiService service
@@ -143,7 +139,8 @@ func (a *ArtifactRulesApiService) CreateArtifactRuleExecute(r ApiCreateArtifactR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -153,7 +150,8 @@ func (a *ArtifactRulesApiService) CreateArtifactRuleExecute(r ApiCreateArtifactR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -163,7 +161,8 @@ func (a *ArtifactRulesApiService) CreateArtifactRuleExecute(r ApiCreateArtifactR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -178,7 +177,6 @@ type ApiDeleteArtifactRuleRequest struct {
 	artifactId string
 	rule string
 }
-
 
 func (r ApiDeleteArtifactRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteArtifactRuleExecute(r)
@@ -283,7 +281,8 @@ func (a *ArtifactRulesApiService) DeleteArtifactRuleExecute(r ApiDeleteArtifactR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -293,7 +292,8 @@ func (a *ArtifactRulesApiService) DeleteArtifactRuleExecute(r ApiDeleteArtifactR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -307,7 +307,6 @@ type ApiDeleteArtifactRulesRequest struct {
 	groupId string
 	artifactId string
 }
-
 
 func (r ApiDeleteArtifactRulesRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteArtifactRulesExecute(r)
@@ -405,7 +404,8 @@ func (a *ArtifactRulesApiService) DeleteArtifactRulesExecute(r ApiDeleteArtifact
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -415,7 +415,8 @@ func (a *ArtifactRulesApiService) DeleteArtifactRulesExecute(r ApiDeleteArtifact
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -430,7 +431,6 @@ type ApiGetArtifactRuleConfigRequest struct {
 	artifactId string
 	rule string
 }
-
 
 func (r ApiGetArtifactRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
 	return r.ApiService.GetArtifactRuleConfigExecute(r)
@@ -535,7 +535,8 @@ func (a *ArtifactRulesApiService) GetArtifactRuleConfigExecute(r ApiGetArtifactR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -545,7 +546,8 @@ func (a *ArtifactRulesApiService) GetArtifactRuleConfigExecute(r ApiGetArtifactR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -568,7 +570,6 @@ type ApiListArtifactRulesRequest struct {
 	groupId string
 	artifactId string
 }
-
 
 func (r ApiListArtifactRulesRequest) Execute() ([]RuleType, *http.Response, error) {
 	return r.ApiService.ListArtifactRulesExecute(r)
@@ -670,7 +671,8 @@ func (a *ArtifactRulesApiService) ListArtifactRulesExecute(r ApiListArtifactRule
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -680,7 +682,8 @@ func (a *ArtifactRulesApiService) ListArtifactRulesExecute(r ApiListArtifactRule
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -825,7 +828,8 @@ func (a *ArtifactRulesApiService) TestUpdateArtifactExecute(r ApiTestUpdateArtif
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -835,7 +839,8 @@ func (a *ArtifactRulesApiService) TestUpdateArtifactExecute(r ApiTestUpdateArtif
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -845,7 +850,8 @@ func (a *ArtifactRulesApiService) TestUpdateArtifactExecute(r ApiTestUpdateArtif
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -977,7 +983,8 @@ func (a *ArtifactRulesApiService) UpdateArtifactRuleConfigExecute(r ApiUpdateArt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -987,7 +994,8 @@ func (a *ArtifactRulesApiService) UpdateArtifactRuleConfigExecute(r ApiUpdateArt
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

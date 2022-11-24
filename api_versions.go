@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.3.2-SNAPSHOT
 Contact: apicurio@lists.jboss.org
 */
 
@@ -21,10 +21,6 @@ import (
 	"os"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
 
 // VersionsApiService VersionsApi service
 type VersionsApiService service
@@ -47,26 +43,31 @@ func (r ApiCreateArtifactVersionRequest) Body(body interface{}) ApiCreateArtifac
 	r.body = &body
 	return r
 }
+
 // Specifies the version number of this new version of the artifact content.  This would typically be a simple integer or a SemVer value.  It must be unique within the artifact.  If this is not provided, the server will generate a new, unique version number for this new updated content.
 func (r ApiCreateArtifactVersionRequest) XRegistryVersion(xRegistryVersion string) ApiCreateArtifactVersionRequest {
 	r.xRegistryVersion = &xRegistryVersion
 	return r
 }
+
 // Specifies the artifact name of this new version of the artifact content. Name must be ASCII-only string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiCreateArtifactVersionRequest) XRegistryName(xRegistryName string) ApiCreateArtifactVersionRequest {
 	r.xRegistryName = &xRegistryName
 	return r
 }
+
 // Specifies the artifact description of this new version of the artifact content. Description must be ASCII-only string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiCreateArtifactVersionRequest) XRegistryDescription(xRegistryDescription string) ApiCreateArtifactVersionRequest {
 	r.xRegistryDescription = &xRegistryDescription
 	return r
 }
+
 // Specifies the artifact description of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiCreateArtifactVersionRequest) XRegistryDescriptionEncoded(xRegistryDescriptionEncoded string) ApiCreateArtifactVersionRequest {
 	r.xRegistryDescriptionEncoded = &xRegistryDescriptionEncoded
 	return r
 }
+
 // Specifies the artifact name of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiCreateArtifactVersionRequest) XRegistryNameEncoded(xRegistryNameEncoded string) ApiCreateArtifactVersionRequest {
 	r.xRegistryNameEncoded = &xRegistryNameEncoded
@@ -200,7 +201,8 @@ func (a *VersionsApiService) CreateArtifactVersionExecute(r ApiCreateArtifactVer
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -210,7 +212,8 @@ func (a *VersionsApiService) CreateArtifactVersionExecute(r ApiCreateArtifactVer
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -220,7 +223,8 @@ func (a *VersionsApiService) CreateArtifactVersionExecute(r ApiCreateArtifactVer
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -360,7 +364,8 @@ func (a *VersionsApiService) GetArtifactVersionExecute(r ApiGetArtifactVersionRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -370,7 +375,8 @@ func (a *VersionsApiService) GetArtifactVersionExecute(r ApiGetArtifactVersionRe
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -394,7 +400,6 @@ type ApiGetArtifactVersionReferencesRequest struct {
 	artifactId string
 	version string
 }
-
 
 func (r ApiGetArtifactVersionReferencesRequest) Execute() ([]ArtifactReference, *http.Response, error) {
 	return r.ApiService.GetArtifactVersionReferencesExecute(r)
@@ -501,7 +506,8 @@ func (a *VersionsApiService) GetArtifactVersionReferencesExecute(r ApiGetArtifac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -511,7 +517,8 @@ func (a *VersionsApiService) GetArtifactVersionReferencesExecute(r ApiGetArtifac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -542,6 +549,7 @@ func (r ApiListArtifactVersionsRequest) Offset(offset int32) ApiListArtifactVers
 	r.offset = &offset
 	return r
 }
+
 // The number of versions to return.  Defaults to 20.
 func (r ApiListArtifactVersionsRequest) Limit(limit int32) ApiListArtifactVersionsRequest {
 	r.limit = &limit
@@ -652,7 +660,8 @@ func (a *VersionsApiService) ListArtifactVersionsExecute(r ApiListArtifactVersio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -662,7 +671,8 @@ func (a *VersionsApiService) ListArtifactVersionsExecute(r ApiListArtifactVersio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -799,7 +809,8 @@ func (a *VersionsApiService) UpdateArtifactVersionStateExecute(r ApiUpdateArtifa
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -809,7 +820,8 @@ func (a *VersionsApiService) UpdateArtifactVersionStateExecute(r ApiUpdateArtifa
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -819,7 +831,8 @@ func (a *VersionsApiService) UpdateArtifactVersionStateExecute(r ApiUpdateArtifa
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}

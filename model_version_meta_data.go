@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.3.2-SNAPSHOT
 Contact: apicurio@lists.jboss.org
 */
 
@@ -15,23 +15,27 @@ import (
 	"encoding/json"
 )
 
-// VersionMetaData struct for VersionMetaData
+// VersionMetaData 
 type VersionMetaData struct {
 	Version string `json:"version"`
 	Name *string `json:"name,omitempty"`
 	Description *string `json:"description,omitempty"`
 	CreatedBy string `json:"createdBy"`
 	CreatedOn string `json:"createdOn"`
-	Type ArtifactType `json:"type"`
+	// 
+	Type string `json:"type"`
+	// 
 	GlobalId int64 `json:"globalId"`
 	State *ArtifactState `json:"state,omitempty"`
 	// The ID of a single artifact.
 	Id string `json:"id"`
+	// 
 	Labels []string `json:"labels,omitempty"`
 	// User-defined name-value pairs. Name and value must be strings.
 	Properties *map[string]string `json:"properties,omitempty"`
 	// An ID of a single artifact group.
 	GroupId *string `json:"groupId,omitempty"`
+	// 
 	ContentId int64 `json:"contentId"`
 }
 
@@ -39,7 +43,7 @@ type VersionMetaData struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewVersionMetaData(version string, createdBy string, createdOn string, type_ ArtifactType, globalId int64, id string, contentId int64) *VersionMetaData {
+func NewVersionMetaData(version string, createdBy string, createdOn string, type_ string, globalId int64, id string, contentId int64) *VersionMetaData {
 	this := VersionMetaData{}
 	this.Version = version
 	this.CreatedBy = createdBy
@@ -72,8 +76,8 @@ func (o *VersionMetaData) GetVersion() string {
 // GetVersionOk returns a tuple with the Version field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetVersionOk() (*string, bool) {
-	if o == nil  {
-		return nil, false
+	if o == nil {
+    return nil, false
 	}
 	return &o.Version, true
 }
@@ -85,7 +89,7 @@ func (o *VersionMetaData) SetVersion(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *VersionMetaData) GetName() string {
-	if o == nil || o.Name == nil {
+	if o == nil || isNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -95,15 +99,15 @@ func (o *VersionMetaData) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetNameOk() (*string, bool) {
-	if o == nil || o.Name == nil {
-		return nil, false
+	if o == nil || isNil(o.Name) {
+    return nil, false
 	}
 	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
 func (o *VersionMetaData) HasName() bool {
-	if o != nil && o.Name != nil {
+	if o != nil && !isNil(o.Name) {
 		return true
 	}
 
@@ -117,7 +121,7 @@ func (o *VersionMetaData) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *VersionMetaData) GetDescription() string {
-	if o == nil || o.Description == nil {
+	if o == nil || isNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -127,15 +131,15 @@ func (o *VersionMetaData) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
-		return nil, false
+	if o == nil || isNil(o.Description) {
+    return nil, false
 	}
 	return o.Description, true
 }
 
 // HasDescription returns a boolean if a field has been set.
 func (o *VersionMetaData) HasDescription() bool {
-	if o != nil && o.Description != nil {
+	if o != nil && !isNil(o.Description) {
 		return true
 	}
 
@@ -160,8 +164,8 @@ func (o *VersionMetaData) GetCreatedBy() string {
 // GetCreatedByOk returns a tuple with the CreatedBy field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetCreatedByOk() (*string, bool) {
-	if o == nil  {
-		return nil, false
+	if o == nil {
+    return nil, false
 	}
 	return &o.CreatedBy, true
 }
@@ -184,8 +188,8 @@ func (o *VersionMetaData) GetCreatedOn() string {
 // GetCreatedOnOk returns a tuple with the CreatedOn field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetCreatedOnOk() (*string, bool) {
-	if o == nil  {
-		return nil, false
+	if o == nil {
+    return nil, false
 	}
 	return &o.CreatedOn, true
 }
@@ -196,9 +200,9 @@ func (o *VersionMetaData) SetCreatedOn(v string) {
 }
 
 // GetType returns the Type field value
-func (o *VersionMetaData) GetType() ArtifactType {
+func (o *VersionMetaData) GetType() string {
 	if o == nil {
-		var ret ArtifactType
+		var ret string
 		return ret
 	}
 
@@ -207,15 +211,15 @@ func (o *VersionMetaData) GetType() ArtifactType {
 
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *VersionMetaData) GetTypeOk() (*ArtifactType, bool) {
-	if o == nil  {
-		return nil, false
+func (o *VersionMetaData) GetTypeOk() (*string, bool) {
+	if o == nil {
+    return nil, false
 	}
 	return &o.Type, true
 }
 
 // SetType sets field value
-func (o *VersionMetaData) SetType(v ArtifactType) {
+func (o *VersionMetaData) SetType(v string) {
 	o.Type = v
 }
 
@@ -232,8 +236,8 @@ func (o *VersionMetaData) GetGlobalId() int64 {
 // GetGlobalIdOk returns a tuple with the GlobalId field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetGlobalIdOk() (*int64, bool) {
-	if o == nil  {
-		return nil, false
+	if o == nil {
+    return nil, false
 	}
 	return &o.GlobalId, true
 }
@@ -245,7 +249,7 @@ func (o *VersionMetaData) SetGlobalId(v int64) {
 
 // GetState returns the State field value if set, zero value otherwise.
 func (o *VersionMetaData) GetState() ArtifactState {
-	if o == nil || o.State == nil {
+	if o == nil || isNil(o.State) {
 		var ret ArtifactState
 		return ret
 	}
@@ -255,15 +259,15 @@ func (o *VersionMetaData) GetState() ArtifactState {
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetStateOk() (*ArtifactState, bool) {
-	if o == nil || o.State == nil {
-		return nil, false
+	if o == nil || isNil(o.State) {
+    return nil, false
 	}
 	return o.State, true
 }
 
 // HasState returns a boolean if a field has been set.
 func (o *VersionMetaData) HasState() bool {
-	if o != nil && o.State != nil {
+	if o != nil && !isNil(o.State) {
 		return true
 	}
 
@@ -288,8 +292,8 @@ func (o *VersionMetaData) GetId() string {
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetIdOk() (*string, bool) {
-	if o == nil  {
-		return nil, false
+	if o == nil {
+    return nil, false
 	}
 	return &o.Id, true
 }
@@ -301,7 +305,7 @@ func (o *VersionMetaData) SetId(v string) {
 
 // GetLabels returns the Labels field value if set, zero value otherwise.
 func (o *VersionMetaData) GetLabels() []string {
-	if o == nil || o.Labels == nil {
+	if o == nil || isNil(o.Labels) {
 		var ret []string
 		return ret
 	}
@@ -311,15 +315,15 @@ func (o *VersionMetaData) GetLabels() []string {
 // GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetLabelsOk() ([]string, bool) {
-	if o == nil || o.Labels == nil {
-		return nil, false
+	if o == nil || isNil(o.Labels) {
+    return nil, false
 	}
 	return o.Labels, true
 }
 
 // HasLabels returns a boolean if a field has been set.
 func (o *VersionMetaData) HasLabels() bool {
-	if o != nil && o.Labels != nil {
+	if o != nil && !isNil(o.Labels) {
 		return true
 	}
 
@@ -333,7 +337,7 @@ func (o *VersionMetaData) SetLabels(v []string) {
 
 // GetProperties returns the Properties field value if set, zero value otherwise.
 func (o *VersionMetaData) GetProperties() map[string]string {
-	if o == nil || o.Properties == nil {
+	if o == nil || isNil(o.Properties) {
 		var ret map[string]string
 		return ret
 	}
@@ -343,15 +347,15 @@ func (o *VersionMetaData) GetProperties() map[string]string {
 // GetPropertiesOk returns a tuple with the Properties field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetPropertiesOk() (*map[string]string, bool) {
-	if o == nil || o.Properties == nil {
-		return nil, false
+	if o == nil || isNil(o.Properties) {
+    return nil, false
 	}
 	return o.Properties, true
 }
 
 // HasProperties returns a boolean if a field has been set.
 func (o *VersionMetaData) HasProperties() bool {
-	if o != nil && o.Properties != nil {
+	if o != nil && !isNil(o.Properties) {
 		return true
 	}
 
@@ -365,7 +369,7 @@ func (o *VersionMetaData) SetProperties(v map[string]string) {
 
 // GetGroupId returns the GroupId field value if set, zero value otherwise.
 func (o *VersionMetaData) GetGroupId() string {
-	if o == nil || o.GroupId == nil {
+	if o == nil || isNil(o.GroupId) {
 		var ret string
 		return ret
 	}
@@ -375,15 +379,15 @@ func (o *VersionMetaData) GetGroupId() string {
 // GetGroupIdOk returns a tuple with the GroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetGroupIdOk() (*string, bool) {
-	if o == nil || o.GroupId == nil {
-		return nil, false
+	if o == nil || isNil(o.GroupId) {
+    return nil, false
 	}
 	return o.GroupId, true
 }
 
 // HasGroupId returns a boolean if a field has been set.
 func (o *VersionMetaData) HasGroupId() bool {
-	if o != nil && o.GroupId != nil {
+	if o != nil && !isNil(o.GroupId) {
 		return true
 	}
 
@@ -408,8 +412,8 @@ func (o *VersionMetaData) GetContentId() int64 {
 // GetContentIdOk returns a tuple with the ContentId field value
 // and a boolean to check if the value has been set.
 func (o *VersionMetaData) GetContentIdOk() (*int64, bool) {
-	if o == nil  {
-		return nil, false
+	if o == nil {
+    return nil, false
 	}
 	return &o.ContentId, true
 }
@@ -424,10 +428,10 @@ func (o VersionMetaData) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["version"] = o.Version
 	}
-	if o.Name != nil {
+	if !isNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.Description != nil {
+	if !isNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
 	if true {
@@ -442,19 +446,19 @@ func (o VersionMetaData) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["globalId"] = o.GlobalId
 	}
-	if o.State != nil {
+	if !isNil(o.State) {
 		toSerialize["state"] = o.State
 	}
 	if true {
 		toSerialize["id"] = o.Id
 	}
-	if o.Labels != nil {
+	if !isNil(o.Labels) {
 		toSerialize["labels"] = o.Labels
 	}
-	if o.Properties != nil {
+	if !isNil(o.Properties) {
 		toSerialize["properties"] = o.Properties
 	}
-	if o.GroupId != nil {
+	if !isNil(o.GroupId) {
 		toSerialize["groupId"] = o.GroupId
 	}
 	if true {

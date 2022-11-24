@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.3.2-SNAPSHOT
 Contact: apicurio@lists.jboss.org
 */
 
@@ -21,10 +21,6 @@ import (
 	"os"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
 
 // AdminApiService AdminApi service
 type AdminApiService service
@@ -136,7 +132,8 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -146,7 +143,8 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -156,7 +154,8 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -270,7 +269,8 @@ func (a *AdminApiService) CreateRoleMappingExecute(r ApiCreateRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -282,7 +282,6 @@ type ApiDeleteAllGlobalRulesRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
-
 
 func (r ApiDeleteAllGlobalRulesRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteAllGlobalRulesExecute(r)
@@ -373,7 +372,8 @@ func (a *AdminApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -386,7 +386,6 @@ type ApiDeleteGlobalRuleRequest struct {
 	ApiService *AdminApiService
 	rule RuleType
 }
-
 
 func (r ApiDeleteGlobalRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteGlobalRuleExecute(r)
@@ -484,7 +483,8 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -494,7 +494,8 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -507,7 +508,6 @@ type ApiDeleteRoleMappingRequest struct {
 	ApiService *AdminApiService
 	principalId string
 }
-
 
 func (r ApiDeleteRoleMappingRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteRoleMappingExecute(r)
@@ -602,7 +602,8 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -612,7 +613,8 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -721,7 +723,8 @@ func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (**os.File, 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -744,13 +747,12 @@ type ApiGetConfigPropertyRequest struct {
 	propertyName string
 }
 
-
 func (r ApiGetConfigPropertyRequest) Execute() (*ConfigurationProperty, *http.Response, error) {
 	return r.ApiService.GetConfigPropertyExecute(r)
 }
 
 /*
-GetConfigProperty Get the value of a configuration property
+GetConfigProperty Get configuration property value
 
 Returns the value of a single configuration property.
 
@@ -840,7 +842,8 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -850,7 +853,8 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -872,7 +876,6 @@ type ApiGetGlobalRuleConfigRequest struct {
 	ApiService *AdminApiService
 	rule RuleType
 }
-
 
 func (r ApiGetGlobalRuleConfigRequest) Execute() (*Rule, *http.Response, error) {
 	return r.ApiService.GetGlobalRuleConfigExecute(r)
@@ -970,7 +973,8 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -980,7 +984,8 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1002,7 +1007,6 @@ type ApiGetLogConfigurationRequest struct {
 	ApiService *AdminApiService
 	logger string
 }
-
 
 func (r ApiGetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.GetLogConfigurationExecute(r)
@@ -1093,7 +1097,8 @@ func (a *AdminApiService) GetLogConfigurationExecute(r ApiGetLogConfigurationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1116,7 +1121,6 @@ type ApiGetRoleMappingRequest struct {
 	principalId string
 }
 
-
 func (r ApiGetRoleMappingRequest) Execute() (*RoleMapping, *http.Response, error) {
 	return r.ApiService.GetRoleMappingExecute(r)
 }
@@ -1124,11 +1128,11 @@ func (r ApiGetRoleMappingRequest) Execute() (*RoleMapping, *http.Response, error
 /*
 GetRoleMapping Return a single role mapping
 
-Gets the details of a single role mapping (by principalId).
+Gets the details of a single role mapping (by `principalId`).
 
 This operation can fail for the following reasons:
 
-* No role mapping for the principalId exists (HTTP error `404`)
+* No role mapping for the `principalId` exists (HTTP error `404`)
 * A server error occurred (HTTP error `500`)
 
 
@@ -1212,7 +1216,8 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1222,7 +1227,8 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1252,11 +1258,13 @@ func (r ApiImportDataRequest) Body(body *os.File) ApiImportDataRequest {
 	r.body = &body
 	return r
 }
+
 // If this header is set to false, global ids of imported data will be ignored and replaced by next id in global id sequence. This allows to import any data even thought the global ids would cause a conflict.
 func (r ApiImportDataRequest) XRegistryPreserveGlobalId(xRegistryPreserveGlobalId bool) ApiImportDataRequest {
 	r.xRegistryPreserveGlobalId = &xRegistryPreserveGlobalId
 	return r
 }
+
 // If this header is set to false, content ids of imported data will be ignored and replaced by next id in content id sequence. The mapping between content and artifacts will be preserved. This allows to import any data even thought the content ids would cause a conflict.
 func (r ApiImportDataRequest) XRegistryPreserveContentId(xRegistryPreserveContentId bool) ApiImportDataRequest {
 	r.xRegistryPreserveContentId = &xRegistryPreserveContentId
@@ -1358,7 +1366,8 @@ func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Respo
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -1366,11 +1375,124 @@ func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Respo
 	return localVarHTTPResponse, nil
 }
 
-type ApiListConfigPropertiesRequest struct {
+type ApiListArtifactTypesRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
 
+func (r ApiListArtifactTypesRequest) Execute() ([]ArtifactTypeInfo, *http.Response, error) {
+	return r.ApiService.ListArtifactTypesExecute(r)
+}
+
+/*
+ListArtifactTypes List artifact types
+
+Gets a list of all the configured artifact types.
+
+This operation can fail for the following reasons:
+
+* A server error occurred (HTTP error `500`)
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListArtifactTypesRequest
+*/
+func (a *AdminApiService) ListArtifactTypes(ctx context.Context) ApiListArtifactTypesRequest {
+	return ApiListArtifactTypesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return []ArtifactTypeInfo
+func (a *AdminApiService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest) ([]ArtifactTypeInfo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ArtifactTypeInfo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ListArtifactTypes")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/admin/artifactTypes"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiListConfigPropertiesRequest struct {
+	ctx context.Context
+	ApiService *AdminApiService
+}
 
 func (r ApiListConfigPropertiesRequest) Execute() ([]ConfigurationProperty, *http.Response, error) {
 	return r.ApiService.ListConfigPropertiesExecute(r)
@@ -1463,7 +1585,8 @@ func (a *AdminApiService) ListConfigPropertiesExecute(r ApiListConfigPropertiesR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1484,7 +1607,6 @@ type ApiListGlobalRulesRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
-
 
 func (r ApiListGlobalRulesRequest) Execute() ([]RuleType, *http.Response, error) {
 	return r.ApiService.ListGlobalRulesExecute(r)
@@ -1577,7 +1699,8 @@ func (a *AdminApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1598,7 +1721,6 @@ type ApiListLogConfigurationsRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
-
 
 func (r ApiListLogConfigurationsRequest) Execute() ([]NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.ListLogConfigurationsExecute(r)
@@ -1687,7 +1809,8 @@ func (a *AdminApiService) ListLogConfigurationsExecute(r ApiListLogConfiguration
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1708,7 +1831,6 @@ type ApiListRoleMappingsRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
 }
-
 
 func (r ApiListRoleMappingsRequest) Execute() ([]RoleMapping, *http.Response, error) {
 	return r.ApiService.ListRoleMappingsExecute(r)
@@ -1801,7 +1923,8 @@ func (a *AdminApiService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1823,7 +1946,6 @@ type ApiRemoveLogConfigurationRequest struct {
 	ApiService *AdminApiService
 	logger string
 }
-
 
 func (r ApiRemoveLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
 	return r.ApiService.RemoveLogConfigurationExecute(r)
@@ -1914,7 +2036,8 @@ func (a *AdminApiService) RemoveLogConfigurationExecute(r ApiRemoveLogConfigurat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1936,7 +2059,6 @@ type ApiResetConfigPropertyRequest struct {
 	ApiService *AdminApiService
 	propertyName string
 }
-
 
 func (r ApiResetConfigPropertyRequest) Execute() (*http.Response, error) {
 	return r.ApiService.ResetConfigPropertyExecute(r)
@@ -2033,7 +2155,8 @@ func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyReq
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2043,7 +2166,8 @@ func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyReq
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -2158,7 +2282,8 @@ func (a *AdminApiService) SetLogConfigurationExecute(r ApiSetLogConfigurationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2285,7 +2410,8 @@ func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2295,7 +2421,8 @@ func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -2416,7 +2543,8 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2426,7 +2554,8 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2553,7 +2682,8 @@ func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2563,7 +2693,8 @@ func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
