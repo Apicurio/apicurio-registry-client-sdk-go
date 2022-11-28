@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.2.4-SNAPSHOT
+API version: 2.3.2-SNAPSHOT
 Contact: apicurio@lists.jboss.org
 */
 
@@ -22,10 +22,6 @@ import (
 	"reflect"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
 
 // ArtifactsApiService ArtifactsApi service
 type ArtifactsApiService service
@@ -35,7 +31,7 @@ type ApiCreateArtifactRequest struct {
 	ApiService *ArtifactsApiService
 	groupId string
 	body *interface{}
-	xRegistryArtifactType *ArtifactType
+	xRegistryArtifactType *string
 	xRegistryArtifactId *string
 	xRegistryVersion *string
 	ifExists *IfExists
@@ -44,6 +40,8 @@ type ApiCreateArtifactRequest struct {
 	xRegistryDescriptionEncoded *string
 	xRegistryName *string
 	xRegistryNameEncoded *string
+	xRegistryContentHash *string
+	xRegistryHashAlgorithm *string
 }
 
 // The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
@@ -51,49 +49,70 @@ func (r ApiCreateArtifactRequest) Body(body interface{}) ApiCreateArtifactReques
 	r.body = &body
 	return r
 }
+
 // Specifies the type of the artifact being added. Possible values include:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
-func (r ApiCreateArtifactRequest) XRegistryArtifactType(xRegistryArtifactType ArtifactType) ApiCreateArtifactRequest {
+func (r ApiCreateArtifactRequest) XRegistryArtifactType(xRegistryArtifactType string) ApiCreateArtifactRequest {
 	r.xRegistryArtifactType = &xRegistryArtifactType
 	return r
 }
+
 // A client-provided, globally unique identifier for the new artifact.
 func (r ApiCreateArtifactRequest) XRegistryArtifactId(xRegistryArtifactId string) ApiCreateArtifactRequest {
 	r.xRegistryArtifactId = &xRegistryArtifactId
 	return r
 }
+
 // Specifies the version number of this initial version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically (starting with version &#x60;1&#x60;).
 func (r ApiCreateArtifactRequest) XRegistryVersion(xRegistryVersion string) ApiCreateArtifactRequest {
 	r.xRegistryVersion = &xRegistryVersion
 	return r
 }
+
 // Set this option to instruct the server on what to do if the artifact already exists.
 func (r ApiCreateArtifactRequest) IfExists(ifExists IfExists) ApiCreateArtifactRequest {
 	r.ifExists = &ifExists
 	return r
 }
+
 // Used only when the &#x60;ifExists&#x60; query parameter is set to &#x60;RETURN_OR_UPDATE&#x60;, this parameter can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for a matching version.  The canonicalization algorithm is unique to each artifact type, but typically involves removing extra whitespace and formatting the content in a consistent manner.
 func (r ApiCreateArtifactRequest) Canonical(canonical bool) ApiCreateArtifactRequest {
 	r.canonical = &canonical
 	return r
 }
+
 // Specifies the description of artifact being added. Description must be ASCII-only string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryDescription(xRegistryDescription string) ApiCreateArtifactRequest {
 	r.xRegistryDescription = &xRegistryDescription
 	return r
 }
+
 // Specifies the description of artifact being added. Value of this must be Base64 encoded string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryDescriptionEncoded(xRegistryDescriptionEncoded string) ApiCreateArtifactRequest {
 	r.xRegistryDescriptionEncoded = &xRegistryDescriptionEncoded
 	return r
 }
+
 // Specifies the name of artifact being added. Name must be ASCII-only string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryName(xRegistryName string) ApiCreateArtifactRequest {
 	r.xRegistryName = &xRegistryName
 	return r
 }
+
 // Specifies the name of artifact being added. Value of this must be Base64 encoded string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryNameEncoded(xRegistryNameEncoded string) ApiCreateArtifactRequest {
 	r.xRegistryNameEncoded = &xRegistryNameEncoded
+	return r
+}
+
+// Specifies the (optional) hash of the artifact to be verified.
+func (r ApiCreateArtifactRequest) XRegistryContentHash(xRegistryContentHash string) ApiCreateArtifactRequest {
+	r.xRegistryContentHash = &xRegistryContentHash
+	return r
+}
+
+// The algorithm to use when checking the content validity. (available: SHA256, MD5; default: SHA256)
+func (r ApiCreateArtifactRequest) XRegistryHashAlgorithm(xRegistryHashAlgorithm string) ApiCreateArtifactRequest {
+	r.xRegistryHashAlgorithm = &xRegistryHashAlgorithm
 	return r
 }
 
@@ -158,7 +177,7 @@ This operation may fail for one of the following reasons:
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param groupId Unique ID of an artifact group.
+ @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiCreateArtifactRequest
 */
 func (a *ArtifactsApiService) CreateArtifact(ctx context.Context, groupId string) ApiCreateArtifactRequest {
@@ -238,8 +257,14 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 	if r.xRegistryNameEncoded != nil {
 		localVarHeaderParams["X-Registry-Name-Encoded"] = parameterToString(*r.xRegistryNameEncoded, "")
 	}
+	if r.xRegistryContentHash != nil {
+		localVarHeaderParams["X-Registry-Content-Hash"] = parameterToString(*r.xRegistryContentHash, "")
+	}
+	if r.xRegistryHashAlgorithm != nil {
+		localVarHeaderParams["X-Registry-Hash-Algorithm"] = parameterToString(*r.xRegistryHashAlgorithm, "")
+	}
 	// body params
-	localVarPostBody = *r.body
+	localVarPostBody = r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -269,7 +294,8 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -279,7 +305,8 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -289,7 +316,8 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -312,7 +340,6 @@ type ApiDeleteArtifactRequest struct {
 	groupId string
 	artifactId string
 }
-
 
 func (r ApiDeleteArtifactRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteArtifactExecute(r)
@@ -408,7 +435,8 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -418,7 +446,8 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -432,18 +461,17 @@ type ApiDeleteArtifactsInGroupRequest struct {
 	groupId string
 }
 
-
 func (r ApiDeleteArtifactsInGroupRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteArtifactsInGroupExecute(r)
 }
 
 /*
-DeleteArtifactsInGroup Deletes all artifacts in a group
+DeleteArtifactsInGroup Delete artifacts in group
 
 Deletes all of the artifacts that exist in a given group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param groupId Unique ID of an artifact group.
+ @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiDeleteArtifactsInGroupRequest
 */
 func (a *ArtifactsApiService) DeleteArtifactsInGroup(ctx context.Context, groupId string) ApiDeleteArtifactsInGroupRequest {
@@ -520,7 +548,8 @@ func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifacts
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -640,7 +669,8 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -650,7 +680,8 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -672,7 +703,6 @@ type ApiGetContentByHashRequest struct {
 	ApiService *ArtifactsApiService
 	contentHash string
 }
-
 
 func (r ApiGetContentByHashRequest) Execute() (**os.File, *http.Response, error) {
 	return r.ApiService.GetContentByHashExecute(r)
@@ -771,7 +801,8 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -781,7 +812,8 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -803,7 +835,6 @@ type ApiGetContentByIdRequest struct {
 	ApiService *ArtifactsApiService
 	contentId int64
 }
-
 
 func (r ApiGetContentByIdRequest) Execute() (**os.File, *http.Response, error) {
 	return r.ApiService.GetContentByIdExecute(r)
@@ -902,7 +933,8 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -912,7 +944,8 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1046,7 +1079,8 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1056,7 +1090,8 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1088,16 +1123,19 @@ func (r ApiListArtifactsInGroupRequest) Limit(limit int32) ApiListArtifactsInGro
 	r.limit = &limit
 	return r
 }
+
 // The number of artifacts to skip before starting the result set.  Defaults to 0.
 func (r ApiListArtifactsInGroupRequest) Offset(offset int32) ApiListArtifactsInGroupRequest {
 	r.offset = &offset
 	return r
 }
+
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
 func (r ApiListArtifactsInGroupRequest) Order(order SortOrder) ApiListArtifactsInGroupRequest {
 	r.order = &order
 	return r
 }
+
 // The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
 func (r ApiListArtifactsInGroupRequest) Orderby(orderby SortBy) ApiListArtifactsInGroupRequest {
 	r.orderby = &orderby
@@ -1114,7 +1152,7 @@ ListArtifactsInGroup List artifacts in group
 Returns a list of all artifacts in the group.  This list is paged.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param groupId Unique ID of an artifact group.
+ @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiListArtifactsInGroupRequest
 */
 func (a *ArtifactsApiService) ListArtifactsInGroup(ctx context.Context, groupId string) ApiListArtifactsInGroupRequest {
@@ -1205,7 +1243,8 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1228,13 +1267,12 @@ type ApiReferencesByContentHashRequest struct {
 	contentHash string
 }
 
-
 func (r ApiReferencesByContentHashRequest) Execute() ([]ArtifactReference, *http.Response, error) {
 	return r.ApiService.ReferencesByContentHashExecute(r)
 }
 
 /*
-ReferencesByContentHash Returns a list with all the references for the artifact with the given hash
+ReferencesByContentHash List artifact references by hash
 
 Returns a list containing all the artifact references using the artifact content hash.
 
@@ -1337,15 +1375,14 @@ type ApiReferencesByContentIdRequest struct {
 	contentId int64
 }
 
-
 func (r ApiReferencesByContentIdRequest) Execute() ([]ArtifactReference, *http.Response, error) {
 	return r.ApiService.ReferencesByContentIdExecute(r)
 }
 
 /*
-ReferencesByContentId Returns a list with all the references for the artifact with the given content id.
+ReferencesByContentId List artifact references by content ID
 
-Returns a list containing all the artifact references using the artifact contentId.
+Returns a list containing all the artifact references using the artifact content ID.
 
 This operation may fail for one of the following reasons:
 
@@ -1445,15 +1482,14 @@ type ApiReferencesByGlobalIdRequest struct {
 	globalId int64
 }
 
-
 func (r ApiReferencesByGlobalIdRequest) Execute() ([]ArtifactReference, *http.Response, error) {
 	return r.ApiService.ReferencesByGlobalIdExecute(r)
 }
 
 /*
-ReferencesByGlobalId Returns a list with all the references for the artifact with the given global id.
+ReferencesByGlobalId List artifact references by global ID
 
-Returns a list containing all the artifact references using the artifact global id.
+Returns a list containing all the artifact references using the artifact global ID.
 
 This operation may fail for one of the following reasons:
 
@@ -1568,51 +1604,61 @@ func (r ApiSearchArtifactsRequest) Name(name string) ApiSearchArtifactsRequest {
 	r.name = &name
 	return r
 }
+
 // The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
 func (r ApiSearchArtifactsRequest) Offset(offset int32) ApiSearchArtifactsRequest {
 	r.offset = &offset
 	return r
 }
+
 // The number of artifacts to return.  Defaults to 20.
 func (r ApiSearchArtifactsRequest) Limit(limit int32) ApiSearchArtifactsRequest {
 	r.limit = &limit
 	return r
 }
+
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
 func (r ApiSearchArtifactsRequest) Order(order SortOrder) ApiSearchArtifactsRequest {
 	r.order = &order
 	return r
 }
+
 // The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
 func (r ApiSearchArtifactsRequest) Orderby(orderby SortBy) ApiSearchArtifactsRequest {
 	r.orderby = &orderby
 	return r
 }
+
 // Filter by label.  Include one or more label to only return artifacts containing all of the specified labels.
 func (r ApiSearchArtifactsRequest) Labels(labels []string) ApiSearchArtifactsRequest {
 	r.labels = &labels
 	return r
 }
+
 // Filter by one or more name/value property.  Separate each name/value pair using a colon.  For example &#x60;properties&#x3D;foo:bar&#x60; will return only artifacts with a custom property named &#x60;foo&#x60; and value &#x60;bar&#x60;.
 func (r ApiSearchArtifactsRequest) Properties(properties []string) ApiSearchArtifactsRequest {
 	r.properties = &properties
 	return r
 }
+
 // Filter by description.
 func (r ApiSearchArtifactsRequest) Description(description string) ApiSearchArtifactsRequest {
 	r.description = &description
 	return r
 }
+
 // Filter by artifact group.
 func (r ApiSearchArtifactsRequest) Group(group string) ApiSearchArtifactsRequest {
 	r.group = &group
 	return r
 }
+
 // Filter by globalId.
 func (r ApiSearchArtifactsRequest) GlobalId(globalId int64) ApiSearchArtifactsRequest {
 	r.globalId = &globalId
 	return r
 }
+
 // Filter by contentId.
 func (r ApiSearchArtifactsRequest) ContentId(contentId int64) ApiSearchArtifactsRequest {
 	r.contentId = &contentId
@@ -1755,7 +1801,8 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1777,7 +1824,7 @@ type ApiSearchArtifactsByContentRequest struct {
 	ApiService *ArtifactsApiService
 	body **os.File
 	canonical *bool
-	artifactType *ArtifactType
+	artifactType *string
 	offset *int32
 	limit *int32
 	order *string
@@ -1789,31 +1836,37 @@ func (r ApiSearchArtifactsByContentRequest) Body(body *os.File) ApiSearchArtifac
 	r.body = &body
 	return r
 }
+
 // Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
 func (r ApiSearchArtifactsByContentRequest) Canonical(canonical bool) ApiSearchArtifactsByContentRequest {
 	r.canonical = &canonical
 	return r
 }
+
 // Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
-func (r ApiSearchArtifactsByContentRequest) ArtifactType(artifactType ArtifactType) ApiSearchArtifactsByContentRequest {
+func (r ApiSearchArtifactsByContentRequest) ArtifactType(artifactType string) ApiSearchArtifactsByContentRequest {
 	r.artifactType = &artifactType
 	return r
 }
+
 // The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
 func (r ApiSearchArtifactsByContentRequest) Offset(offset int32) ApiSearchArtifactsByContentRequest {
 	r.offset = &offset
 	return r
 }
+
 // The number of artifacts to return.  Defaults to 20.
 func (r ApiSearchArtifactsByContentRequest) Limit(limit int32) ApiSearchArtifactsByContentRequest {
 	r.limit = &limit
 	return r
 }
+
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
 func (r ApiSearchArtifactsByContentRequest) Order(order string) ApiSearchArtifactsByContentRequest {
 	r.order = &order
 	return r
 }
+
 // The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
 func (r ApiSearchArtifactsByContentRequest) Orderby(orderby string) ApiSearchArtifactsByContentRequest {
 	r.orderby = &orderby
@@ -1931,7 +1984,8 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1966,26 +2020,31 @@ func (r ApiUpdateArtifactRequest) Body(body interface{}) ApiUpdateArtifactReques
 	r.body = &body
 	return r
 }
+
 // Specifies the version number of this new version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically.
 func (r ApiUpdateArtifactRequest) XRegistryVersion(xRegistryVersion string) ApiUpdateArtifactRequest {
 	r.xRegistryVersion = &xRegistryVersion
 	return r
 }
+
 // Specifies the artifact name of this new version of the artifact content. Name must be ASCII-only string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryName(xRegistryName string) ApiUpdateArtifactRequest {
 	r.xRegistryName = &xRegistryName
 	return r
 }
+
 // Specifies the artifact name of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryNameEncoded(xRegistryNameEncoded string) ApiUpdateArtifactRequest {
 	r.xRegistryNameEncoded = &xRegistryNameEncoded
 	return r
 }
+
 // Specifies the artifact description of this new version of the artifact content. Description must be ASCII-only string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryDescription(xRegistryDescription string) ApiUpdateArtifactRequest {
 	r.xRegistryDescription = &xRegistryDescription
 	return r
 }
+
 // Specifies the artifact description of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryDescriptionEncoded(xRegistryDescriptionEncoded string) ApiUpdateArtifactRequest {
 	r.xRegistryDescriptionEncoded = &xRegistryDescriptionEncoded
@@ -2119,7 +2178,8 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -2129,7 +2189,8 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2139,7 +2200,8 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2272,7 +2334,8 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -2282,7 +2345,8 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2292,7 +2356,8 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+            		newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
