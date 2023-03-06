@@ -100,13 +100,4 @@ model_user_info.go
 model_version_meta_data.go
 model_version_search_results.go
 response.go
-test/api_admin_test.go
-test/api_artifact_rules_test.go
-test/api_artifact_type_test.go
-test/api_artifacts_test.go
-test/api_groups_test.go
-test/api_metadata_test.go
-test/api_system_test.go
-test/api_users_test.go
-test/api_versions_test.go
 utils.go

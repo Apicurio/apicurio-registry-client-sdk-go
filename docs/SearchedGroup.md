@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Id** | **string** | An ID of a single artifact group. | 
 **Description** | **string** |  | 
 **CreatedOn** | **string** |  | 
-**CreatedBy** | **interface{}** |  | 
+**CreatedBy** | **string** |  | 
 **ModifiedOn** | **string** |  | 
 **ModifiedBy** | **string** |  | 
 
@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 
 ### NewSearchedGroup
 
-`func NewSearchedGroup(id string, description string, createdOn string, createdBy interface{}, modifiedOn string, modifiedBy string, ) *SearchedGroup`
+`func NewSearchedGroup(id string, description string, createdOn string, createdBy string, modifiedOn string, modifiedBy string, ) *SearchedGroup`
 
 NewSearchedGroup instantiates a new SearchedGroup object
 This constructor will assign default values to properties that have it defined,
@@ -92,34 +92,24 @@ SetCreatedOn sets CreatedOn field to given value.
 
 ### GetCreatedBy
 
-`func (o *SearchedGroup) GetCreatedBy() interface{}`
+`func (o *SearchedGroup) GetCreatedBy() string`
 
 GetCreatedBy returns the CreatedBy field if non-nil, zero value otherwise.
 
 ### GetCreatedByOk
 
-`func (o *SearchedGroup) GetCreatedByOk() (*interface{}, bool)`
+`func (o *SearchedGroup) GetCreatedByOk() (*string, bool)`
 
 GetCreatedByOk returns a tuple with the CreatedBy field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedBy
 
-`func (o *SearchedGroup) SetCreatedBy(v interface{})`
+`func (o *SearchedGroup) SetCreatedBy(v string)`
 
 SetCreatedBy sets CreatedBy field to given value.
 
 
-### SetCreatedByNil
-
-`func (o *SearchedGroup) SetCreatedByNil(b bool)`
-
- SetCreatedByNil sets the value for CreatedBy to be an explicit nil
-
-### UnsetCreatedBy
-`func (o *SearchedGroup) UnsetCreatedBy()`
-
-UnsetCreatedBy ensures that no value is present for CreatedBy, not even an explicit nil
 ### GetModifiedOn
 
 `func (o *SearchedGroup) GetModifiedOn() string`

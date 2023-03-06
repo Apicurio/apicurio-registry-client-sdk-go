@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the Limits type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Limits{}
 
 // Limits List of limitations on used resources, that are applied on the current instance of Registry. Keys represent the resource type and are suffixed by the corresponding unit. Values are integers. Only non-negative values are allowed, with the exception of -1, which means that the limit is not applied.
 type Limits struct {
@@ -50,7 +53,7 @@ func NewLimitsWithDefaults() *Limits {
 
 // GetMaxTotalSchemasCount returns the MaxTotalSchemasCount field value if set, zero value otherwise.
 func (o *Limits) GetMaxTotalSchemasCount() int64 {
-	if o == nil || isNil(o.MaxTotalSchemasCount) {
+	if o == nil || IsNil(o.MaxTotalSchemasCount) {
 		var ret int64
 		return ret
 	}
@@ -60,15 +63,15 @@ func (o *Limits) GetMaxTotalSchemasCount() int64 {
 // GetMaxTotalSchemasCountOk returns a tuple with the MaxTotalSchemasCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxTotalSchemasCountOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxTotalSchemasCount) {
-    return nil, false
+	if o == nil || IsNil(o.MaxTotalSchemasCount) {
+		return nil, false
 	}
 	return o.MaxTotalSchemasCount, true
 }
 
 // HasMaxTotalSchemasCount returns a boolean if a field has been set.
 func (o *Limits) HasMaxTotalSchemasCount() bool {
-	if o != nil && !isNil(o.MaxTotalSchemasCount) {
+	if o != nil && !IsNil(o.MaxTotalSchemasCount) {
 		return true
 	}
 
@@ -82,7 +85,7 @@ func (o *Limits) SetMaxTotalSchemasCount(v int64) {
 
 // GetMaxSchemaSizeBytes returns the MaxSchemaSizeBytes field value if set, zero value otherwise.
 func (o *Limits) GetMaxSchemaSizeBytes() int64 {
-	if o == nil || isNil(o.MaxSchemaSizeBytes) {
+	if o == nil || IsNil(o.MaxSchemaSizeBytes) {
 		var ret int64
 		return ret
 	}
@@ -92,15 +95,15 @@ func (o *Limits) GetMaxSchemaSizeBytes() int64 {
 // GetMaxSchemaSizeBytesOk returns a tuple with the MaxSchemaSizeBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxSchemaSizeBytesOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxSchemaSizeBytes) {
-    return nil, false
+	if o == nil || IsNil(o.MaxSchemaSizeBytes) {
+		return nil, false
 	}
 	return o.MaxSchemaSizeBytes, true
 }
 
 // HasMaxSchemaSizeBytes returns a boolean if a field has been set.
 func (o *Limits) HasMaxSchemaSizeBytes() bool {
-	if o != nil && !isNil(o.MaxSchemaSizeBytes) {
+	if o != nil && !IsNil(o.MaxSchemaSizeBytes) {
 		return true
 	}
 
@@ -114,7 +117,7 @@ func (o *Limits) SetMaxSchemaSizeBytes(v int64) {
 
 // GetMaxArtifactsCount returns the MaxArtifactsCount field value if set, zero value otherwise.
 func (o *Limits) GetMaxArtifactsCount() int64 {
-	if o == nil || isNil(o.MaxArtifactsCount) {
+	if o == nil || IsNil(o.MaxArtifactsCount) {
 		var ret int64
 		return ret
 	}
@@ -124,15 +127,15 @@ func (o *Limits) GetMaxArtifactsCount() int64 {
 // GetMaxArtifactsCountOk returns a tuple with the MaxArtifactsCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxArtifactsCountOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxArtifactsCount) {
-    return nil, false
+	if o == nil || IsNil(o.MaxArtifactsCount) {
+		return nil, false
 	}
 	return o.MaxArtifactsCount, true
 }
 
 // HasMaxArtifactsCount returns a boolean if a field has been set.
 func (o *Limits) HasMaxArtifactsCount() bool {
-	if o != nil && !isNil(o.MaxArtifactsCount) {
+	if o != nil && !IsNil(o.MaxArtifactsCount) {
 		return true
 	}
 
@@ -146,7 +149,7 @@ func (o *Limits) SetMaxArtifactsCount(v int64) {
 
 // GetMaxVersionsPerArtifactCount returns the MaxVersionsPerArtifactCount field value if set, zero value otherwise.
 func (o *Limits) GetMaxVersionsPerArtifactCount() int64 {
-	if o == nil || isNil(o.MaxVersionsPerArtifactCount) {
+	if o == nil || IsNil(o.MaxVersionsPerArtifactCount) {
 		var ret int64
 		return ret
 	}
@@ -156,15 +159,15 @@ func (o *Limits) GetMaxVersionsPerArtifactCount() int64 {
 // GetMaxVersionsPerArtifactCountOk returns a tuple with the MaxVersionsPerArtifactCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxVersionsPerArtifactCountOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxVersionsPerArtifactCount) {
-    return nil, false
+	if o == nil || IsNil(o.MaxVersionsPerArtifactCount) {
+		return nil, false
 	}
 	return o.MaxVersionsPerArtifactCount, true
 }
 
 // HasMaxVersionsPerArtifactCount returns a boolean if a field has been set.
 func (o *Limits) HasMaxVersionsPerArtifactCount() bool {
-	if o != nil && !isNil(o.MaxVersionsPerArtifactCount) {
+	if o != nil && !IsNil(o.MaxVersionsPerArtifactCount) {
 		return true
 	}
 
@@ -178,7 +181,7 @@ func (o *Limits) SetMaxVersionsPerArtifactCount(v int64) {
 
 // GetMaxArtifactPropertiesCount returns the MaxArtifactPropertiesCount field value if set, zero value otherwise.
 func (o *Limits) GetMaxArtifactPropertiesCount() int64 {
-	if o == nil || isNil(o.MaxArtifactPropertiesCount) {
+	if o == nil || IsNil(o.MaxArtifactPropertiesCount) {
 		var ret int64
 		return ret
 	}
@@ -188,15 +191,15 @@ func (o *Limits) GetMaxArtifactPropertiesCount() int64 {
 // GetMaxArtifactPropertiesCountOk returns a tuple with the MaxArtifactPropertiesCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxArtifactPropertiesCountOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxArtifactPropertiesCount) {
-    return nil, false
+	if o == nil || IsNil(o.MaxArtifactPropertiesCount) {
+		return nil, false
 	}
 	return o.MaxArtifactPropertiesCount, true
 }
 
 // HasMaxArtifactPropertiesCount returns a boolean if a field has been set.
 func (o *Limits) HasMaxArtifactPropertiesCount() bool {
-	if o != nil && !isNil(o.MaxArtifactPropertiesCount) {
+	if o != nil && !IsNil(o.MaxArtifactPropertiesCount) {
 		return true
 	}
 
@@ -210,7 +213,7 @@ func (o *Limits) SetMaxArtifactPropertiesCount(v int64) {
 
 // GetMaxPropertyKeySizeBytes returns the MaxPropertyKeySizeBytes field value if set, zero value otherwise.
 func (o *Limits) GetMaxPropertyKeySizeBytes() int64 {
-	if o == nil || isNil(o.MaxPropertyKeySizeBytes) {
+	if o == nil || IsNil(o.MaxPropertyKeySizeBytes) {
 		var ret int64
 		return ret
 	}
@@ -220,15 +223,15 @@ func (o *Limits) GetMaxPropertyKeySizeBytes() int64 {
 // GetMaxPropertyKeySizeBytesOk returns a tuple with the MaxPropertyKeySizeBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxPropertyKeySizeBytesOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxPropertyKeySizeBytes) {
-    return nil, false
+	if o == nil || IsNil(o.MaxPropertyKeySizeBytes) {
+		return nil, false
 	}
 	return o.MaxPropertyKeySizeBytes, true
 }
 
 // HasMaxPropertyKeySizeBytes returns a boolean if a field has been set.
 func (o *Limits) HasMaxPropertyKeySizeBytes() bool {
-	if o != nil && !isNil(o.MaxPropertyKeySizeBytes) {
+	if o != nil && !IsNil(o.MaxPropertyKeySizeBytes) {
 		return true
 	}
 
@@ -242,7 +245,7 @@ func (o *Limits) SetMaxPropertyKeySizeBytes(v int64) {
 
 // GetMaxPropertyValueSizeBytes returns the MaxPropertyValueSizeBytes field value if set, zero value otherwise.
 func (o *Limits) GetMaxPropertyValueSizeBytes() int64 {
-	if o == nil || isNil(o.MaxPropertyValueSizeBytes) {
+	if o == nil || IsNil(o.MaxPropertyValueSizeBytes) {
 		var ret int64
 		return ret
 	}
@@ -252,15 +255,15 @@ func (o *Limits) GetMaxPropertyValueSizeBytes() int64 {
 // GetMaxPropertyValueSizeBytesOk returns a tuple with the MaxPropertyValueSizeBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxPropertyValueSizeBytesOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxPropertyValueSizeBytes) {
-    return nil, false
+	if o == nil || IsNil(o.MaxPropertyValueSizeBytes) {
+		return nil, false
 	}
 	return o.MaxPropertyValueSizeBytes, true
 }
 
 // HasMaxPropertyValueSizeBytes returns a boolean if a field has been set.
 func (o *Limits) HasMaxPropertyValueSizeBytes() bool {
-	if o != nil && !isNil(o.MaxPropertyValueSizeBytes) {
+	if o != nil && !IsNil(o.MaxPropertyValueSizeBytes) {
 		return true
 	}
 
@@ -274,7 +277,7 @@ func (o *Limits) SetMaxPropertyValueSizeBytes(v int64) {
 
 // GetMaxArtifactLabelsCount returns the MaxArtifactLabelsCount field value if set, zero value otherwise.
 func (o *Limits) GetMaxArtifactLabelsCount() int64 {
-	if o == nil || isNil(o.MaxArtifactLabelsCount) {
+	if o == nil || IsNil(o.MaxArtifactLabelsCount) {
 		var ret int64
 		return ret
 	}
@@ -284,15 +287,15 @@ func (o *Limits) GetMaxArtifactLabelsCount() int64 {
 // GetMaxArtifactLabelsCountOk returns a tuple with the MaxArtifactLabelsCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxArtifactLabelsCountOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxArtifactLabelsCount) {
-    return nil, false
+	if o == nil || IsNil(o.MaxArtifactLabelsCount) {
+		return nil, false
 	}
 	return o.MaxArtifactLabelsCount, true
 }
 
 // HasMaxArtifactLabelsCount returns a boolean if a field has been set.
 func (o *Limits) HasMaxArtifactLabelsCount() bool {
-	if o != nil && !isNil(o.MaxArtifactLabelsCount) {
+	if o != nil && !IsNil(o.MaxArtifactLabelsCount) {
 		return true
 	}
 
@@ -306,7 +309,7 @@ func (o *Limits) SetMaxArtifactLabelsCount(v int64) {
 
 // GetMaxLabelSizeBytes returns the MaxLabelSizeBytes field value if set, zero value otherwise.
 func (o *Limits) GetMaxLabelSizeBytes() int64 {
-	if o == nil || isNil(o.MaxLabelSizeBytes) {
+	if o == nil || IsNil(o.MaxLabelSizeBytes) {
 		var ret int64
 		return ret
 	}
@@ -316,15 +319,15 @@ func (o *Limits) GetMaxLabelSizeBytes() int64 {
 // GetMaxLabelSizeBytesOk returns a tuple with the MaxLabelSizeBytes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxLabelSizeBytesOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxLabelSizeBytes) {
-    return nil, false
+	if o == nil || IsNil(o.MaxLabelSizeBytes) {
+		return nil, false
 	}
 	return o.MaxLabelSizeBytes, true
 }
 
 // HasMaxLabelSizeBytes returns a boolean if a field has been set.
 func (o *Limits) HasMaxLabelSizeBytes() bool {
-	if o != nil && !isNil(o.MaxLabelSizeBytes) {
+	if o != nil && !IsNil(o.MaxLabelSizeBytes) {
 		return true
 	}
 
@@ -338,7 +341,7 @@ func (o *Limits) SetMaxLabelSizeBytes(v int64) {
 
 // GetMaxArtifactNameLengthChars returns the MaxArtifactNameLengthChars field value if set, zero value otherwise.
 func (o *Limits) GetMaxArtifactNameLengthChars() int64 {
-	if o == nil || isNil(o.MaxArtifactNameLengthChars) {
+	if o == nil || IsNil(o.MaxArtifactNameLengthChars) {
 		var ret int64
 		return ret
 	}
@@ -348,15 +351,15 @@ func (o *Limits) GetMaxArtifactNameLengthChars() int64 {
 // GetMaxArtifactNameLengthCharsOk returns a tuple with the MaxArtifactNameLengthChars field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxArtifactNameLengthCharsOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxArtifactNameLengthChars) {
-    return nil, false
+	if o == nil || IsNil(o.MaxArtifactNameLengthChars) {
+		return nil, false
 	}
 	return o.MaxArtifactNameLengthChars, true
 }
 
 // HasMaxArtifactNameLengthChars returns a boolean if a field has been set.
 func (o *Limits) HasMaxArtifactNameLengthChars() bool {
-	if o != nil && !isNil(o.MaxArtifactNameLengthChars) {
+	if o != nil && !IsNil(o.MaxArtifactNameLengthChars) {
 		return true
 	}
 
@@ -370,7 +373,7 @@ func (o *Limits) SetMaxArtifactNameLengthChars(v int64) {
 
 // GetMaxArtifactDescriptionLengthChars returns the MaxArtifactDescriptionLengthChars field value if set, zero value otherwise.
 func (o *Limits) GetMaxArtifactDescriptionLengthChars() int64 {
-	if o == nil || isNil(o.MaxArtifactDescriptionLengthChars) {
+	if o == nil || IsNil(o.MaxArtifactDescriptionLengthChars) {
 		var ret int64
 		return ret
 	}
@@ -380,15 +383,15 @@ func (o *Limits) GetMaxArtifactDescriptionLengthChars() int64 {
 // GetMaxArtifactDescriptionLengthCharsOk returns a tuple with the MaxArtifactDescriptionLengthChars field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxArtifactDescriptionLengthCharsOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxArtifactDescriptionLengthChars) {
-    return nil, false
+	if o == nil || IsNil(o.MaxArtifactDescriptionLengthChars) {
+		return nil, false
 	}
 	return o.MaxArtifactDescriptionLengthChars, true
 }
 
 // HasMaxArtifactDescriptionLengthChars returns a boolean if a field has been set.
 func (o *Limits) HasMaxArtifactDescriptionLengthChars() bool {
-	if o != nil && !isNil(o.MaxArtifactDescriptionLengthChars) {
+	if o != nil && !IsNil(o.MaxArtifactDescriptionLengthChars) {
 		return true
 	}
 
@@ -402,7 +405,7 @@ func (o *Limits) SetMaxArtifactDescriptionLengthChars(v int64) {
 
 // GetMaxRequestsPerSecondCount returns the MaxRequestsPerSecondCount field value if set, zero value otherwise.
 func (o *Limits) GetMaxRequestsPerSecondCount() int64 {
-	if o == nil || isNil(o.MaxRequestsPerSecondCount) {
+	if o == nil || IsNil(o.MaxRequestsPerSecondCount) {
 		var ret int64
 		return ret
 	}
@@ -412,15 +415,15 @@ func (o *Limits) GetMaxRequestsPerSecondCount() int64 {
 // GetMaxRequestsPerSecondCountOk returns a tuple with the MaxRequestsPerSecondCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Limits) GetMaxRequestsPerSecondCountOk() (*int64, bool) {
-	if o == nil || isNil(o.MaxRequestsPerSecondCount) {
-    return nil, false
+	if o == nil || IsNil(o.MaxRequestsPerSecondCount) {
+		return nil, false
 	}
 	return o.MaxRequestsPerSecondCount, true
 }
 
 // HasMaxRequestsPerSecondCount returns a boolean if a field has been set.
 func (o *Limits) HasMaxRequestsPerSecondCount() bool {
-	if o != nil && !isNil(o.MaxRequestsPerSecondCount) {
+	if o != nil && !IsNil(o.MaxRequestsPerSecondCount) {
 		return true
 	}
 
@@ -433,44 +436,52 @@ func (o *Limits) SetMaxRequestsPerSecondCount(v int64) {
 }
 
 func (o Limits) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if !isNil(o.MaxTotalSchemasCount) {
-		toSerialize["maxTotalSchemasCount"] = o.MaxTotalSchemasCount
-	}
-	if !isNil(o.MaxSchemaSizeBytes) {
-		toSerialize["maxSchemaSizeBytes"] = o.MaxSchemaSizeBytes
-	}
-	if !isNil(o.MaxArtifactsCount) {
-		toSerialize["maxArtifactsCount"] = o.MaxArtifactsCount
-	}
-	if !isNil(o.MaxVersionsPerArtifactCount) {
-		toSerialize["maxVersionsPerArtifactCount"] = o.MaxVersionsPerArtifactCount
-	}
-	if !isNil(o.MaxArtifactPropertiesCount) {
-		toSerialize["maxArtifactPropertiesCount"] = o.MaxArtifactPropertiesCount
-	}
-	if !isNil(o.MaxPropertyKeySizeBytes) {
-		toSerialize["maxPropertyKeySizeBytes"] = o.MaxPropertyKeySizeBytes
-	}
-	if !isNil(o.MaxPropertyValueSizeBytes) {
-		toSerialize["maxPropertyValueSizeBytes"] = o.MaxPropertyValueSizeBytes
-	}
-	if !isNil(o.MaxArtifactLabelsCount) {
-		toSerialize["maxArtifactLabelsCount"] = o.MaxArtifactLabelsCount
-	}
-	if !isNil(o.MaxLabelSizeBytes) {
-		toSerialize["maxLabelSizeBytes"] = o.MaxLabelSizeBytes
-	}
-	if !isNil(o.MaxArtifactNameLengthChars) {
-		toSerialize["maxArtifactNameLengthChars"] = o.MaxArtifactNameLengthChars
-	}
-	if !isNil(o.MaxArtifactDescriptionLengthChars) {
-		toSerialize["maxArtifactDescriptionLengthChars"] = o.MaxArtifactDescriptionLengthChars
-	}
-	if !isNil(o.MaxRequestsPerSecondCount) {
-		toSerialize["maxRequestsPerSecondCount"] = o.MaxRequestsPerSecondCount
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Limits) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.MaxTotalSchemasCount) {
+		toSerialize["maxTotalSchemasCount"] = o.MaxTotalSchemasCount
+	}
+	if !IsNil(o.MaxSchemaSizeBytes) {
+		toSerialize["maxSchemaSizeBytes"] = o.MaxSchemaSizeBytes
+	}
+	if !IsNil(o.MaxArtifactsCount) {
+		toSerialize["maxArtifactsCount"] = o.MaxArtifactsCount
+	}
+	if !IsNil(o.MaxVersionsPerArtifactCount) {
+		toSerialize["maxVersionsPerArtifactCount"] = o.MaxVersionsPerArtifactCount
+	}
+	if !IsNil(o.MaxArtifactPropertiesCount) {
+		toSerialize["maxArtifactPropertiesCount"] = o.MaxArtifactPropertiesCount
+	}
+	if !IsNil(o.MaxPropertyKeySizeBytes) {
+		toSerialize["maxPropertyKeySizeBytes"] = o.MaxPropertyKeySizeBytes
+	}
+	if !IsNil(o.MaxPropertyValueSizeBytes) {
+		toSerialize["maxPropertyValueSizeBytes"] = o.MaxPropertyValueSizeBytes
+	}
+	if !IsNil(o.MaxArtifactLabelsCount) {
+		toSerialize["maxArtifactLabelsCount"] = o.MaxArtifactLabelsCount
+	}
+	if !IsNil(o.MaxLabelSizeBytes) {
+		toSerialize["maxLabelSizeBytes"] = o.MaxLabelSizeBytes
+	}
+	if !IsNil(o.MaxArtifactNameLengthChars) {
+		toSerialize["maxArtifactNameLengthChars"] = o.MaxArtifactNameLengthChars
+	}
+	if !IsNil(o.MaxArtifactDescriptionLengthChars) {
+		toSerialize["maxArtifactDescriptionLengthChars"] = o.MaxArtifactDescriptionLengthChars
+	}
+	if !IsNil(o.MaxRequestsPerSecondCount) {
+		toSerialize["maxRequestsPerSecondCount"] = o.MaxRequestsPerSecondCount
+	}
+	return toSerialize, nil
 }
 
 type NullableLimits struct {

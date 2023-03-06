@@ -46,7 +46,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -54,7 +54,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.CreateGlobalRule(context.Background()).Rule(rule).Execute()
+    r, err := apiClient.AdminApi.CreateGlobalRule(context.Background()).Rule(rule).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.CreateGlobalRule``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -110,7 +110,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -118,7 +118,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.CreateRoleMapping(context.Background()).RoleMapping(roleMapping).Execute()
+    r, err := apiClient.AdminApi.CreateRoleMapping(context.Background()).RoleMapping(roleMapping).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.CreateRoleMapping``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -174,14 +174,14 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.DeleteAllGlobalRules(context.Background()).Execute()
+    r, err := apiClient.AdminApi.DeleteAllGlobalRules(context.Background()).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.DeleteAllGlobalRules``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -233,7 +233,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -241,7 +241,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.DeleteGlobalRule(context.Background(), rule).Execute()
+    r, err := apiClient.AdminApi.DeleteGlobalRule(context.Background(), rule).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.DeleteGlobalRule``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -301,7 +301,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -309,7 +309,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.DeleteRoleMapping(context.Background(), principalId).Execute()
+    r, err := apiClient.AdminApi.DeleteRoleMapping(context.Background(), principalId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.DeleteRoleMapping``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -369,7 +369,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -435,7 +435,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -505,7 +505,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -575,7 +575,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -645,7 +645,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -715,7 +715,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -725,7 +725,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.ImportData(context.Background()).Body(body).XRegistryPreserveGlobalId(xRegistryPreserveGlobalId).XRegistryPreserveContentId(xRegistryPreserveContentId).Execute()
+    r, err := apiClient.AdminApi.ImportData(context.Background()).Body(body).XRegistryPreserveGlobalId(xRegistryPreserveGlobalId).XRegistryPreserveContentId(xRegistryPreserveContentId).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ImportData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -783,7 +783,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -844,7 +844,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -905,7 +905,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -966,7 +966,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1027,7 +1027,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1088,7 +1088,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1158,7 +1158,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1166,7 +1166,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.ResetConfigProperty(context.Background(), propertyName).Execute()
+    r, err := apiClient.AdminApi.ResetConfigProperty(context.Background(), propertyName).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.ResetConfigProperty``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1226,7 +1226,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1298,7 +1298,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1307,7 +1307,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.UpdateConfigProperty(context.Background(), propertyName).UpdateConfigurationProperty(updateConfigurationProperty).Execute()
+    r, err := apiClient.AdminApi.UpdateConfigProperty(context.Background(), propertyName).UpdateConfigurationProperty(updateConfigurationProperty).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.UpdateConfigProperty``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1368,7 +1368,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1440,7 +1440,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {
@@ -1449,7 +1449,7 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.AdminApi.UpdateRoleMapping(context.Background(), principalId).UpdateRole(updateRole).Execute()
+    r, err := apiClient.AdminApi.UpdateRoleMapping(context.Background(), principalId).UpdateRole(updateRole).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `AdminApi.UpdateRoleMapping``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)

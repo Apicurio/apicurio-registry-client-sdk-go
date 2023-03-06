@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the ArtifactOwner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ArtifactOwner{}
 
 // ArtifactOwner Describes the ownership of an artifact.
 type ArtifactOwner struct {
@@ -39,7 +42,7 @@ func NewArtifactOwnerWithDefaults() *ArtifactOwner {
 
 // GetOwner returns the Owner field value if set, zero value otherwise.
 func (o *ArtifactOwner) GetOwner() string {
-	if o == nil || isNil(o.Owner) {
+	if o == nil || IsNil(o.Owner) {
 		var ret string
 		return ret
 	}
@@ -49,15 +52,15 @@ func (o *ArtifactOwner) GetOwner() string {
 // GetOwnerOk returns a tuple with the Owner field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ArtifactOwner) GetOwnerOk() (*string, bool) {
-	if o == nil || isNil(o.Owner) {
-    return nil, false
+	if o == nil || IsNil(o.Owner) {
+		return nil, false
 	}
 	return o.Owner, true
 }
 
 // HasOwner returns a boolean if a field has been set.
 func (o *ArtifactOwner) HasOwner() bool {
-	if o != nil && !isNil(o.Owner) {
+	if o != nil && !IsNil(o.Owner) {
 		return true
 	}
 
@@ -70,11 +73,19 @@ func (o *ArtifactOwner) SetOwner(v string) {
 }
 
 func (o ArtifactOwner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if !isNil(o.Owner) {
-		toSerialize["owner"] = o.Owner
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ArtifactOwner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Owner) {
+		toSerialize["owner"] = o.Owner
+	}
+	return toSerialize, nil
 }
 
 type NullableArtifactOwner struct {

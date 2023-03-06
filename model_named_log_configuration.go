@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the NamedLogConfiguration type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NamedLogConfiguration{}
 
 // NamedLogConfiguration 
 type NamedLogConfiguration struct {
@@ -55,7 +58,7 @@ func (o *NamedLogConfiguration) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *NamedLogConfiguration) GetNameOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Name, true
 }
@@ -79,7 +82,7 @@ func (o *NamedLogConfiguration) GetLevel() LogLevel {
 // and a boolean to check if the value has been set.
 func (o *NamedLogConfiguration) GetLevelOk() (*LogLevel, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Level, true
 }
@@ -90,14 +93,18 @@ func (o *NamedLogConfiguration) SetLevel(v LogLevel) {
 }
 
 func (o NamedLogConfiguration) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["level"] = o.Level
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o NamedLogConfiguration) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["level"] = o.Level
+	return toSerialize, nil
 }
 
 type NullableNamedLogConfiguration struct {

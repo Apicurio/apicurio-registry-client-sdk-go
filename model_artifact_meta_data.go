@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the ArtifactMetaData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ArtifactMetaData{}
 
 // ArtifactMetaData 
 type ArtifactMetaData struct {
@@ -73,7 +76,7 @@ func NewArtifactMetaDataWithDefaults() *ArtifactMetaData {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *ArtifactMetaData) GetName() string {
-	if o == nil || isNil(o.Name) {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -83,15 +86,15 @@ func (o *ArtifactMetaData) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetNameOk() (*string, bool) {
-	if o == nil || isNil(o.Name) {
-    return nil, false
+	if o == nil || IsNil(o.Name) {
+		return nil, false
 	}
 	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
 func (o *ArtifactMetaData) HasName() bool {
-	if o != nil && !isNil(o.Name) {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -105,7 +108,7 @@ func (o *ArtifactMetaData) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *ArtifactMetaData) GetDescription() string {
-	if o == nil || isNil(o.Description) {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -115,15 +118,15 @@ func (o *ArtifactMetaData) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetDescriptionOk() (*string, bool) {
-	if o == nil || isNil(o.Description) {
-    return nil, false
+	if o == nil || IsNil(o.Description) {
+		return nil, false
 	}
 	return o.Description, true
 }
 
 // HasDescription returns a boolean if a field has been set.
 func (o *ArtifactMetaData) HasDescription() bool {
-	if o != nil && !isNil(o.Description) {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -149,7 +152,7 @@ func (o *ArtifactMetaData) GetCreatedBy() string {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetCreatedByOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.CreatedBy, true
 }
@@ -173,7 +176,7 @@ func (o *ArtifactMetaData) GetCreatedOn() string {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetCreatedOnOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.CreatedOn, true
 }
@@ -197,7 +200,7 @@ func (o *ArtifactMetaData) GetModifiedBy() string {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetModifiedByOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.ModifiedBy, true
 }
@@ -221,7 +224,7 @@ func (o *ArtifactMetaData) GetModifiedOn() string {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetModifiedOnOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.ModifiedOn, true
 }
@@ -245,7 +248,7 @@ func (o *ArtifactMetaData) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Id, true
 }
@@ -269,7 +272,7 @@ func (o *ArtifactMetaData) GetVersion() string {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetVersionOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Version, true
 }
@@ -293,7 +296,7 @@ func (o *ArtifactMetaData) GetType() string {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetTypeOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Type, true
 }
@@ -317,7 +320,7 @@ func (o *ArtifactMetaData) GetGlobalId() int64 {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetGlobalIdOk() (*int64, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.GlobalId, true
 }
@@ -341,7 +344,7 @@ func (o *ArtifactMetaData) GetState() ArtifactState {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetStateOk() (*ArtifactState, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.State, true
 }
@@ -353,7 +356,7 @@ func (o *ArtifactMetaData) SetState(v ArtifactState) {
 
 // GetLabels returns the Labels field value if set, zero value otherwise.
 func (o *ArtifactMetaData) GetLabels() []string {
-	if o == nil || isNil(o.Labels) {
+	if o == nil || IsNil(o.Labels) {
 		var ret []string
 		return ret
 	}
@@ -363,15 +366,15 @@ func (o *ArtifactMetaData) GetLabels() []string {
 // GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetLabelsOk() ([]string, bool) {
-	if o == nil || isNil(o.Labels) {
-    return nil, false
+	if o == nil || IsNil(o.Labels) {
+		return nil, false
 	}
 	return o.Labels, true
 }
 
 // HasLabels returns a boolean if a field has been set.
 func (o *ArtifactMetaData) HasLabels() bool {
-	if o != nil && !isNil(o.Labels) {
+	if o != nil && !IsNil(o.Labels) {
 		return true
 	}
 
@@ -385,7 +388,7 @@ func (o *ArtifactMetaData) SetLabels(v []string) {
 
 // GetProperties returns the Properties field value if set, zero value otherwise.
 func (o *ArtifactMetaData) GetProperties() map[string]string {
-	if o == nil || isNil(o.Properties) {
+	if o == nil || IsNil(o.Properties) {
 		var ret map[string]string
 		return ret
 	}
@@ -395,15 +398,15 @@ func (o *ArtifactMetaData) GetProperties() map[string]string {
 // GetPropertiesOk returns a tuple with the Properties field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetPropertiesOk() (*map[string]string, bool) {
-	if o == nil || isNil(o.Properties) {
-    return nil, false
+	if o == nil || IsNil(o.Properties) {
+		return nil, false
 	}
 	return o.Properties, true
 }
 
 // HasProperties returns a boolean if a field has been set.
 func (o *ArtifactMetaData) HasProperties() bool {
-	if o != nil && !isNil(o.Properties) {
+	if o != nil && !IsNil(o.Properties) {
 		return true
 	}
 
@@ -417,7 +420,7 @@ func (o *ArtifactMetaData) SetProperties(v map[string]string) {
 
 // GetGroupId returns the GroupId field value if set, zero value otherwise.
 func (o *ArtifactMetaData) GetGroupId() string {
-	if o == nil || isNil(o.GroupId) {
+	if o == nil || IsNil(o.GroupId) {
 		var ret string
 		return ret
 	}
@@ -427,15 +430,15 @@ func (o *ArtifactMetaData) GetGroupId() string {
 // GetGroupIdOk returns a tuple with the GroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetGroupIdOk() (*string, bool) {
-	if o == nil || isNil(o.GroupId) {
-    return nil, false
+	if o == nil || IsNil(o.GroupId) {
+		return nil, false
 	}
 	return o.GroupId, true
 }
 
 // HasGroupId returns a boolean if a field has been set.
 func (o *ArtifactMetaData) HasGroupId() bool {
-	if o != nil && !isNil(o.GroupId) {
+	if o != nil && !IsNil(o.GroupId) {
 		return true
 	}
 
@@ -461,7 +464,7 @@ func (o *ArtifactMetaData) GetContentId() int64 {
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetContentIdOk() (*int64, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.ContentId, true
 }
@@ -473,7 +476,7 @@ func (o *ArtifactMetaData) SetContentId(v int64) {
 
 // GetReferences returns the References field value if set, zero value otherwise.
 func (o *ArtifactMetaData) GetReferences() []ArtifactReference {
-	if o == nil || isNil(o.References) {
+	if o == nil || IsNil(o.References) {
 		var ret []ArtifactReference
 		return ret
 	}
@@ -483,15 +486,15 @@ func (o *ArtifactMetaData) GetReferences() []ArtifactReference {
 // GetReferencesOk returns a tuple with the References field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ArtifactMetaData) GetReferencesOk() ([]ArtifactReference, bool) {
-	if o == nil || isNil(o.References) {
-    return nil, false
+	if o == nil || IsNil(o.References) {
+		return nil, false
 	}
 	return o.References, true
 }
 
 // HasReferences returns a boolean if a field has been set.
 func (o *ArtifactMetaData) HasReferences() bool {
-	if o != nil && !isNil(o.References) {
+	if o != nil && !IsNil(o.References) {
 		return true
 	}
 
@@ -504,56 +507,44 @@ func (o *ArtifactMetaData) SetReferences(v []ArtifactReference) {
 }
 
 func (o ArtifactMetaData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if !isNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !isNil(o.Description) {
-		toSerialize["description"] = o.Description
-	}
-	if true {
-		toSerialize["createdBy"] = o.CreatedBy
-	}
-	if true {
-		toSerialize["createdOn"] = o.CreatedOn
-	}
-	if true {
-		toSerialize["modifiedBy"] = o.ModifiedBy
-	}
-	if true {
-		toSerialize["modifiedOn"] = o.ModifiedOn
-	}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["version"] = o.Version
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["globalId"] = o.GlobalId
-	}
-	if true {
-		toSerialize["state"] = o.State
-	}
-	if !isNil(o.Labels) {
-		toSerialize["labels"] = o.Labels
-	}
-	if !isNil(o.Properties) {
-		toSerialize["properties"] = o.Properties
-	}
-	if !isNil(o.GroupId) {
-		toSerialize["groupId"] = o.GroupId
-	}
-	if true {
-		toSerialize["contentId"] = o.ContentId
-	}
-	if !isNil(o.References) {
-		toSerialize["references"] = o.References
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ArtifactMetaData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	toSerialize["createdBy"] = o.CreatedBy
+	toSerialize["createdOn"] = o.CreatedOn
+	toSerialize["modifiedBy"] = o.ModifiedBy
+	toSerialize["modifiedOn"] = o.ModifiedOn
+	toSerialize["id"] = o.Id
+	toSerialize["version"] = o.Version
+	toSerialize["type"] = o.Type
+	toSerialize["globalId"] = o.GlobalId
+	toSerialize["state"] = o.State
+	if !IsNil(o.Labels) {
+		toSerialize["labels"] = o.Labels
+	}
+	if !IsNil(o.Properties) {
+		toSerialize["properties"] = o.Properties
+	}
+	if !IsNil(o.GroupId) {
+		toSerialize["groupId"] = o.GroupId
+	}
+	toSerialize["contentId"] = o.ContentId
+	if !IsNil(o.References) {
+		toSerialize["references"] = o.References
+	}
+	return toSerialize, nil
 }
 
 type NullableArtifactMetaData struct {

@@ -25,7 +25,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "./openapi"
+    openapiclient "github.com/Apicurio/apicurio-registry-client-sdk-go"
 )
 
 func main() {

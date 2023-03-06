@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the Error type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Error{}
 
 // Error All error responses, whether `4xx` or `5xx` will include one of these as the response body.
 type Error struct {
@@ -46,7 +49,7 @@ func NewErrorWithDefaults() *Error {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *Error) GetMessage() string {
-	if o == nil || isNil(o.Message) {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -56,15 +59,15 @@ func (o *Error) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetMessageOk() (*string, bool) {
-	if o == nil || isNil(o.Message) {
-    return nil, false
+	if o == nil || IsNil(o.Message) {
+		return nil, false
 	}
 	return o.Message, true
 }
 
 // HasMessage returns a boolean if a field has been set.
 func (o *Error) HasMessage() bool {
-	if o != nil && !isNil(o.Message) {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -78,7 +81,7 @@ func (o *Error) SetMessage(v string) {
 
 // GetErrorCode returns the ErrorCode field value if set, zero value otherwise.
 func (o *Error) GetErrorCode() int32 {
-	if o == nil || isNil(o.ErrorCode) {
+	if o == nil || IsNil(o.ErrorCode) {
 		var ret int32
 		return ret
 	}
@@ -88,15 +91,15 @@ func (o *Error) GetErrorCode() int32 {
 // GetErrorCodeOk returns a tuple with the ErrorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetErrorCodeOk() (*int32, bool) {
-	if o == nil || isNil(o.ErrorCode) {
-    return nil, false
+	if o == nil || IsNil(o.ErrorCode) {
+		return nil, false
 	}
 	return o.ErrorCode, true
 }
 
 // HasErrorCode returns a boolean if a field has been set.
 func (o *Error) HasErrorCode() bool {
-	if o != nil && !isNil(o.ErrorCode) {
+	if o != nil && !IsNil(o.ErrorCode) {
 		return true
 	}
 
@@ -110,7 +113,7 @@ func (o *Error) SetErrorCode(v int32) {
 
 // GetDetail returns the Detail field value if set, zero value otherwise.
 func (o *Error) GetDetail() string {
-	if o == nil || isNil(o.Detail) {
+	if o == nil || IsNil(o.Detail) {
 		var ret string
 		return ret
 	}
@@ -120,15 +123,15 @@ func (o *Error) GetDetail() string {
 // GetDetailOk returns a tuple with the Detail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetDetailOk() (*string, bool) {
-	if o == nil || isNil(o.Detail) {
-    return nil, false
+	if o == nil || IsNil(o.Detail) {
+		return nil, false
 	}
 	return o.Detail, true
 }
 
 // HasDetail returns a boolean if a field has been set.
 func (o *Error) HasDetail() bool {
-	if o != nil && !isNil(o.Detail) {
+	if o != nil && !IsNil(o.Detail) {
 		return true
 	}
 
@@ -142,7 +145,7 @@ func (o *Error) SetDetail(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *Error) GetName() string {
-	if o == nil || isNil(o.Name) {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -152,15 +155,15 @@ func (o *Error) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Error) GetNameOk() (*string, bool) {
-	if o == nil || isNil(o.Name) {
-    return nil, false
+	if o == nil || IsNil(o.Name) {
+		return nil, false
 	}
 	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
 func (o *Error) HasName() bool {
-	if o != nil && !isNil(o.Name) {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -173,20 +176,28 @@ func (o *Error) SetName(v string) {
 }
 
 func (o Error) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if !isNil(o.Message) {
-		toSerialize["message"] = o.Message
-	}
-	if !isNil(o.ErrorCode) {
-		toSerialize["error_code"] = o.ErrorCode
-	}
-	if !isNil(o.Detail) {
-		toSerialize["detail"] = o.Detail
-	}
-	if !isNil(o.Name) {
-		toSerialize["name"] = o.Name
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Error) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.ErrorCode) {
+		toSerialize["error_code"] = o.ErrorCode
+	}
+	if !IsNil(o.Detail) {
+		toSerialize["detail"] = o.Detail
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	return toSerialize, nil
 }
 
 type NullableError struct {
