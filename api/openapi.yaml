@@ -24,7 +24,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   title: "Apicurio Registry API [v2]"
-  version: 2.3.2-SNAPSHOT
+  version: 2.4.x
 servers:
 - url: /
 tags:
@@ -1381,6 +1381,86 @@ paths:
       - Metadata
     summary: Manage the metadata for a single version of an artifact in the registry.
   /groups/{groupId}/artifacts/{artifactId}/versions/{version}:
+    delete:
+      description: "Deletes a single version of the artifact. Parameters `groupId`,\
+        \ `artifactId` and the unique `version`\nare needed. If this is the only version\
+        \ of the artifact, this operation is the same as \ndeleting the entire artifact.\n\
+        \nThis feature is disabled by default and it's discouraged for normal usage.\
+        \ To enable it, set the `registry.rest.artifact.deletion.enabled` property\
+        \ to true. This operation can fail for the following reasons:\n\n* No artifact\
+        \ with this `artifactId` exists (HTTP error `404`)\n* No version with this\
+        \ `version` exists (HTTP error `404`)\n * Feature is disabled (HTTP error\
+        \ `405`)\n * A server error occurred (HTTP error `500`)\n"
+      operationId: deleteArtifactVersion
+      parameters:
+      - description: "The artifact group ID.  Must be a string provided by the client,\
+          \ representing the name of the grouping of artifacts."
+        explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          $ref: '#/components/schemas/GroupId'
+        style: simple
+      - description: "The artifact ID.  Can be a string (client-provided) or UUID\
+          \ (server-generated), representing the unique artifact identifier."
+        explode: false
+        in: path
+        name: artifactId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ArtifactId'
+        style: simple
+      - description: The unique identifier of a specific version of the artifact content.
+        explode: false
+        in: path
+        name: version
+        required: true
+        schema:
+          $ref: '#/components/schemas/Version'
+        style: simple
+      responses:
+        "204":
+          description: The artifact version was successfully deleted.
+        "404":
+          content:
+            application/json:
+              examples:
+                NotFoundExample:
+                  value:
+                    error_code: 404
+                    message: No artifact with id 'Topic-1/Inbound' could be found.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can return a `404`
+            error.
+        "405":
+          content:
+            application/json:
+              examples:
+                MethodNotAllowedExample:
+                  value:
+                    error_code: 405
+                    message: Method is currently not supported or disabled.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail due to method
+            not allowed or disabled.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+      summary: Delete artifact version
+      tags:
+      - Versions
     get:
       description: "Retrieves a single version of the artifact content.  Both the\
         \ `artifactId` and the\nunique `version` number must be provided.  The `Content-Type`\
@@ -2883,8 +2963,12 @@ paths:
                         example:
                           property-1: value1
                           property-2: true
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/FileContent'
           application/create.extended+json:
+            schema:
+              $ref: '#/components/schemas/ContentCreateRequest'
+          application/vnd.create.extended+json:
             schema:
               $ref: '#/components/schemas/ContentCreateRequest'
         description: |
@@ -3256,8 +3340,12 @@ paths:
                         example:
                           property-1: value1
                           property-2: true
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/FileContent'
           application/create.extended+json:
+            schema:
+              $ref: '#/components/schemas/ContentCreateRequest'
+          application/vnd.create.extended+json:
             schema:
               $ref: '#/components/schemas/ContentCreateRequest'
         description: |
@@ -3362,7 +3450,8 @@ paths:
       requestBody:
         content:
           '*/*':
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/FileContent'
         description: |
           The content of the artifact being tested. This is often, but not always, JSON data
           representing one of the supported artifact types:
@@ -3638,8 +3727,12 @@ paths:
                         example:
                           property-1: value1
                           property-2: true
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/FileContent'
           application/create.extended+json:
+            schema:
+              $ref: '#/components/schemas/ContentCreateRequest'
+          application/vnd.create.extended+json:
             schema:
               $ref: '#/components/schemas/ContentCreateRequest'
         description: |
@@ -3854,7 +3947,8 @@ paths:
                         example:
                           property-1: value1
                           property-2: true
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/FileContent'
         description: The content of an artifact version.
         required: true
       responses:
@@ -4318,6 +4412,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Common response for all operations that can return a `404` error.
+    MethodNotAllowed:
+      content:
+        application/json:
+          examples:
+            MethodNotAllowedExample:
+              value:
+                error_code: 405
+                message: Method is currently not supported or disabled.
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Common response for all operations that can fail due to method
+        not allowed or disabled.
     ServerError:
       content:
         application/json:
@@ -4823,13 +4929,11 @@ components:
         createdOn:
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         modifiedBy:
           type: string
         modifiedOn:
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         id:
           description: The ID of a single artifact.
           example: '"example-artifact"'
@@ -4917,7 +5021,6 @@ components:
           description: ""
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         createdBy:
           description: ""
           type: string
@@ -4937,7 +5040,6 @@ components:
           description: ""
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         modifiedBy:
           description: ""
           type: string
@@ -4989,7 +5091,6 @@ components:
         createdOn:
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         type:
           description: ""
           example: AVRO
@@ -5064,7 +5165,6 @@ components:
           description: ""
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         createdBy:
           description: ""
           type: string
@@ -5302,14 +5402,13 @@ components:
           description: ""
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         createdBy:
           description: ""
+          type: string
         modifiedOn:
           description: ""
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         modifiedBy:
           description: ""
           type: string
@@ -5346,13 +5445,11 @@ components:
         createdOn:
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         modifiedBy:
           type: string
         modifiedOn:
           format: utc-date
           type: string
-          x-codegen-formatPattern: yyyy-MM-dd'T'HH:mm:ssZ
         properties:
           additionalProperties:
             type: string
@@ -5452,5 +5549,13 @@ components:
 x-codegen:
   bean-annotations:
   - io.quarkus.runtime.annotations.RegisterForReflection
-  - annotation: lombok.ToString
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
     excludeEnums: true

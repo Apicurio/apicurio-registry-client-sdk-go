@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,7 +14,7 @@ package registryclient
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -113,9 +113,9 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -132,8 +132,8 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -143,8 +143,8 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -154,8 +154,8 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -250,9 +250,9 @@ func (a *AdminApiService) CreateRoleMappingExecute(r ApiCreateRoleMappingRequest
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -269,8 +269,8 @@ func (a *AdminApiService) CreateRoleMappingExecute(r ApiCreateRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -353,9 +353,9 @@ func (a *AdminApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesR
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -372,8 +372,8 @@ func (a *AdminApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -431,7 +431,7 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) 
 	}
 
 	localVarPath := localBasePath + "/admin/rules/{rule}"
-	localVarPath = strings.Replace(localVarPath, "{"+"rule"+"}", url.PathEscape(parameterToString(r.rule, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"rule"+"}", url.PathEscape(parameterValueToString(r.rule, "rule")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -464,9 +464,9 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) 
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -483,8 +483,8 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -494,8 +494,8 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -550,7 +550,7 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest
 	}
 
 	localVarPath := localBasePath + "/admin/roleMappings/{principalId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"principalId"+"}", url.PathEscape(parameterToString(r.principalId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"principalId"+"}", url.PathEscape(parameterValueToString(r.principalId, "principalId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -583,9 +583,9 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -602,8 +602,8 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -613,8 +613,8 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -634,7 +634,7 @@ func (r ApiExportDataRequest) ForBrowser(forBrowser bool) ApiExportDataRequest {
 	return r
 }
 
-func (r ApiExportDataRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiExportDataRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.ExportDataExecute(r)
 }
 
@@ -655,12 +655,12 @@ func (a *AdminApiService) ExportData(ctx context.Context) ApiExportDataRequest {
 
 // Execute executes the request
 //  @return *os.File
-func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (**os.File, *http.Response, error) {
+func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarReturnValue  *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ExportData")
@@ -675,7 +675,7 @@ func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (**os.File, 
 	localVarFormParams := url.Values{}
 
 	if r.forBrowser != nil {
-		localVarQueryParams.Add("forBrowser", parameterToString(*r.forBrowser, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "forBrowser", r.forBrowser, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -704,9 +704,9 @@ func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (**os.File, 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -723,8 +723,8 @@ func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (**os.File, 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -790,7 +790,7 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 	}
 
 	localVarPath := localBasePath + "/admin/config/properties/{propertyName}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propertyName"+"}", url.PathEscape(parameterToString(r.propertyName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"propertyName"+"}", url.PathEscape(parameterValueToString(r.propertyName, "propertyName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -823,9 +823,9 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -842,8 +842,8 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -853,8 +853,8 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -921,7 +921,7 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 	}
 
 	localVarPath := localBasePath + "/admin/rules/{rule}"
-	localVarPath = strings.Replace(localVarPath, "{"+"rule"+"}", url.PathEscape(parameterToString(r.rule, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"rule"+"}", url.PathEscape(parameterValueToString(r.rule, "rule")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -954,9 +954,9 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -973,8 +973,8 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -984,8 +984,8 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1045,7 +1045,7 @@ func (a *AdminApiService) GetLogConfigurationExecute(r ApiGetLogConfigurationReq
 	}
 
 	localVarPath := localBasePath + "/admin/loggers/{logger}"
-	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterToString(r.logger, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterValueToString(r.logger, "logger")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1078,9 +1078,9 @@ func (a *AdminApiService) GetLogConfigurationExecute(r ApiGetLogConfigurationReq
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1097,8 +1097,8 @@ func (a *AdminApiService) GetLogConfigurationExecute(r ApiGetLogConfigurationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1164,7 +1164,7 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 	}
 
 	localVarPath := localBasePath + "/admin/roleMappings/{principalId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"principalId"+"}", url.PathEscape(parameterToString(r.principalId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"principalId"+"}", url.PathEscape(parameterValueToString(r.principalId, "principalId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1197,9 +1197,9 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1216,8 +1216,8 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1227,8 +1227,8 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1248,14 +1248,14 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 type ApiImportDataRequest struct {
 	ctx context.Context
 	ApiService *AdminApiService
-	body **os.File
+	body *os.File
 	xRegistryPreserveGlobalId *bool
 	xRegistryPreserveContentId *bool
 }
 
 // The ZIP file representing the previously exported registry data.
 func (r ApiImportDataRequest) Body(body *os.File) ApiImportDataRequest {
-	r.body = &body
+	r.body = body
 	return r
 }
 
@@ -1330,10 +1330,10 @@ func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Respo
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.xRegistryPreserveGlobalId != nil {
-		localVarHeaderParams["X-Registry-Preserve-GlobalId"] = parameterToString(*r.xRegistryPreserveGlobalId, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Preserve-GlobalId", r.xRegistryPreserveGlobalId, "")
 	}
 	if r.xRegistryPreserveContentId != nil {
-		localVarHeaderParams["X-Registry-Preserve-ContentId"] = parameterToString(*r.xRegistryPreserveContentId, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Preserve-ContentId", r.xRegistryPreserveContentId, "")
 	}
 	// body params
 	localVarPostBody = r.body
@@ -1347,9 +1347,9 @@ func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Respo
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -1366,8 +1366,8 @@ func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Respo
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -1452,9 +1452,9 @@ func (a *AdminApiService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1471,8 +1471,8 @@ func (a *AdminApiService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1566,9 +1566,9 @@ func (a *AdminApiService) ListConfigPropertiesExecute(r ApiListConfigPropertiesR
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1585,8 +1585,8 @@ func (a *AdminApiService) ListConfigPropertiesExecute(r ApiListConfigPropertiesR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1680,9 +1680,9 @@ func (a *AdminApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1699,8 +1699,8 @@ func (a *AdminApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1790,9 +1790,9 @@ func (a *AdminApiService) ListLogConfigurationsExecute(r ApiListLogConfiguration
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1809,8 +1809,8 @@ func (a *AdminApiService) ListLogConfigurationsExecute(r ApiListLogConfiguration
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1904,9 +1904,9 @@ func (a *AdminApiService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1923,8 +1923,8 @@ func (a *AdminApiService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1984,7 +1984,7 @@ func (a *AdminApiService) RemoveLogConfigurationExecute(r ApiRemoveLogConfigurat
 	}
 
 	localVarPath := localBasePath + "/admin/loggers/{logger}"
-	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterToString(r.logger, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterValueToString(r.logger, "logger")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2017,9 +2017,9 @@ func (a *AdminApiService) RemoveLogConfigurationExecute(r ApiRemoveLogConfigurat
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2036,8 +2036,8 @@ func (a *AdminApiService) RemoveLogConfigurationExecute(r ApiRemoveLogConfigurat
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2103,7 +2103,7 @@ func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyReq
 	}
 
 	localVarPath := localBasePath + "/admin/config/properties/{propertyName}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propertyName"+"}", url.PathEscape(parameterToString(r.propertyName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"propertyName"+"}", url.PathEscape(parameterValueToString(r.propertyName, "propertyName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2136,9 +2136,9 @@ func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyReq
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -2155,8 +2155,8 @@ func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyReq
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2166,8 +2166,8 @@ func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyReq
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -2225,7 +2225,7 @@ func (a *AdminApiService) SetLogConfigurationExecute(r ApiSetLogConfigurationReq
 	}
 
 	localVarPath := localBasePath + "/admin/loggers/{logger}"
-	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterToString(r.logger, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterValueToString(r.logger, "logger")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2263,9 +2263,9 @@ func (a *AdminApiService) SetLogConfigurationExecute(r ApiSetLogConfigurationReq
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2282,8 +2282,8 @@ func (a *AdminApiService) SetLogConfigurationExecute(r ApiSetLogConfigurationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2353,7 +2353,7 @@ func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyR
 	}
 
 	localVarPath := localBasePath + "/admin/config/properties/{propertyName}"
-	localVarPath = strings.Replace(localVarPath, "{"+"propertyName"+"}", url.PathEscape(parameterToString(r.propertyName, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"propertyName"+"}", url.PathEscape(parameterValueToString(r.propertyName, "propertyName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2391,9 +2391,9 @@ func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyR
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -2410,8 +2410,8 @@ func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2421,8 +2421,8 @@ func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyR
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -2486,7 +2486,7 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 	}
 
 	localVarPath := localBasePath + "/admin/rules/{rule}"
-	localVarPath = strings.Replace(localVarPath, "{"+"rule"+"}", url.PathEscape(parameterToString(r.rule, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"rule"+"}", url.PathEscape(parameterValueToString(r.rule, "rule")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2524,9 +2524,9 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2543,8 +2543,8 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2554,8 +2554,8 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2625,7 +2625,7 @@ func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest
 	}
 
 	localVarPath := localBasePath + "/admin/roleMappings/{principalId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"principalId"+"}", url.PathEscape(parameterToString(r.principalId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"principalId"+"}", url.PathEscape(parameterValueToString(r.principalId, "principalId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2663,9 +2663,9 @@ func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -2682,8 +2682,8 @@ func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2693,8 +2693,8 @@ func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}

@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,7 +14,7 @@ package registryclient
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -30,7 +30,7 @@ type ApiCreateArtifactRequest struct {
 	ctx context.Context
 	ApiService *ArtifactsApiService
 	groupId string
-	body *interface{}
+	body *os.File
 	xRegistryArtifactType *string
 	xRegistryArtifactId *string
 	xRegistryVersion *string
@@ -45,8 +45,8 @@ type ApiCreateArtifactRequest struct {
 }
 
 // The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
-func (r ApiCreateArtifactRequest) Body(body interface{}) ApiCreateArtifactRequest {
-	r.body = &body
+func (r ApiCreateArtifactRequest) Body(body *os.File) ApiCreateArtifactRequest {
+	r.body = body
 	return r
 }
 
@@ -204,7 +204,7 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 	}
 
 	localVarPath := localBasePath + "/groups/{groupId}/artifacts"
-	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterToString(r.groupId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -214,13 +214,13 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 	}
 
 	if r.ifExists != nil {
-		localVarQueryParams.Add("ifExists", parameterToString(*r.ifExists, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ifExists", r.ifExists, "")
 	}
 	if r.canonical != nil {
-		localVarQueryParams.Add("canonical", parameterToString(*r.canonical, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "canonical", r.canonical, "")
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/create.extended+json"}
+	localVarHTTPContentTypes := []string{"application/create.extended+json", "application/vnd.create.extended+json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -237,31 +237,31 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.xRegistryArtifactType != nil {
-		localVarHeaderParams["X-Registry-ArtifactType"] = parameterToString(*r.xRegistryArtifactType, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-ArtifactType", r.xRegistryArtifactType, "")
 	}
 	if r.xRegistryArtifactId != nil {
-		localVarHeaderParams["X-Registry-ArtifactId"] = parameterToString(*r.xRegistryArtifactId, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-ArtifactId", r.xRegistryArtifactId, "")
 	}
 	if r.xRegistryVersion != nil {
-		localVarHeaderParams["X-Registry-Version"] = parameterToString(*r.xRegistryVersion, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Version", r.xRegistryVersion, "")
 	}
 	if r.xRegistryDescription != nil {
-		localVarHeaderParams["X-Registry-Description"] = parameterToString(*r.xRegistryDescription, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Description", r.xRegistryDescription, "")
 	}
 	if r.xRegistryDescriptionEncoded != nil {
-		localVarHeaderParams["X-Registry-Description-Encoded"] = parameterToString(*r.xRegistryDescriptionEncoded, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Description-Encoded", r.xRegistryDescriptionEncoded, "")
 	}
 	if r.xRegistryName != nil {
-		localVarHeaderParams["X-Registry-Name"] = parameterToString(*r.xRegistryName, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Name", r.xRegistryName, "")
 	}
 	if r.xRegistryNameEncoded != nil {
-		localVarHeaderParams["X-Registry-Name-Encoded"] = parameterToString(*r.xRegistryNameEncoded, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Name-Encoded", r.xRegistryNameEncoded, "")
 	}
 	if r.xRegistryContentHash != nil {
-		localVarHeaderParams["X-Registry-Content-Hash"] = parameterToString(*r.xRegistryContentHash, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Content-Hash", r.xRegistryContentHash, "")
 	}
 	if r.xRegistryHashAlgorithm != nil {
-		localVarHeaderParams["X-Registry-Hash-Algorithm"] = parameterToString(*r.xRegistryHashAlgorithm, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Hash-Algorithm", r.xRegistryHashAlgorithm, "")
 	}
 	// body params
 	localVarPostBody = r.body
@@ -275,9 +275,9 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -294,8 +294,8 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -305,8 +305,8 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -316,8 +316,8 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -382,8 +382,8 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 	}
 
 	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterToString(r.groupId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterToString(r.artifactId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -416,9 +416,9 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -435,8 +435,8 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -446,8 +446,8 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -496,7 +496,7 @@ func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifacts
 	}
 
 	localVarPath := localBasePath + "/groups/{groupId}/artifacts"
-	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterToString(r.groupId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -529,9 +529,9 @@ func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifacts
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -548,8 +548,8 @@ func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifacts
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -570,7 +570,7 @@ func (r ApiGetContentByGlobalIdRequest) Dereference(dereference bool) ApiGetCont
 	return r
 }
 
-func (r ApiGetContentByGlobalIdRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiGetContentByGlobalIdRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.GetContentByGlobalIdExecute(r)
 }
 
@@ -600,12 +600,12 @@ func (a *ArtifactsApiService) GetContentByGlobalId(ctx context.Context, globalId
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGlobalIdRequest) (**os.File, *http.Response, error) {
+func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGlobalIdRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarReturnValue  *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentByGlobalId")
@@ -614,14 +614,14 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 	}
 
 	localVarPath := localBasePath + "/ids/globalIds/{globalId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"globalId"+"}", url.PathEscape(parameterToString(r.globalId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"globalId"+"}", url.PathEscape(parameterValueToString(r.globalId, "globalId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	if r.dereference != nil {
-		localVarQueryParams.Add("dereference", parameterToString(*r.dereference, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dereference", r.dereference, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -650,9 +650,9 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -669,8 +669,8 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -680,8 +680,8 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -704,7 +704,7 @@ type ApiGetContentByHashRequest struct {
 	contentHash string
 }
 
-func (r ApiGetContentByHashRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiGetContentByHashRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.GetContentByHashExecute(r)
 }
 
@@ -735,12 +735,12 @@ func (a *ArtifactsApiService) GetContentByHash(ctx context.Context, contentHash 
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashRequest) (**os.File, *http.Response, error) {
+func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarReturnValue  *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentByHash")
@@ -749,7 +749,7 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 	}
 
 	localVarPath := localBasePath + "/ids/contentHashes/{contentHash}/"
-	localVarPath = strings.Replace(localVarPath, "{"+"contentHash"+"}", url.PathEscape(parameterToString(r.contentHash, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"contentHash"+"}", url.PathEscape(parameterValueToString(r.contentHash, "contentHash")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -782,9 +782,9 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -801,8 +801,8 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -812,8 +812,8 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -836,7 +836,7 @@ type ApiGetContentByIdRequest struct {
 	contentId int64
 }
 
-func (r ApiGetContentByIdRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiGetContentByIdRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.GetContentByIdExecute(r)
 }
 
@@ -867,12 +867,12 @@ func (a *ArtifactsApiService) GetContentById(ctx context.Context, contentId int6
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) (**os.File, *http.Response, error) {
+func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarReturnValue  *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentById")
@@ -881,7 +881,7 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 	}
 
 	localVarPath := localBasePath + "/ids/contentIds/{contentId}/"
-	localVarPath = strings.Replace(localVarPath, "{"+"contentId"+"}", url.PathEscape(parameterToString(r.contentId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"contentId"+"}", url.PathEscape(parameterValueToString(r.contentId, "contentId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -914,9 +914,9 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -933,8 +933,8 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -944,8 +944,8 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -976,7 +976,7 @@ func (r ApiGetLatestArtifactRequest) Dereference(dereference bool) ApiGetLatestA
 	return r
 }
 
-func (r ApiGetLatestArtifactRequest) Execute() (**os.File, *http.Response, error) {
+func (r ApiGetLatestArtifactRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.GetLatestArtifactExecute(r)
 }
 
@@ -1009,12 +1009,12 @@ func (a *ArtifactsApiService) GetLatestArtifact(ctx context.Context, groupId str
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactRequest) (**os.File, *http.Response, error) {
+func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarReturnValue  *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetLatestArtifact")
@@ -1023,15 +1023,15 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 	}
 
 	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterToString(r.groupId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterToString(r.artifactId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	if r.dereference != nil {
-		localVarQueryParams.Add("dereference", parameterToString(*r.dereference, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dereference", r.dereference, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1060,9 +1060,9 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1079,8 +1079,8 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1090,8 +1090,8 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1179,23 +1179,23 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 	}
 
 	localVarPath := localBasePath + "/groups/{groupId}/artifacts"
-	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterToString(r.groupId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.offset != nil {
-		localVarQueryParams.Add("offset", parameterToString(*r.offset, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "")
 	}
 	if r.order != nil {
-		localVarQueryParams.Add("order", parameterToString(*r.order, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "order", r.order, "")
 	}
 	if r.orderby != nil {
-		localVarQueryParams.Add("orderby", parameterToString(*r.orderby, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderby", r.orderby, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1224,9 +1224,9 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1243,8 +1243,8 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1309,7 +1309,7 @@ func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByCo
 	}
 
 	localVarPath := localBasePath + "/ids/contentHashes/{contentHash}/references"
-	localVarPath = strings.Replace(localVarPath, "{"+"contentHash"+"}", url.PathEscape(parameterToString(r.contentHash, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"contentHash"+"}", url.PathEscape(parameterValueToString(r.contentHash, "contentHash")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1342,9 +1342,9 @@ func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByCo
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1416,7 +1416,7 @@ func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByCont
 	}
 
 	localVarPath := localBasePath + "/ids/contentIds/{contentId}/references"
-	localVarPath = strings.Replace(localVarPath, "{"+"contentId"+"}", url.PathEscape(parameterToString(r.contentId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"contentId"+"}", url.PathEscape(parameterValueToString(r.contentId, "contentId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1449,9 +1449,9 @@ func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByCont
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1523,7 +1523,7 @@ func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGloba
 	}
 
 	localVarPath := localBasePath + "/ids/globalIds/{globalId}/references"
-	localVarPath = strings.Replace(localVarPath, "{"+"globalId"+"}", url.PathEscape(parameterToString(r.globalId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"globalId"+"}", url.PathEscape(parameterValueToString(r.globalId, "globalId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -1556,9 +1556,9 @@ func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGloba
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1707,29 +1707,29 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 	localVarFormParams := url.Values{}
 
 	if r.name != nil {
-		localVarQueryParams.Add("name", parameterToString(*r.name, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
 	}
 	if r.offset != nil {
-		localVarQueryParams.Add("offset", parameterToString(*r.offset, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "")
 	}
 	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.order != nil {
-		localVarQueryParams.Add("order", parameterToString(*r.order, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "order", r.order, "")
 	}
 	if r.orderby != nil {
-		localVarQueryParams.Add("orderby", parameterToString(*r.orderby, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderby", r.orderby, "")
 	}
 	if r.labels != nil {
 		t := *r.labels
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				localVarQueryParams.Add("labels", parameterToString(s.Index(i), "multi"))
+				parameterAddToHeaderOrQuery(localVarQueryParams, "labels", s.Index(i), "multi")
 			}
 		} else {
-			localVarQueryParams.Add("labels", parameterToString(t, "multi"))
+			parameterAddToHeaderOrQuery(localVarQueryParams, "labels", t, "multi")
 		}
 	}
 	if r.properties != nil {
@@ -1737,23 +1737,23 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				localVarQueryParams.Add("properties", parameterToString(s.Index(i), "multi"))
+				parameterAddToHeaderOrQuery(localVarQueryParams, "properties", s.Index(i), "multi")
 			}
 		} else {
-			localVarQueryParams.Add("properties", parameterToString(t, "multi"))
+			parameterAddToHeaderOrQuery(localVarQueryParams, "properties", t, "multi")
 		}
 	}
 	if r.description != nil {
-		localVarQueryParams.Add("description", parameterToString(*r.description, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "description", r.description, "")
 	}
 	if r.group != nil {
-		localVarQueryParams.Add("group", parameterToString(*r.group, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group", r.group, "")
 	}
 	if r.globalId != nil {
-		localVarQueryParams.Add("globalId", parameterToString(*r.globalId, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "globalId", r.globalId, "")
 	}
 	if r.contentId != nil {
-		localVarQueryParams.Add("contentId", parameterToString(*r.contentId, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "contentId", r.contentId, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1782,9 +1782,9 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1801,8 +1801,8 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1822,7 +1822,7 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 type ApiSearchArtifactsByContentRequest struct {
 	ctx context.Context
 	ApiService *ArtifactsApiService
-	body **os.File
+	body *os.File
 	canonical *bool
 	artifactType *string
 	offset *int32
@@ -1833,7 +1833,7 @@ type ApiSearchArtifactsByContentRequest struct {
 
 // The content to search for.
 func (r ApiSearchArtifactsByContentRequest) Body(body *os.File) ApiSearchArtifactsByContentRequest {
-	r.body = &body
+	r.body = body
 	return r
 }
 
@@ -1919,22 +1919,22 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 	}
 
 	if r.canonical != nil {
-		localVarQueryParams.Add("canonical", parameterToString(*r.canonical, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "canonical", r.canonical, "")
 	}
 	if r.artifactType != nil {
-		localVarQueryParams.Add("artifactType", parameterToString(*r.artifactType, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "artifactType", r.artifactType, "")
 	}
 	if r.offset != nil {
-		localVarQueryParams.Add("offset", parameterToString(*r.offset, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "")
 	}
 	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.order != nil {
-		localVarQueryParams.Add("order", parameterToString(*r.order, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "order", r.order, "")
 	}
 	if r.orderby != nil {
-		localVarQueryParams.Add("orderby", parameterToString(*r.orderby, ""))
+		parameterAddToHeaderOrQuery(localVarQueryParams, "orderby", r.orderby, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1965,9 +1965,9 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -1984,8 +1984,8 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2007,7 +2007,7 @@ type ApiUpdateArtifactRequest struct {
 	ApiService *ArtifactsApiService
 	groupId string
 	artifactId string
-	body *interface{}
+	body *os.File
 	xRegistryVersion *string
 	xRegistryName *string
 	xRegistryNameEncoded *string
@@ -2016,8 +2016,8 @@ type ApiUpdateArtifactRequest struct {
 }
 
 // The new content of the artifact being updated. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
-func (r ApiUpdateArtifactRequest) Body(body interface{}) ApiUpdateArtifactRequest {
-	r.body = &body
+func (r ApiUpdateArtifactRequest) Body(body *os.File) ApiUpdateArtifactRequest {
+	r.body = body
 	return r
 }
 
@@ -2105,8 +2105,8 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 	}
 
 	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterToString(r.groupId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterToString(r.artifactId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2116,7 +2116,7 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/create.extended+json"}
+	localVarHTTPContentTypes := []string{"application/create.extended+json", "application/vnd.create.extended+json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -2133,19 +2133,19 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.xRegistryVersion != nil {
-		localVarHeaderParams["X-Registry-Version"] = parameterToString(*r.xRegistryVersion, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Version", r.xRegistryVersion, "")
 	}
 	if r.xRegistryName != nil {
-		localVarHeaderParams["X-Registry-Name"] = parameterToString(*r.xRegistryName, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Name", r.xRegistryName, "")
 	}
 	if r.xRegistryNameEncoded != nil {
-		localVarHeaderParams["X-Registry-Name-Encoded"] = parameterToString(*r.xRegistryNameEncoded, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Name-Encoded", r.xRegistryNameEncoded, "")
 	}
 	if r.xRegistryDescription != nil {
-		localVarHeaderParams["X-Registry-Description"] = parameterToString(*r.xRegistryDescription, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Description", r.xRegistryDescription, "")
 	}
 	if r.xRegistryDescriptionEncoded != nil {
-		localVarHeaderParams["X-Registry-Description-Encoded"] = parameterToString(*r.xRegistryDescriptionEncoded, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Registry-Description-Encoded", r.xRegistryDescriptionEncoded, "")
 	}
 	// body params
 	localVarPostBody = r.body
@@ -2159,9 +2159,9 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -2178,8 +2178,8 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
@@ -2189,8 +2189,8 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2200,8 +2200,8 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -2276,8 +2276,8 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 	}
 
 	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}/state"
-	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterToString(r.groupId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterToString(r.artifactId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2315,9 +2315,9 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 		return localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarHTTPResponse, err
 	}
@@ -2334,8 +2334,8 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -2345,8 +2345,8 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -2356,8 +2356,8 @@ func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-            		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-            		newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}

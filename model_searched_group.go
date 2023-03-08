@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the SearchedGroup type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SearchedGroup{}
+
 // SearchedGroup Models a single group from the result set returned when searching for groups.
 type SearchedGroup struct {
 	// An ID of a single artifact group.
@@ -24,7 +27,7 @@ type SearchedGroup struct {
 	// 
 	CreatedOn string `json:"createdOn"`
 	// 
-	CreatedBy interface{} `json:"createdBy"`
+	CreatedBy string `json:"createdBy"`
 	// 
 	ModifiedOn string `json:"modifiedOn"`
 	// 
@@ -35,7 +38,7 @@ type SearchedGroup struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSearchedGroup(id string, description string, createdOn string, createdBy interface{}, modifiedOn string, modifiedBy string) *SearchedGroup {
+func NewSearchedGroup(id string, description string, createdOn string, createdBy string, modifiedOn string, modifiedBy string) *SearchedGroup {
 	this := SearchedGroup{}
 	this.Id = id
 	this.Description = description
@@ -68,7 +71,7 @@ func (o *SearchedGroup) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedGroup) GetIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Id, true
 }
@@ -92,7 +95,7 @@ func (o *SearchedGroup) GetDescription() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedGroup) GetDescriptionOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Description, true
 }
@@ -116,7 +119,7 @@ func (o *SearchedGroup) GetCreatedOn() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedGroup) GetCreatedOnOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.CreatedOn, true
 }
@@ -127,10 +130,9 @@ func (o *SearchedGroup) SetCreatedOn(v string) {
 }
 
 // GetCreatedBy returns the CreatedBy field value
-// If the value is explicit nil, the zero value for interface{} will be returned
-func (o *SearchedGroup) GetCreatedBy() interface{} {
+func (o *SearchedGroup) GetCreatedBy() string {
 	if o == nil {
-		var ret interface{}
+		var ret string
 		return ret
 	}
 
@@ -139,16 +141,15 @@ func (o *SearchedGroup) GetCreatedBy() interface{} {
 
 // GetCreatedByOk returns a tuple with the CreatedBy field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SearchedGroup) GetCreatedByOk() (*interface{}, bool) {
-	if o == nil || isNil(o.CreatedBy) {
-    return nil, false
+func (o *SearchedGroup) GetCreatedByOk() (*string, bool) {
+	if o == nil {
+		return nil, false
 	}
 	return &o.CreatedBy, true
 }
 
 // SetCreatedBy sets field value
-func (o *SearchedGroup) SetCreatedBy(v interface{}) {
+func (o *SearchedGroup) SetCreatedBy(v string) {
 	o.CreatedBy = v
 }
 
@@ -166,7 +167,7 @@ func (o *SearchedGroup) GetModifiedOn() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedGroup) GetModifiedOnOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.ModifiedOn, true
 }
@@ -190,7 +191,7 @@ func (o *SearchedGroup) GetModifiedBy() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedGroup) GetModifiedByOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.ModifiedBy, true
 }
@@ -201,26 +202,22 @@ func (o *SearchedGroup) SetModifiedBy(v string) {
 }
 
 func (o SearchedGroup) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["description"] = o.Description
-	}
-	if true {
-		toSerialize["createdOn"] = o.CreatedOn
-	}
-	if o.CreatedBy != nil {
-		toSerialize["createdBy"] = o.CreatedBy
-	}
-	if true {
-		toSerialize["modifiedOn"] = o.ModifiedOn
-	}
-	if true {
-		toSerialize["modifiedBy"] = o.ModifiedBy
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SearchedGroup) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	toSerialize["description"] = o.Description
+	toSerialize["createdOn"] = o.CreatedOn
+	toSerialize["createdBy"] = o.CreatedBy
+	toSerialize["modifiedOn"] = o.ModifiedOn
+	toSerialize["modifiedBy"] = o.ModifiedBy
+	return toSerialize, nil
 }
 
 type NullableSearchedGroup struct {

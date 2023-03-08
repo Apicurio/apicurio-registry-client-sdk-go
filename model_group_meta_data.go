@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the GroupMetaData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GroupMetaData{}
 
 // GroupMetaData 
 type GroupMetaData struct {
@@ -66,7 +69,7 @@ func (o *GroupMetaData) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *GroupMetaData) GetIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Id, true
 }
@@ -90,7 +93,7 @@ func (o *GroupMetaData) GetDescription() string {
 // and a boolean to check if the value has been set.
 func (o *GroupMetaData) GetDescriptionOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Description, true
 }
@@ -114,7 +117,7 @@ func (o *GroupMetaData) GetCreatedBy() string {
 // and a boolean to check if the value has been set.
 func (o *GroupMetaData) GetCreatedByOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.CreatedBy, true
 }
@@ -138,7 +141,7 @@ func (o *GroupMetaData) GetCreatedOn() string {
 // and a boolean to check if the value has been set.
 func (o *GroupMetaData) GetCreatedOnOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.CreatedOn, true
 }
@@ -162,7 +165,7 @@ func (o *GroupMetaData) GetModifiedBy() string {
 // and a boolean to check if the value has been set.
 func (o *GroupMetaData) GetModifiedByOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.ModifiedBy, true
 }
@@ -186,7 +189,7 @@ func (o *GroupMetaData) GetModifiedOn() string {
 // and a boolean to check if the value has been set.
 func (o *GroupMetaData) GetModifiedOnOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.ModifiedOn, true
 }
@@ -210,7 +213,7 @@ func (o *GroupMetaData) GetProperties() map[string]string {
 // and a boolean to check if the value has been set.
 func (o *GroupMetaData) GetPropertiesOk() (*map[string]string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Properties, true
 }
@@ -221,29 +224,23 @@ func (o *GroupMetaData) SetProperties(v map[string]string) {
 }
 
 func (o GroupMetaData) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if true {
-		toSerialize["description"] = o.Description
-	}
-	if true {
-		toSerialize["createdBy"] = o.CreatedBy
-	}
-	if true {
-		toSerialize["createdOn"] = o.CreatedOn
-	}
-	if true {
-		toSerialize["modifiedBy"] = o.ModifiedBy
-	}
-	if true {
-		toSerialize["modifiedOn"] = o.ModifiedOn
-	}
-	if true {
-		toSerialize["properties"] = o.Properties
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GroupMetaData) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	toSerialize["description"] = o.Description
+	toSerialize["createdBy"] = o.CreatedBy
+	toSerialize["createdOn"] = o.CreatedOn
+	toSerialize["modifiedBy"] = o.ModifiedBy
+	toSerialize["modifiedOn"] = o.ModifiedOn
+	toSerialize["properties"] = o.Properties
+	return toSerialize, nil
 }
 
 type NullableGroupMetaData struct {

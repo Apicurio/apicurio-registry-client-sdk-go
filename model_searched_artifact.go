@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the SearchedArtifact type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SearchedArtifact{}
 
 // SearchedArtifact Models a single artifact from the result set returned when searching for artifacts.
 type SearchedArtifact struct {
@@ -76,7 +79,7 @@ func (o *SearchedArtifact) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Id, true
 }
@@ -88,7 +91,7 @@ func (o *SearchedArtifact) SetId(v string) {
 
 // GetName returns the Name field value if set, zero value otherwise.
 func (o *SearchedArtifact) GetName() string {
-	if o == nil || isNil(o.Name) {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
@@ -98,15 +101,15 @@ func (o *SearchedArtifact) GetName() string {
 // GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetNameOk() (*string, bool) {
-	if o == nil || isNil(o.Name) {
-    return nil, false
+	if o == nil || IsNil(o.Name) {
+		return nil, false
 	}
 	return o.Name, true
 }
 
 // HasName returns a boolean if a field has been set.
 func (o *SearchedArtifact) HasName() bool {
-	if o != nil && !isNil(o.Name) {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
@@ -120,7 +123,7 @@ func (o *SearchedArtifact) SetName(v string) {
 
 // GetDescription returns the Description field value if set, zero value otherwise.
 func (o *SearchedArtifact) GetDescription() string {
-	if o == nil || isNil(o.Description) {
+	if o == nil || IsNil(o.Description) {
 		var ret string
 		return ret
 	}
@@ -130,15 +133,15 @@ func (o *SearchedArtifact) GetDescription() string {
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetDescriptionOk() (*string, bool) {
-	if o == nil || isNil(o.Description) {
-    return nil, false
+	if o == nil || IsNil(o.Description) {
+		return nil, false
 	}
 	return o.Description, true
 }
 
 // HasDescription returns a boolean if a field has been set.
 func (o *SearchedArtifact) HasDescription() bool {
-	if o != nil && !isNil(o.Description) {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
@@ -164,7 +167,7 @@ func (o *SearchedArtifact) GetCreatedOn() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetCreatedOnOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.CreatedOn, true
 }
@@ -188,7 +191,7 @@ func (o *SearchedArtifact) GetCreatedBy() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetCreatedByOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.CreatedBy, true
 }
@@ -212,7 +215,7 @@ func (o *SearchedArtifact) GetType() string {
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetTypeOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Type, true
 }
@@ -224,7 +227,7 @@ func (o *SearchedArtifact) SetType(v string) {
 
 // GetLabels returns the Labels field value if set, zero value otherwise.
 func (o *SearchedArtifact) GetLabels() []string {
-	if o == nil || isNil(o.Labels) {
+	if o == nil || IsNil(o.Labels) {
 		var ret []string
 		return ret
 	}
@@ -234,15 +237,15 @@ func (o *SearchedArtifact) GetLabels() []string {
 // GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetLabelsOk() ([]string, bool) {
-	if o == nil || isNil(o.Labels) {
-    return nil, false
+	if o == nil || IsNil(o.Labels) {
+		return nil, false
 	}
 	return o.Labels, true
 }
 
 // HasLabels returns a boolean if a field has been set.
 func (o *SearchedArtifact) HasLabels() bool {
-	if o != nil && !isNil(o.Labels) {
+	if o != nil && !IsNil(o.Labels) {
 		return true
 	}
 
@@ -268,7 +271,7 @@ func (o *SearchedArtifact) GetState() ArtifactState {
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetStateOk() (*ArtifactState, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.State, true
 }
@@ -280,7 +283,7 @@ func (o *SearchedArtifact) SetState(v ArtifactState) {
 
 // GetModifiedOn returns the ModifiedOn field value if set, zero value otherwise.
 func (o *SearchedArtifact) GetModifiedOn() string {
-	if o == nil || isNil(o.ModifiedOn) {
+	if o == nil || IsNil(o.ModifiedOn) {
 		var ret string
 		return ret
 	}
@@ -290,15 +293,15 @@ func (o *SearchedArtifact) GetModifiedOn() string {
 // GetModifiedOnOk returns a tuple with the ModifiedOn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetModifiedOnOk() (*string, bool) {
-	if o == nil || isNil(o.ModifiedOn) {
-    return nil, false
+	if o == nil || IsNil(o.ModifiedOn) {
+		return nil, false
 	}
 	return o.ModifiedOn, true
 }
 
 // HasModifiedOn returns a boolean if a field has been set.
 func (o *SearchedArtifact) HasModifiedOn() bool {
-	if o != nil && !isNil(o.ModifiedOn) {
+	if o != nil && !IsNil(o.ModifiedOn) {
 		return true
 	}
 
@@ -312,7 +315,7 @@ func (o *SearchedArtifact) SetModifiedOn(v string) {
 
 // GetModifiedBy returns the ModifiedBy field value if set, zero value otherwise.
 func (o *SearchedArtifact) GetModifiedBy() string {
-	if o == nil || isNil(o.ModifiedBy) {
+	if o == nil || IsNil(o.ModifiedBy) {
 		var ret string
 		return ret
 	}
@@ -322,15 +325,15 @@ func (o *SearchedArtifact) GetModifiedBy() string {
 // GetModifiedByOk returns a tuple with the ModifiedBy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetModifiedByOk() (*string, bool) {
-	if o == nil || isNil(o.ModifiedBy) {
-    return nil, false
+	if o == nil || IsNil(o.ModifiedBy) {
+		return nil, false
 	}
 	return o.ModifiedBy, true
 }
 
 // HasModifiedBy returns a boolean if a field has been set.
 func (o *SearchedArtifact) HasModifiedBy() bool {
-	if o != nil && !isNil(o.ModifiedBy) {
+	if o != nil && !IsNil(o.ModifiedBy) {
 		return true
 	}
 
@@ -344,7 +347,7 @@ func (o *SearchedArtifact) SetModifiedBy(v string) {
 
 // GetGroupId returns the GroupId field value if set, zero value otherwise.
 func (o *SearchedArtifact) GetGroupId() string {
-	if o == nil || isNil(o.GroupId) {
+	if o == nil || IsNil(o.GroupId) {
 		var ret string
 		return ret
 	}
@@ -354,15 +357,15 @@ func (o *SearchedArtifact) GetGroupId() string {
 // GetGroupIdOk returns a tuple with the GroupId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SearchedArtifact) GetGroupIdOk() (*string, bool) {
-	if o == nil || isNil(o.GroupId) {
-    return nil, false
+	if o == nil || IsNil(o.GroupId) {
+		return nil, false
 	}
 	return o.GroupId, true
 }
 
 // HasGroupId returns a boolean if a field has been set.
 func (o *SearchedArtifact) HasGroupId() bool {
-	if o != nil && !isNil(o.GroupId) {
+	if o != nil && !IsNil(o.GroupId) {
 		return true
 	}
 
@@ -375,41 +378,39 @@ func (o *SearchedArtifact) SetGroupId(v string) {
 }
 
 func (o SearchedArtifact) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
-	}
-	if !isNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !isNil(o.Description) {
-		toSerialize["description"] = o.Description
-	}
-	if true {
-		toSerialize["createdOn"] = o.CreatedOn
-	}
-	if true {
-		toSerialize["createdBy"] = o.CreatedBy
-	}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if !isNil(o.Labels) {
-		toSerialize["labels"] = o.Labels
-	}
-	if true {
-		toSerialize["state"] = o.State
-	}
-	if !isNil(o.ModifiedOn) {
-		toSerialize["modifiedOn"] = o.ModifiedOn
-	}
-	if !isNil(o.ModifiedBy) {
-		toSerialize["modifiedBy"] = o.ModifiedBy
-	}
-	if !isNil(o.GroupId) {
-		toSerialize["groupId"] = o.GroupId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o SearchedArtifact) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Description) {
+		toSerialize["description"] = o.Description
+	}
+	toSerialize["createdOn"] = o.CreatedOn
+	toSerialize["createdBy"] = o.CreatedBy
+	toSerialize["type"] = o.Type
+	if !IsNil(o.Labels) {
+		toSerialize["labels"] = o.Labels
+	}
+	toSerialize["state"] = o.State
+	if !IsNil(o.ModifiedOn) {
+		toSerialize["modifiedOn"] = o.ModifiedOn
+	}
+	if !IsNil(o.ModifiedBy) {
+		toSerialize["modifiedBy"] = o.ModifiedBy
+	}
+	if !IsNil(o.GroupId) {
+		toSerialize["groupId"] = o.GroupId
+	}
+	return toSerialize, nil
 }
 
 type NullableSearchedArtifact struct {

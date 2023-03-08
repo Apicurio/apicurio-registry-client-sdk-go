@@ -3,7 +3,7 @@ Apicurio Registry API [v2]
 
 Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
 
-API version: 2.3.2-SNAPSHOT
+API version: 2.4.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -14,6 +14,9 @@ package registryclient
 import (
 	"encoding/json"
 )
+
+// checks if the RoleMapping type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RoleMapping{}
 
 // RoleMapping The mapping between a user/principal and their role.
 type RoleMapping struct {
@@ -57,7 +60,7 @@ func (o *RoleMapping) GetPrincipalId() string {
 // and a boolean to check if the value has been set.
 func (o *RoleMapping) GetPrincipalIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.PrincipalId, true
 }
@@ -81,7 +84,7 @@ func (o *RoleMapping) GetRole() RoleType {
 // and a boolean to check if the value has been set.
 func (o *RoleMapping) GetRoleOk() (*RoleType, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Role, true
 }
@@ -93,7 +96,7 @@ func (o *RoleMapping) SetRole(v RoleType) {
 
 // GetPrincipalName returns the PrincipalName field value if set, zero value otherwise.
 func (o *RoleMapping) GetPrincipalName() string {
-	if o == nil || isNil(o.PrincipalName) {
+	if o == nil || IsNil(o.PrincipalName) {
 		var ret string
 		return ret
 	}
@@ -103,15 +106,15 @@ func (o *RoleMapping) GetPrincipalName() string {
 // GetPrincipalNameOk returns a tuple with the PrincipalName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RoleMapping) GetPrincipalNameOk() (*string, bool) {
-	if o == nil || isNil(o.PrincipalName) {
-    return nil, false
+	if o == nil || IsNil(o.PrincipalName) {
+		return nil, false
 	}
 	return o.PrincipalName, true
 }
 
 // HasPrincipalName returns a boolean if a field has been set.
 func (o *RoleMapping) HasPrincipalName() bool {
-	if o != nil && !isNil(o.PrincipalName) {
+	if o != nil && !IsNil(o.PrincipalName) {
 		return true
 	}
 
@@ -124,17 +127,21 @@ func (o *RoleMapping) SetPrincipalName(v string) {
 }
 
 func (o RoleMapping) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["principalId"] = o.PrincipalId
-	}
-	if true {
-		toSerialize["role"] = o.Role
-	}
-	if !isNil(o.PrincipalName) {
-		toSerialize["principalName"] = o.PrincipalName
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RoleMapping) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["principalId"] = o.PrincipalId
+	toSerialize["role"] = o.Role
+	if !IsNil(o.PrincipalName) {
+		toSerialize["principalName"] = o.PrincipalName
+	}
+	return toSerialize, nil
 }
 
 type NullableRoleMapping struct {
