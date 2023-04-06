@@ -173,6 +173,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [ArtifactContent](docs/ArtifactContent.md)
  - [ArtifactMetaData](docs/ArtifactMetaData.md)
  - [ArtifactOwner](docs/ArtifactOwner.md)
  - [ArtifactReference](docs/ArtifactReference.md)
@@ -180,7 +181,6 @@ Class | Method | HTTP request | Description
  - [ArtifactState](docs/ArtifactState.md)
  - [ArtifactTypeInfo](docs/ArtifactTypeInfo.md)
  - [ConfigurationProperty](docs/ConfigurationProperty.md)
- - [ContentCreateRequest](docs/ContentCreateRequest.md)
  - [CreateGroupMetaData](docs/CreateGroupMetaData.md)
  - [DownloadRef](docs/DownloadRef.md)
  - [EditableMetaData](docs/EditableMetaData.md)

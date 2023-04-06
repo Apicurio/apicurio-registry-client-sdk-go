@@ -12,6 +12,7 @@ api_versions.go
 client.go
 configuration.go
 docs/AdminApi.md
+docs/ArtifactContent.md
 docs/ArtifactMetaData.md
 docs/ArtifactOwner.md
 docs/ArtifactReference.md
@@ -22,7 +23,6 @@ docs/ArtifactTypeApi.md
 docs/ArtifactTypeInfo.md
 docs/ArtifactsApi.md
 docs/ConfigurationProperty.md
-docs/ContentCreateRequest.md
 docs/CreateGroupMetaData.md
 docs/DownloadRef.md
 docs/EditableMetaData.md
@@ -60,6 +60,7 @@ docs/VersionMetaData.md
 docs/VersionSearchResults.md
 docs/VersionsApi.md
 go.sum
+model_artifact_content.go
 model_artifact_meta_data.go
 model_artifact_owner.go
 model_artifact_reference.go
@@ -67,7 +68,6 @@ model_artifact_search_results.go
 model_artifact_state.go
 model_artifact_type_info.go
 model_configuration_property.go
-model_content_create_request.go
 model_create_group_meta_data.go
 model_download_ref.go
 model_editable_meta_data.go

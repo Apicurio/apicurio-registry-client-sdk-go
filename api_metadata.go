@@ -168,12 +168,12 @@ func (r ApiGetArtifactMetaDataRequest) Execute() (*ArtifactMetaData, *http.Respo
 /*
 GetArtifactMetaData Get artifact metadata
 
-Gets the metadata for an artifact in the registry.  The returned metadata includes
+Gets the metadata for an artifact in the registry, based on the latest version. If the latest version of the artifact is marked as `DISABLED`, the next available non-disabled version will be used. The returned metadata includes
 both generated (read-only) and editable metadata (such as name and description).
 
 This operation can fail for the following reasons:
 
-* No artifact with this `artifactId` exists (HTTP error `404`)
+* No artifact with this `artifactId` exists  or all versions are `DISABLED` (HTTP error `404`)
 * A server error occurred (HTTP error `500`)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -646,7 +646,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataByContentExecute(r ApiGet
 		parameterAddToHeaderOrQuery(localVarQueryParams, "canonical", r.canonical, "")
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/get.extended+json", "application/vnd.get.extended+json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
