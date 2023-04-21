@@ -1098,12 +1098,13 @@ paths:
     summary: Provides a way to import data into the registry.
   /groups/{groupId}/artifacts/{artifactId}/state:
     put:
-      description: "Updates the state of the artifact.  For example, you can use this\
-        \ to mark the latest\nversion of an artifact as `DEPRECATED`.  The operation\
-        \ changes the state of the latest \nversion of the artifact.  If multiple\
-        \ versions exist, only the most recent is changed.\n\nThis operation can fail\
-        \ for the following reasons:\n\n* No artifact with this `artifactId` exists\
-        \ (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+      description: |
+        Updates the state of the artifact.  For example, you can use this to mark the latest version of an artifact as `DEPRECATED`. The operation changes the state of the latest version of the artifact, even if this version is `DISABLED`. If multiple versions exist, only the most recent is changed.
+
+        This operation can fail for the following reasons:
+
+        * No artifact with this `artifactId` exists (HTTP error `404`)
+        * A server error occurred (HTTP error `500`)
       operationId: updateArtifactState
       parameters:
       - description: "The artifact group ID.  Must be a string provided by the client,\
@@ -2761,8 +2762,10 @@ paths:
       description: "Returns the latest version of the artifact in its raw form.  The\
         \ `Content-Type` of the\nresponse depends on the artifact type.  In most cases,\
         \ this is `application/json`, but \nfor some types it may be different (for\
-        \ example, `PROTOBUF`).\n\nThis operation may fail for one of the following\
-        \ reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n\
+        \ example, `PROTOBUF`).\nIf the latest version of the artifact is marked as\
+        \ `DISABLED`, the next available non-disabled version will be used.\n\nThis\
+        \ operation may fail for one of the following reasons:\n\n* No artifact with\
+        \ this `artifactId` exists or all versions are `DISABLED` (HTTP error `404`)\n\
         * A server error occurred (HTTP error `500`)\n"
       operationId: getLatestArtifact
       parameters:
@@ -2967,10 +2970,10 @@ paths:
               $ref: '#/components/schemas/FileContent'
           application/create.extended+json:
             schema:
-              $ref: '#/components/schemas/ContentCreateRequest'
+              $ref: '#/components/schemas/ArtifactContent'
           application/vnd.create.extended+json:
             schema:
-              $ref: '#/components/schemas/ContentCreateRequest'
+              $ref: '#/components/schemas/ArtifactContent'
         description: |
           The new content of the artifact being updated. This is often, but not always, JSON data
           representing one of the supported artifact types:
@@ -3344,10 +3347,10 @@ paths:
               $ref: '#/components/schemas/FileContent'
           application/create.extended+json:
             schema:
-              $ref: '#/components/schemas/ContentCreateRequest'
+              $ref: '#/components/schemas/ArtifactContent'
           application/vnd.create.extended+json:
             schema:
-              $ref: '#/components/schemas/ContentCreateRequest'
+              $ref: '#/components/schemas/ArtifactContent'
         description: |
           The content of the artifact being created. This is often, but not always, JSON data
           representing one of the supported artifact types:
@@ -3731,10 +3734,10 @@ paths:
               $ref: '#/components/schemas/FileContent'
           application/create.extended+json:
             schema:
-              $ref: '#/components/schemas/ContentCreateRequest'
+              $ref: '#/components/schemas/ArtifactContent'
           application/vnd.create.extended+json:
             schema:
-              $ref: '#/components/schemas/ContentCreateRequest'
+              $ref: '#/components/schemas/ArtifactContent'
         description: |
           The content of the artifact version being created or the content and a set of references to other artifacts. This is often, but not always, JSON data
           representing one of the supported artifact types:
@@ -3801,258 +3804,6 @@ paths:
       tags:
       - Versions
     summary: Manage all the versions of an artifact in the registry.
-  /groups/{groupId}/artifacts/{artifactId}/meta:
-    get:
-      description: |-
-        Gets the metadata for an artifact in the registry.  The returned metadata includes
-        both generated (read-only) and editable metadata (such as name and description).
-
-        This operation can fail for the following reasons:
-
-        * No artifact with this `artifactId` exists (HTTP error `404`)
-        * A server error occurred (HTTP error `500`)
-      operationId: getArtifactMetaData
-      parameters:
-      - description: "The artifact group ID.  Must be a string provided by the client,\
-          \ representing the name of the grouping of artifacts."
-        explode: false
-        in: path
-        name: groupId
-        required: true
-        schema:
-          $ref: '#/components/schemas/GroupId'
-        style: simple
-      - description: "The artifact ID.  Can be a string (client-provided) or UUID\
-          \ (server-generated), representing the unique artifact identifier."
-        explode: false
-        in: path
-        name: artifactId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ArtifactId'
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ArtifactMetaData'
-          description: The artifact's metadata.
-        "404":
-          content:
-            application/json:
-              examples:
-                NotFoundExample:
-                  value:
-                    error_code: 404
-                    message: No artifact with id 'Topic-1/Inbound' could be found.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can return a `404`
-            error.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
-      summary: Get artifact metadata
-      tags:
-      - Metadata
-    post:
-      description: |
-        Gets the metadata for an artifact that matches the raw content.  Searches the registry
-        for a version of the given artifact matching the content provided in the body of the
-        POST.
-
-        This operation can fail for the following reasons:
-
-        * Provided content (request body) was empty (HTTP error `400`)
-        * No artifact with the `artifactId` exists (HTTP error `404`)
-        * No artifact version matching the provided content exists (HTTP error `404`)
-        * A server error occurred (HTTP error `500`)
-      operationId: getArtifactVersionMetaDataByContent
-      parameters:
-      - description: "The artifact group ID.  Must be a string provided by the client,\
-          \ representing the name of the grouping of artifacts."
-        explode: false
-        in: path
-        name: groupId
-        required: true
-        schema:
-          $ref: '#/components/schemas/GroupId'
-        style: simple
-      - description: "The artifact ID.  Can be a string (client-provided) or UUID\
-          \ (server-generated), representing the unique artifact identifier."
-        explode: false
-        in: path
-        name: artifactId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ArtifactId'
-        style: simple
-      - description: "Parameter that can be set to `true` to indicate that the server\
-          \ should \"canonicalize\" the content when searching for a matching version.\
-          \  Canonicalization is unique to each artifact type, but typically involves\
-          \ removing any extra whitespace and formatting the content in a consistent\
-          \ manner."
-        explode: true
-        in: query
-        name: canonical
-        required: false
-        schema:
-          type: boolean
-        style: form
-      requestBody:
-        content:
-          '*/*':
-            examples:
-              OpenAPI:
-                value:
-                  openapi: 3.0.2
-                  info:
-                    title: Empty API
-                    version: 1.0.7
-                    description: An example API design using OpenAPI.
-                  paths:
-                    /widgets:
-                      get:
-                        responses:
-                          "200":
-                            content:
-                              application/json:
-                                schema:
-                                  type: array
-                                  items:
-                                    type: string
-                            description: All widgets
-                        summary: Get widgets
-                  components:
-                    schemas:
-                      Widget:
-                        title: Root Type for Widget
-                        description: A sample data type.
-                        type: object
-                        properties:
-                          property-1:
-                            type: string
-                          property-2:
-                            type: boolean
-                        example:
-                          property-1: value1
-                          property-2: true
-            schema:
-              $ref: '#/components/schemas/FileContent'
-        description: The content of an artifact version.
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/VersionMetaData'
-          description: The metadata of the artifact version matching the provided
-            content.
-        "404":
-          content:
-            application/json:
-              examples:
-                NotFoundExample:
-                  value:
-                    error_code: 404
-                    message: No artifact with id 'Topic-1/Inbound' could be found.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can return a `404`
-            error.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
-      summary: Get artifact version metadata by content
-      tags:
-      - Metadata
-    put:
-      description: |-
-        Updates the editable parts of the artifact's metadata.  Not all metadata fields can
-        be updated.  For example, `createdOn` and `createdBy` are both read-only properties.
-
-        This operation can fail for the following reasons:
-
-        * No artifact with the `artifactId` exists (HTTP error `404`)
-        * A server error occurred (HTTP error `500`)
-      operationId: updateArtifactMetaData
-      parameters:
-      - description: "The artifact group ID.  Must be a string provided by the client,\
-          \ representing the name of the grouping of artifacts."
-        explode: false
-        in: path
-        name: groupId
-        required: true
-        schema:
-          $ref: '#/components/schemas/GroupId'
-        style: simple
-      - description: "The artifact ID.  Can be a string (client-provided) or UUID\
-          \ (server-generated), representing the unique artifact identifier."
-        explode: false
-        in: path
-        name: artifactId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ArtifactId'
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EditableMetaData'
-        description: Updated artifact metadata.
-        required: true
-      responses:
-        "204":
-          description: The artifact's metadata was updated.
-        "404":
-          content:
-            application/json:
-              examples:
-                NotFoundExample:
-                  value:
-                    error_code: 404
-                    message: No artifact with id 'Topic-1/Inbound' could be found.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can return a `404`
-            error.
-        "500":
-          content:
-            application/json:
-              examples:
-                ErrorExample:
-                  value:
-                    error_code: 500
-                    message: Lost connection to the database.
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Common response for all operations that can fail with an unexpected
-            server error.
-      summary: Update artifact metadata
-      tags:
-      - Metadata
-    summary: Manage the metadata of a single artifact.
   /groups/{groupId}/artifacts/{artifactId}/owner:
     get:
       description: |-
@@ -4399,6 +4150,264 @@ paths:
       tags:
       - Groups
     summary: Collection of the groups in the registry.
+  /groups/{groupId}/artifacts/{artifactId}/meta:
+    get:
+      description: |-
+        Gets the metadata for an artifact in the registry, based on the latest version. If the latest version of the artifact is marked as `DISABLED`, the next available non-disabled version will be used. The returned metadata includes
+        both generated (read-only) and editable metadata (such as name and description).
+
+        This operation can fail for the following reasons:
+
+        * No artifact with this `artifactId` exists  or all versions are `DISABLED` (HTTP error `404`)
+        * A server error occurred (HTTP error `500`)
+      operationId: getArtifactMetaData
+      parameters:
+      - description: "The artifact group ID.  Must be a string provided by the client,\
+          \ representing the name of the grouping of artifacts."
+        explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          $ref: '#/components/schemas/GroupId'
+        style: simple
+      - description: "The artifact ID.  Can be a string (client-provided) or UUID\
+          \ (server-generated), representing the unique artifact identifier."
+        explode: false
+        in: path
+        name: artifactId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ArtifactId'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactMetaData'
+          description: The artifact's metadata.
+        "404":
+          content:
+            application/json:
+              examples:
+                NotFoundExample:
+                  value:
+                    error_code: 404
+                    message: No artifact with id 'Topic-1/Inbound' could be found.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can return a `404`
+            error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+      summary: Get artifact metadata
+      tags:
+      - Metadata
+    post:
+      description: |
+        Gets the metadata for an artifact that matches the raw content.  Searches the registry
+        for a version of the given artifact matching the content provided in the body of the
+        POST.
+
+        This operation can fail for the following reasons:
+
+        * Provided content (request body) was empty (HTTP error `400`)
+        * No artifact with the `artifactId` exists (HTTP error `404`)
+        * No artifact version matching the provided content exists (HTTP error `404`)
+        * A server error occurred (HTTP error `500`)
+      operationId: getArtifactVersionMetaDataByContent
+      parameters:
+      - description: "The artifact group ID.  Must be a string provided by the client,\
+          \ representing the name of the grouping of artifacts."
+        explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          $ref: '#/components/schemas/GroupId'
+        style: simple
+      - description: "The artifact ID.  Can be a string (client-provided) or UUID\
+          \ (server-generated), representing the unique artifact identifier."
+        explode: false
+        in: path
+        name: artifactId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ArtifactId'
+        style: simple
+      - description: "Parameter that can be set to `true` to indicate that the server\
+          \ should \"canonicalize\" the content when searching for a matching version.\
+          \  Canonicalization is unique to each artifact type, but typically involves\
+          \ removing any extra whitespace and formatting the content in a consistent\
+          \ manner."
+        explode: true
+        in: query
+        name: canonical
+        required: false
+        schema:
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          '*/*':
+            examples:
+              OpenAPI:
+                value:
+                  openapi: 3.0.2
+                  info:
+                    title: Empty API
+                    version: 1.0.7
+                    description: An example API design using OpenAPI.
+                  paths:
+                    /widgets:
+                      get:
+                        responses:
+                          "200":
+                            content:
+                              application/json:
+                                schema:
+                                  type: array
+                                  items:
+                                    type: string
+                            description: All widgets
+                        summary: Get widgets
+                  components:
+                    schemas:
+                      Widget:
+                        title: Root Type for Widget
+                        description: A sample data type.
+                        type: object
+                        properties:
+                          property-1:
+                            type: string
+                          property-2:
+                            type: boolean
+                        example:
+                          property-1: value1
+                          property-2: true
+            schema:
+              $ref: '#/components/schemas/FileContent'
+          application/get.extended+json:
+            schema:
+              $ref: '#/components/schemas/ArtifactContent'
+          application/vnd.get.extended+json:
+            schema:
+              $ref: '#/components/schemas/ArtifactContent'
+        description: The content of an artifact version.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionMetaData'
+          description: The metadata of the artifact version matching the provided
+            content.
+        "404":
+          content:
+            application/json:
+              examples:
+                NotFoundExample:
+                  value:
+                    error_code: 404
+                    message: No artifact with id 'Topic-1/Inbound' could be found.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can return a `404`
+            error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+      summary: Get artifact version metadata by content
+      tags:
+      - Metadata
+    put:
+      description: |-
+        Updates the editable parts of the artifact's metadata.  Not all metadata fields can
+        be updated.  For example, `createdOn` and `createdBy` are both read-only properties.
+
+        This operation can fail for the following reasons:
+
+        * No artifact with the `artifactId` exists (HTTP error `404`)
+        * A server error occurred (HTTP error `500`)
+      operationId: updateArtifactMetaData
+      parameters:
+      - description: "The artifact group ID.  Must be a string provided by the client,\
+          \ representing the name of the grouping of artifacts."
+        explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          $ref: '#/components/schemas/GroupId'
+        style: simple
+      - description: "The artifact ID.  Can be a string (client-provided) or UUID\
+          \ (server-generated), representing the unique artifact identifier."
+        explode: false
+        in: path
+        name: artifactId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ArtifactId'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditableMetaData'
+        description: Updated artifact metadata.
+        required: true
+      responses:
+        "204":
+          description: The artifact's metadata was updated.
+        "404":
+          content:
+            application/json:
+              examples:
+                NotFoundExample:
+                  value:
+                    error_code: 404
+                    message: No artifact with id 'Topic-1/Inbound' could be found.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can return a `404`
+            error.
+        "500":
+          content:
+            application/json:
+              examples:
+                ErrorExample:
+                  value:
+                    error_code: 500
+                    message: Lost connection to the database.
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Common response for all operations that can fail with an unexpected
+            server error.
+      summary: Update artifact metadata
+      tags:
+      - Metadata
+    summary: Manage the metadata of a single artifact.
 components:
   responses:
     NotFound:
@@ -5254,23 +5263,6 @@ components:
       - name
       title: Root Type for ArtifactReference
       type: object
-    ContentCreateRequest:
-      description: ""
-      properties:
-        content:
-          description: Raw content of the artifact or a valid (and accessible) URL
-            where the content can be found.
-          example: ""
-          type: string
-        references:
-          description: Collection of references to other artifacts.
-          items:
-            $ref: '#/components/schemas/ArtifactReference'
-          type: array
-      required:
-      - content
-      - references
-      type: object
     ConfigurationProperty:
       description: ""
       example:
@@ -5525,6 +5517,23 @@ components:
       required:
       - id
       title: Root Type for CreateGroupMetaData
+      type: object
+    ArtifactContent:
+      description: ""
+      properties:
+        content:
+          description: Raw content of the artifact or a valid (and accessible) URL
+            where the content can be found.
+          example: ""
+          type: string
+        references:
+          description: Collection of references to other artifacts.
+          items:
+            $ref: '#/components/schemas/ArtifactReference'
+          type: array
+      required:
+      - content
+      - references
       type: object
     NamedLogConfiguration_allOf:
       properties:
