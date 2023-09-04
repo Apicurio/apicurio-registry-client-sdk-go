@@ -23,12 +23,12 @@ import (
 )
 
 
-// ArtifactsApiService ArtifactsApi service
-type ArtifactsApiService service
+// ArtifactsAPIService ArtifactsAPI service
+type ArtifactsAPIService service
 
 type ApiCreateArtifactRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	groupId string
 	body *os.File
 	xRegistryArtifactType *string
@@ -180,7 +180,7 @@ This operation may fail for one of the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiCreateArtifactRequest
 */
-func (a *ArtifactsApiService) CreateArtifact(ctx context.Context, groupId string) ApiCreateArtifactRequest {
+func (a *ArtifactsAPIService) CreateArtifact(ctx context.Context, groupId string) ApiCreateArtifactRequest {
 	return ApiCreateArtifactRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -190,7 +190,7 @@ func (a *ArtifactsApiService) CreateArtifact(ctx context.Context, groupId string
 
 // Execute executes the request
 //  @return ArtifactMetaData
-func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) (*ArtifactMetaData, *http.Response, error) {
+func (a *ArtifactsAPIService) CreateArtifactExecute(r ApiCreateArtifactRequest) (*ArtifactMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -198,7 +198,7 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 		localVarReturnValue  *ArtifactMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.CreateArtifact")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.CreateArtifact")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -336,7 +336,7 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 
 type ApiDeleteArtifactRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	groupId string
 	artifactId string
 }
@@ -359,7 +359,7 @@ deleted.  This may fail for one of the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiDeleteArtifactRequest
 */
-func (a *ArtifactsApiService) DeleteArtifact(ctx context.Context, groupId string, artifactId string) ApiDeleteArtifactRequest {
+func (a *ArtifactsAPIService) DeleteArtifact(ctx context.Context, groupId string, artifactId string) ApiDeleteArtifactRequest {
 	return ApiDeleteArtifactRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -369,14 +369,14 @@ func (a *ArtifactsApiService) DeleteArtifact(ctx context.Context, groupId string
 }
 
 // Execute executes the request
-func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) (*http.Response, error) {
+func (a *ArtifactsAPIService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.DeleteArtifact")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.DeleteArtifact")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -457,7 +457,7 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 
 type ApiDeleteArtifactsInGroupRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	groupId string
 }
 
@@ -474,7 +474,7 @@ Deletes all of the artifacts that exist in a given group.
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiDeleteArtifactsInGroupRequest
 */
-func (a *ArtifactsApiService) DeleteArtifactsInGroup(ctx context.Context, groupId string) ApiDeleteArtifactsInGroupRequest {
+func (a *ArtifactsAPIService) DeleteArtifactsInGroup(ctx context.Context, groupId string) ApiDeleteArtifactsInGroupRequest {
 	return ApiDeleteArtifactsInGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -483,14 +483,14 @@ func (a *ArtifactsApiService) DeleteArtifactsInGroup(ctx context.Context, groupI
 }
 
 // Execute executes the request
-func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifactsInGroupRequest) (*http.Response, error) {
+func (a *ArtifactsAPIService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifactsInGroupRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.DeleteArtifactsInGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.DeleteArtifactsInGroup")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -559,14 +559,14 @@ func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifacts
 
 type ApiGetContentByGlobalIdRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	globalId int64
-	dereference *bool
+	references *HandleReferencesType
 }
 
-// Allows the user to specify if the content should be dereferenced when being returned
-func (r ApiGetContentByGlobalIdRequest) Dereference(dereference bool) ApiGetContentByGlobalIdRequest {
-	r.dereference = &dereference
+// Allows the user to specify how references in the content should be treated.
+func (r ApiGetContentByGlobalIdRequest) References(references HandleReferencesType) ApiGetContentByGlobalIdRequest {
+	r.references = &references
 	return r
 }
 
@@ -590,7 +590,7 @@ This operation may fail for one of the following reasons:
  @param globalId Global identifier for an artifact version.
  @return ApiGetContentByGlobalIdRequest
 */
-func (a *ArtifactsApiService) GetContentByGlobalId(ctx context.Context, globalId int64) ApiGetContentByGlobalIdRequest {
+func (a *ArtifactsAPIService) GetContentByGlobalId(ctx context.Context, globalId int64) ApiGetContentByGlobalIdRequest {
 	return ApiGetContentByGlobalIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -600,7 +600,7 @@ func (a *ArtifactsApiService) GetContentByGlobalId(ctx context.Context, globalId
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGlobalIdRequest) (*os.File, *http.Response, error) {
+func (a *ArtifactsAPIService) GetContentByGlobalIdExecute(r ApiGetContentByGlobalIdRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -608,7 +608,7 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 		localVarReturnValue  *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentByGlobalId")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.GetContentByGlobalId")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -620,8 +620,8 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.dereference != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "dereference", r.dereference, "")
+	if r.references != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "references", r.references, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -700,7 +700,7 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 
 type ApiGetContentByHashRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	contentHash string
 }
 
@@ -725,7 +725,7 @@ This operation may fail for one of the following reasons:
  @param contentHash SHA-256 content hash for a single artifact content.
  @return ApiGetContentByHashRequest
 */
-func (a *ArtifactsApiService) GetContentByHash(ctx context.Context, contentHash string) ApiGetContentByHashRequest {
+func (a *ArtifactsAPIService) GetContentByHash(ctx context.Context, contentHash string) ApiGetContentByHashRequest {
 	return ApiGetContentByHashRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -735,7 +735,7 @@ func (a *ArtifactsApiService) GetContentByHash(ctx context.Context, contentHash 
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashRequest) (*os.File, *http.Response, error) {
+func (a *ArtifactsAPIService) GetContentByHashExecute(r ApiGetContentByHashRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -743,7 +743,7 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 		localVarReturnValue  *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentByHash")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.GetContentByHash")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -832,7 +832,7 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 
 type ApiGetContentByIdRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	contentId int64
 }
 
@@ -857,7 +857,7 @@ This operation may fail for one of the following reasons:
  @param contentId Global identifier for a single artifact content.
  @return ApiGetContentByIdRequest
 */
-func (a *ArtifactsApiService) GetContentById(ctx context.Context, contentId int64) ApiGetContentByIdRequest {
+func (a *ArtifactsAPIService) GetContentById(ctx context.Context, contentId int64) ApiGetContentByIdRequest {
 	return ApiGetContentByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -867,7 +867,7 @@ func (a *ArtifactsApiService) GetContentById(ctx context.Context, contentId int6
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) (*os.File, *http.Response, error) {
+func (a *ArtifactsAPIService) GetContentByIdExecute(r ApiGetContentByIdRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -875,7 +875,7 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 		localVarReturnValue  *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.GetContentById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -964,15 +964,15 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 
 type ApiGetLatestArtifactRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	groupId string
 	artifactId string
-	dereference *bool
+	references *HandleReferencesType
 }
 
-// Allows the user to specify if the content should be dereferenced when being returned
-func (r ApiGetLatestArtifactRequest) Dereference(dereference bool) ApiGetLatestArtifactRequest {
-	r.dereference = &dereference
+// Allows the user to specify how references in the content should be treated.
+func (r ApiGetLatestArtifactRequest) References(references HandleReferencesType) ApiGetLatestArtifactRequest {
+	r.references = &references
 	return r
 }
 
@@ -999,7 +999,7 @@ This operation may fail for one of the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiGetLatestArtifactRequest
 */
-func (a *ArtifactsApiService) GetLatestArtifact(ctx context.Context, groupId string, artifactId string) ApiGetLatestArtifactRequest {
+func (a *ArtifactsAPIService) GetLatestArtifact(ctx context.Context, groupId string, artifactId string) ApiGetLatestArtifactRequest {
 	return ApiGetLatestArtifactRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1010,7 +1010,7 @@ func (a *ArtifactsApiService) GetLatestArtifact(ctx context.Context, groupId str
 
 // Execute executes the request
 //  @return *os.File
-func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactRequest) (*os.File, *http.Response, error) {
+func (a *ArtifactsAPIService) GetLatestArtifactExecute(r ApiGetLatestArtifactRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1018,7 +1018,7 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 		localVarReturnValue  *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetLatestArtifact")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.GetLatestArtifact")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1031,8 +1031,8 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.dereference != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "dereference", r.dereference, "")
+	if r.references != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "references", r.references, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1111,7 +1111,7 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 
 type ApiListArtifactsInGroupRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	groupId string
 	limit *int32
 	offset *int32
@@ -1156,7 +1156,7 @@ Returns a list of all artifacts in the group.  This list is paged.
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiListArtifactsInGroupRequest
 */
-func (a *ArtifactsApiService) ListArtifactsInGroup(ctx context.Context, groupId string) ApiListArtifactsInGroupRequest {
+func (a *ArtifactsAPIService) ListArtifactsInGroup(ctx context.Context, groupId string) ApiListArtifactsInGroupRequest {
 	return ApiListArtifactsInGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1166,7 +1166,7 @@ func (a *ArtifactsApiService) ListArtifactsInGroup(ctx context.Context, groupId 
 
 // Execute executes the request
 //  @return ArtifactSearchResults
-func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGroupRequest) (*ArtifactSearchResults, *http.Response, error) {
+func (a *ArtifactsAPIService) ListArtifactsInGroupExecute(r ApiListArtifactsInGroupRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1174,7 +1174,7 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 		localVarReturnValue  *ArtifactSearchResults
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ListArtifactsInGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.ListArtifactsInGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1264,7 +1264,7 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 
 type ApiReferencesByContentHashRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	contentHash string
 }
 
@@ -1286,7 +1286,7 @@ This operation may fail for one of the following reasons:
  @param contentHash SHA-256 content hash for a single artifact content.
  @return ApiReferencesByContentHashRequest
 */
-func (a *ArtifactsApiService) ReferencesByContentHash(ctx context.Context, contentHash string) ApiReferencesByContentHashRequest {
+func (a *ArtifactsAPIService) ReferencesByContentHash(ctx context.Context, contentHash string) ApiReferencesByContentHashRequest {
 	return ApiReferencesByContentHashRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1296,7 +1296,7 @@ func (a *ArtifactsApiService) ReferencesByContentHash(ctx context.Context, conte
 
 // Execute executes the request
 //  @return []ArtifactReference
-func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByContentHashRequest) ([]ArtifactReference, *http.Response, error) {
+func (a *ArtifactsAPIService) ReferencesByContentHashExecute(r ApiReferencesByContentHashRequest) ([]ArtifactReference, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1304,7 +1304,7 @@ func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByCo
 		localVarReturnValue  []ArtifactReference
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByContentHash")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.ReferencesByContentHash")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1372,7 +1372,7 @@ func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByCo
 
 type ApiReferencesByContentIdRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	contentId int64
 }
 
@@ -1393,7 +1393,7 @@ This operation may fail for one of the following reasons:
  @param contentId Global identifier for a single artifact content.
  @return ApiReferencesByContentIdRequest
 */
-func (a *ArtifactsApiService) ReferencesByContentId(ctx context.Context, contentId int64) ApiReferencesByContentIdRequest {
+func (a *ArtifactsAPIService) ReferencesByContentId(ctx context.Context, contentId int64) ApiReferencesByContentIdRequest {
 	return ApiReferencesByContentIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1403,7 +1403,7 @@ func (a *ArtifactsApiService) ReferencesByContentId(ctx context.Context, content
 
 // Execute executes the request
 //  @return []ArtifactReference
-func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByContentIdRequest) ([]ArtifactReference, *http.Response, error) {
+func (a *ArtifactsAPIService) ReferencesByContentIdExecute(r ApiReferencesByContentIdRequest) ([]ArtifactReference, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1411,7 +1411,7 @@ func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByCont
 		localVarReturnValue  []ArtifactReference
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByContentId")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.ReferencesByContentId")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1479,8 +1479,15 @@ func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByCont
 
 type ApiReferencesByGlobalIdRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	globalId int64
+	refType *ReferenceType
+}
+
+// Determines the type of reference to return, either INBOUND or OUTBOUND.  Defaults to OUTBOUND.
+func (r ApiReferencesByGlobalIdRequest) RefType(refType ReferenceType) ApiReferencesByGlobalIdRequest {
+	r.refType = &refType
+	return r
 }
 
 func (r ApiReferencesByGlobalIdRequest) Execute() ([]ArtifactReference, *http.Response, error) {
@@ -1500,7 +1507,7 @@ This operation may fail for one of the following reasons:
  @param globalId Global identifier for an artifact version.
  @return ApiReferencesByGlobalIdRequest
 */
-func (a *ArtifactsApiService) ReferencesByGlobalId(ctx context.Context, globalId int64) ApiReferencesByGlobalIdRequest {
+func (a *ArtifactsAPIService) ReferencesByGlobalId(ctx context.Context, globalId int64) ApiReferencesByGlobalIdRequest {
 	return ApiReferencesByGlobalIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1510,7 +1517,7 @@ func (a *ArtifactsApiService) ReferencesByGlobalId(ctx context.Context, globalId
 
 // Execute executes the request
 //  @return []ArtifactReference
-func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGlobalIdRequest) ([]ArtifactReference, *http.Response, error) {
+func (a *ArtifactsAPIService) ReferencesByGlobalIdExecute(r ApiReferencesByGlobalIdRequest) ([]ArtifactReference, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1518,7 +1525,7 @@ func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGloba
 		localVarReturnValue  []ArtifactReference
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByGlobalId")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.ReferencesByGlobalId")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1530,6 +1537,9 @@ func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGloba
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.refType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "refType", r.refType, "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1586,7 +1596,7 @@ func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGloba
 
 type ApiSearchArtifactsRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	name *string
 	offset *int32
 	limit *int32
@@ -1679,7 +1689,7 @@ Returns a paginated list of all artifacts that match the provided filter criteri
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchArtifactsRequest
 */
-func (a *ArtifactsApiService) SearchArtifacts(ctx context.Context) ApiSearchArtifactsRequest {
+func (a *ArtifactsAPIService) SearchArtifacts(ctx context.Context) ApiSearchArtifactsRequest {
 	return ApiSearchArtifactsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1688,7 +1698,7 @@ func (a *ArtifactsApiService) SearchArtifacts(ctx context.Context) ApiSearchArti
 
 // Execute executes the request
 //  @return ArtifactSearchResults
-func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest) (*ArtifactSearchResults, *http.Response, error) {
+func (a *ArtifactsAPIService) SearchArtifactsExecute(r ApiSearchArtifactsRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1696,7 +1706,7 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 		localVarReturnValue  *ArtifactSearchResults
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.SearchArtifacts")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.SearchArtifacts")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1727,7 +1737,7 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "labels", s.Index(i), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "labels", s.Index(i).Interface(), "multi")
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "labels", t, "multi")
@@ -1738,7 +1748,7 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "properties", s.Index(i), "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "properties", s.Index(i).Interface(), "multi")
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "properties", t, "multi")
@@ -1822,7 +1832,7 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 
 type ApiSearchArtifactsByContentRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	body *os.File
 	canonical *bool
 	artifactType *string
@@ -1888,7 +1898,7 @@ posted content.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchArtifactsByContentRequest
 */
-func (a *ArtifactsApiService) SearchArtifactsByContent(ctx context.Context) ApiSearchArtifactsByContentRequest {
+func (a *ArtifactsAPIService) SearchArtifactsByContent(ctx context.Context) ApiSearchArtifactsByContentRequest {
 	return ApiSearchArtifactsByContentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1897,7 +1907,7 @@ func (a *ArtifactsApiService) SearchArtifactsByContent(ctx context.Context) ApiS
 
 // Execute executes the request
 //  @return ArtifactSearchResults
-func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifactsByContentRequest) (*ArtifactSearchResults, *http.Response, error) {
+func (a *ArtifactsAPIService) SearchArtifactsByContentExecute(r ApiSearchArtifactsByContentRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -1905,7 +1915,7 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 		localVarReturnValue  *ArtifactSearchResults
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.SearchArtifactsByContent")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.SearchArtifactsByContent")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2005,7 +2015,7 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 
 type ApiUpdateArtifactRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	groupId string
 	artifactId string
 	body *os.File
@@ -2081,7 +2091,7 @@ When successful, this creates a new version of the artifact, making it the most 
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiUpdateArtifactRequest
 */
-func (a *ArtifactsApiService) UpdateArtifact(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactRequest {
+func (a *ArtifactsAPIService) UpdateArtifact(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactRequest {
 	return ApiUpdateArtifactRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2092,7 +2102,7 @@ func (a *ArtifactsApiService) UpdateArtifact(ctx context.Context, groupId string
 
 // Execute executes the request
 //  @return ArtifactMetaData
-func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) (*ArtifactMetaData, *http.Response, error) {
+func (a *ArtifactsAPIService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) (*ArtifactMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -2100,7 +2110,7 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 		localVarReturnValue  *ArtifactMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.UpdateArtifact")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.UpdateArtifact")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2221,7 +2231,7 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 
 type ApiUpdateArtifactStateRequest struct {
 	ctx context.Context
-	ApiService *ArtifactsApiService
+	ApiService *ArtifactsAPIService
 	groupId string
 	artifactId string
 	updateState *UpdateState
@@ -2252,7 +2262,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiUpdateArtifactStateRequest
 */
-func (a *ArtifactsApiService) UpdateArtifactState(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactStateRequest {
+func (a *ArtifactsAPIService) UpdateArtifactState(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactStateRequest {
 	return ApiUpdateArtifactStateRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2262,14 +2272,14 @@ func (a *ArtifactsApiService) UpdateArtifactState(ctx context.Context, groupId s
 }
 
 // Execute executes the request
-func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStateRequest) (*http.Response, error) {
+func (a *ArtifactsAPIService) UpdateArtifactStateExecute(r ApiUpdateArtifactStateRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.UpdateArtifactState")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsAPIService.UpdateArtifactState")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}

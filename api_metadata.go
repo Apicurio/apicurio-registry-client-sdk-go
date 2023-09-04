@@ -22,12 +22,12 @@ import (
 )
 
 
-// MetadataApiService MetadataApi service
-type MetadataApiService service
+// MetadataAPIService MetadataAPI service
+type MetadataAPIService service
 
 type ApiDeleteArtifactVersionMetaDataRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 	version string
@@ -56,7 +56,7 @@ This operation can fail for the following reasons:
  @param version The unique identifier of a specific version of the artifact content.
  @return ApiDeleteArtifactVersionMetaDataRequest
 */
-func (a *MetadataApiService) DeleteArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiDeleteArtifactVersionMetaDataRequest {
+func (a *MetadataAPIService) DeleteArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiDeleteArtifactVersionMetaDataRequest {
 	return ApiDeleteArtifactVersionMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -67,14 +67,14 @@ func (a *MetadataApiService) DeleteArtifactVersionMetaData(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *MetadataApiService) DeleteArtifactVersionMetaDataExecute(r ApiDeleteArtifactVersionMetaDataRequest) (*http.Response, error) {
+func (a *MetadataAPIService) DeleteArtifactVersionMetaDataExecute(r ApiDeleteArtifactVersionMetaDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.DeleteArtifactVersionMetaData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.DeleteArtifactVersionMetaData")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -156,7 +156,7 @@ func (a *MetadataApiService) DeleteArtifactVersionMetaDataExecute(r ApiDeleteArt
 
 type ApiGetArtifactMetaDataRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 }
@@ -181,7 +181,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiGetArtifactMetaDataRequest
 */
-func (a *MetadataApiService) GetArtifactMetaData(ctx context.Context, groupId string, artifactId string) ApiGetArtifactMetaDataRequest {
+func (a *MetadataAPIService) GetArtifactMetaData(ctx context.Context, groupId string, artifactId string) ApiGetArtifactMetaDataRequest {
 	return ApiGetArtifactMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -192,7 +192,7 @@ func (a *MetadataApiService) GetArtifactMetaData(ctx context.Context, groupId st
 
 // Execute executes the request
 //  @return ArtifactMetaData
-func (a *MetadataApiService) GetArtifactMetaDataExecute(r ApiGetArtifactMetaDataRequest) (*ArtifactMetaData, *http.Response, error) {
+func (a *MetadataAPIService) GetArtifactMetaDataExecute(r ApiGetArtifactMetaDataRequest) (*ArtifactMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -200,7 +200,7 @@ func (a *MetadataApiService) GetArtifactMetaDataExecute(r ApiGetArtifactMetaData
 		localVarReturnValue  *ArtifactMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.GetArtifactMetaData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.GetArtifactMetaData")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -290,7 +290,7 @@ func (a *MetadataApiService) GetArtifactMetaDataExecute(r ApiGetArtifactMetaData
 
 type ApiGetArtifactOwnerRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 }
@@ -314,7 +314,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiGetArtifactOwnerRequest
 */
-func (a *MetadataApiService) GetArtifactOwner(ctx context.Context, groupId string, artifactId string) ApiGetArtifactOwnerRequest {
+func (a *MetadataAPIService) GetArtifactOwner(ctx context.Context, groupId string, artifactId string) ApiGetArtifactOwnerRequest {
 	return ApiGetArtifactOwnerRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -325,7 +325,7 @@ func (a *MetadataApiService) GetArtifactOwner(ctx context.Context, groupId strin
 
 // Execute executes the request
 //  @return ArtifactOwner
-func (a *MetadataApiService) GetArtifactOwnerExecute(r ApiGetArtifactOwnerRequest) (*ArtifactOwner, *http.Response, error) {
+func (a *MetadataAPIService) GetArtifactOwnerExecute(r ApiGetArtifactOwnerRequest) (*ArtifactOwner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -333,7 +333,7 @@ func (a *MetadataApiService) GetArtifactOwnerExecute(r ApiGetArtifactOwnerReques
 		localVarReturnValue  *ArtifactOwner
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.GetArtifactOwner")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.GetArtifactOwner")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -423,7 +423,7 @@ func (a *MetadataApiService) GetArtifactOwnerExecute(r ApiGetArtifactOwnerReques
 
 type ApiGetArtifactVersionMetaDataRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 	version string
@@ -453,7 +453,7 @@ This operation can fail for the following reasons:
  @param version The unique identifier of a specific version of the artifact content.
  @return ApiGetArtifactVersionMetaDataRequest
 */
-func (a *MetadataApiService) GetArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionMetaDataRequest {
+func (a *MetadataAPIService) GetArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionMetaDataRequest {
 	return ApiGetArtifactVersionMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -465,7 +465,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaData(ctx context.Context, gro
 
 // Execute executes the request
 //  @return VersionMetaData
-func (a *MetadataApiService) GetArtifactVersionMetaDataExecute(r ApiGetArtifactVersionMetaDataRequest) (*VersionMetaData, *http.Response, error) {
+func (a *MetadataAPIService) GetArtifactVersionMetaDataExecute(r ApiGetArtifactVersionMetaDataRequest) (*VersionMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -473,7 +473,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataExecute(r ApiGetArtifactV
 		localVarReturnValue  *VersionMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.GetArtifactVersionMetaData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.GetArtifactVersionMetaData")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -564,7 +564,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataExecute(r ApiGetArtifactV
 
 type ApiGetArtifactVersionMetaDataByContentRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 	body *os.File
@@ -607,7 +607,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiGetArtifactVersionMetaDataByContentRequest
 */
-func (a *MetadataApiService) GetArtifactVersionMetaDataByContent(ctx context.Context, groupId string, artifactId string) ApiGetArtifactVersionMetaDataByContentRequest {
+func (a *MetadataAPIService) GetArtifactVersionMetaDataByContent(ctx context.Context, groupId string, artifactId string) ApiGetArtifactVersionMetaDataByContentRequest {
 	return ApiGetArtifactVersionMetaDataByContentRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -618,7 +618,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataByContent(ctx context.Con
 
 // Execute executes the request
 //  @return VersionMetaData
-func (a *MetadataApiService) GetArtifactVersionMetaDataByContentExecute(r ApiGetArtifactVersionMetaDataByContentRequest) (*VersionMetaData, *http.Response, error) {
+func (a *MetadataAPIService) GetArtifactVersionMetaDataByContentExecute(r ApiGetArtifactVersionMetaDataByContentRequest) (*VersionMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -626,7 +626,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataByContentExecute(r ApiGet
 		localVarReturnValue  *VersionMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.GetArtifactVersionMetaDataByContent")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.GetArtifactVersionMetaDataByContent")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -724,7 +724,7 @@ func (a *MetadataApiService) GetArtifactVersionMetaDataByContentExecute(r ApiGet
 
 type ApiUpdateArtifactMetaDataRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 	editableMetaData *EditableMetaData
@@ -756,7 +756,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiUpdateArtifactMetaDataRequest
 */
-func (a *MetadataApiService) UpdateArtifactMetaData(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactMetaDataRequest {
+func (a *MetadataAPIService) UpdateArtifactMetaData(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactMetaDataRequest {
 	return ApiUpdateArtifactMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -766,14 +766,14 @@ func (a *MetadataApiService) UpdateArtifactMetaData(ctx context.Context, groupId
 }
 
 // Execute executes the request
-func (a *MetadataApiService) UpdateArtifactMetaDataExecute(r ApiUpdateArtifactMetaDataRequest) (*http.Response, error) {
+func (a *MetadataAPIService) UpdateArtifactMetaDataExecute(r ApiUpdateArtifactMetaDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.UpdateArtifactMetaData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.UpdateArtifactMetaData")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -859,7 +859,7 @@ func (a *MetadataApiService) UpdateArtifactMetaDataExecute(r ApiUpdateArtifactMe
 
 type ApiUpdateArtifactOwnerRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 	artifactOwner *ArtifactOwner
@@ -889,7 +889,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiUpdateArtifactOwnerRequest
 */
-func (a *MetadataApiService) UpdateArtifactOwner(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactOwnerRequest {
+func (a *MetadataAPIService) UpdateArtifactOwner(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactOwnerRequest {
 	return ApiUpdateArtifactOwnerRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -899,14 +899,14 @@ func (a *MetadataApiService) UpdateArtifactOwner(ctx context.Context, groupId st
 }
 
 // Execute executes the request
-func (a *MetadataApiService) UpdateArtifactOwnerExecute(r ApiUpdateArtifactOwnerRequest) (*http.Response, error) {
+func (a *MetadataAPIService) UpdateArtifactOwnerExecute(r ApiUpdateArtifactOwnerRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.UpdateArtifactOwner")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.UpdateArtifactOwner")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -992,7 +992,7 @@ func (a *MetadataApiService) UpdateArtifactOwnerExecute(r ApiUpdateArtifactOwner
 
 type ApiUpdateArtifactVersionMetaDataRequest struct {
 	ctx context.Context
-	ApiService *MetadataApiService
+	ApiService *MetadataAPIService
 	groupId string
 	artifactId string
 	version string
@@ -1028,7 +1028,7 @@ This operation can fail for the following reasons:
  @param version The unique identifier of a specific version of the artifact content.
  @return ApiUpdateArtifactVersionMetaDataRequest
 */
-func (a *MetadataApiService) UpdateArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiUpdateArtifactVersionMetaDataRequest {
+func (a *MetadataAPIService) UpdateArtifactVersionMetaData(ctx context.Context, groupId string, artifactId string, version string) ApiUpdateArtifactVersionMetaDataRequest {
 	return ApiUpdateArtifactVersionMetaDataRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1039,14 +1039,14 @@ func (a *MetadataApiService) UpdateArtifactVersionMetaData(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *MetadataApiService) UpdateArtifactVersionMetaDataExecute(r ApiUpdateArtifactVersionMetaDataRequest) (*http.Response, error) {
+func (a *MetadataAPIService) UpdateArtifactVersionMetaDataExecute(r ApiUpdateArtifactVersionMetaDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataApiService.UpdateArtifactVersionMetaData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetadataAPIService.UpdateArtifactVersionMetaData")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}

@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Causes** | [**[]RuleViolationCause**](RuleViolationCause.md) | List of rule violation causes. | 
 **Message** | Pointer to **string** | The short error message. | [optional] 
 **ErrorCode** | Pointer to **int32** | The server-side error code. | [optional] 
 **Detail** | Pointer to **string** | Full details about the error.  This might contain a server stack trace, for example. | [optional] 
 **Name** | Pointer to **string** | The error name - typically the classname of the exception thrown by the server. | [optional] 
+**Causes** | [**[]RuleViolationCause**](RuleViolationCause.md) | List of rule violation causes. | 
 
 ## Methods
 
@@ -28,26 +28,6 @@ will change when the set of required properties is changed
 NewRuleViolationErrorWithDefaults instantiates a new RuleViolationError object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetCauses
-
-`func (o *RuleViolationError) GetCauses() []RuleViolationCause`
-
-GetCauses returns the Causes field if non-nil, zero value otherwise.
-
-### GetCausesOk
-
-`func (o *RuleViolationError) GetCausesOk() (*[]RuleViolationCause, bool)`
-
-GetCausesOk returns a tuple with the Causes field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCauses
-
-`func (o *RuleViolationError) SetCauses(v []RuleViolationCause)`
-
-SetCauses sets Causes field to given value.
-
 
 ### GetMessage
 
@@ -148,6 +128,26 @@ SetName sets Name field to given value.
 `func (o *RuleViolationError) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetCauses
+
+`func (o *RuleViolationError) GetCauses() []RuleViolationCause`
+
+GetCauses returns the Causes field if non-nil, zero value otherwise.
+
+### GetCausesOk
+
+`func (o *RuleViolationError) GetCausesOk() (*[]RuleViolationCause, bool)`
+
+GetCausesOk returns a tuple with the Causes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCauses
+
+`func (o *RuleViolationError) SetCauses(v []RuleViolationCause)`
+
+SetCauses sets Causes field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

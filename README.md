@@ -103,72 +103,72 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AdminApi* | [**CreateGlobalRule**](docs/AdminApi.md#createglobalrule) | **Post** /admin/rules | Create global rule
-*AdminApi* | [**CreateRoleMapping**](docs/AdminApi.md#createrolemapping) | **Post** /admin/roleMappings | Create a new role mapping
-*AdminApi* | [**DeleteAllGlobalRules**](docs/AdminApi.md#deleteallglobalrules) | **Delete** /admin/rules | Delete all global rules
-*AdminApi* | [**DeleteGlobalRule**](docs/AdminApi.md#deleteglobalrule) | **Delete** /admin/rules/{rule} | Delete global rule
-*AdminApi* | [**DeleteRoleMapping**](docs/AdminApi.md#deleterolemapping) | **Delete** /admin/roleMappings/{principalId} | Delete a role mapping
-*AdminApi* | [**ExportData**](docs/AdminApi.md#exportdata) | **Get** /admin/export | Export registry data
-*AdminApi* | [**GetConfigProperty**](docs/AdminApi.md#getconfigproperty) | **Get** /admin/config/properties/{propertyName} | Get configuration property value
-*AdminApi* | [**GetGlobalRuleConfig**](docs/AdminApi.md#getglobalruleconfig) | **Get** /admin/rules/{rule} | Get global rule configuration
-*AdminApi* | [**GetLogConfiguration**](docs/AdminApi.md#getlogconfiguration) | **Get** /admin/loggers/{logger} | Get a single logger configuration
-*AdminApi* | [**GetRoleMapping**](docs/AdminApi.md#getrolemapping) | **Get** /admin/roleMappings/{principalId} | Return a single role mapping
-*AdminApi* | [**ImportData**](docs/AdminApi.md#importdata) | **Post** /admin/import | Import registry data
-*AdminApi* | [**ListArtifactTypes**](docs/AdminApi.md#listartifacttypes) | **Get** /admin/artifactTypes | List artifact types
-*AdminApi* | [**ListConfigProperties**](docs/AdminApi.md#listconfigproperties) | **Get** /admin/config/properties | List all configuration properties
-*AdminApi* | [**ListGlobalRules**](docs/AdminApi.md#listglobalrules) | **Get** /admin/rules | List global rules
-*AdminApi* | [**ListLogConfigurations**](docs/AdminApi.md#listlogconfigurations) | **Get** /admin/loggers | List logging configurations
-*AdminApi* | [**ListRoleMappings**](docs/AdminApi.md#listrolemappings) | **Get** /admin/roleMappings | List all role mappings
-*AdminApi* | [**RemoveLogConfiguration**](docs/AdminApi.md#removelogconfiguration) | **Delete** /admin/loggers/{logger} | Removes logger configuration
-*AdminApi* | [**ResetConfigProperty**](docs/AdminApi.md#resetconfigproperty) | **Delete** /admin/config/properties/{propertyName} | Reset a configuration property
-*AdminApi* | [**SetLogConfiguration**](docs/AdminApi.md#setlogconfiguration) | **Put** /admin/loggers/{logger} | Set a logger&#39;s configuration
-*AdminApi* | [**UpdateConfigProperty**](docs/AdminApi.md#updateconfigproperty) | **Put** /admin/config/properties/{propertyName} | Update a configuration property
-*AdminApi* | [**UpdateGlobalRuleConfig**](docs/AdminApi.md#updateglobalruleconfig) | **Put** /admin/rules/{rule} | Update global rule configuration
-*AdminApi* | [**UpdateRoleMapping**](docs/AdminApi.md#updaterolemapping) | **Put** /admin/roleMappings/{principalId} | Update a role mapping
-*ArtifactRulesApi* | [**CreateArtifactRule**](docs/ArtifactRulesApi.md#createartifactrule) | **Post** /groups/{groupId}/artifacts/{artifactId}/rules | Create artifact rule
-*ArtifactRulesApi* | [**DeleteArtifactRule**](docs/ArtifactRulesApi.md#deleteartifactrule) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Delete artifact rule
-*ArtifactRulesApi* | [**DeleteArtifactRules**](docs/ArtifactRulesApi.md#deleteartifactrules) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules | Delete artifact rules
-*ArtifactRulesApi* | [**GetArtifactRuleConfig**](docs/ArtifactRulesApi.md#getartifactruleconfig) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Get artifact rule configuration
-*ArtifactRulesApi* | [**ListArtifactRules**](docs/ArtifactRulesApi.md#listartifactrules) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules | List artifact rules
-*ArtifactRulesApi* | [**TestUpdateArtifact**](docs/ArtifactRulesApi.md#testupdateartifact) | **Put** /groups/{groupId}/artifacts/{artifactId}/test | Test update artifact
-*ArtifactRulesApi* | [**UpdateArtifactRuleConfig**](docs/ArtifactRulesApi.md#updateartifactruleconfig) | **Put** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Update artifact rule configuration
-*ArtifactTypeApi* | [**ListArtifactTypes**](docs/ArtifactTypeApi.md#listartifacttypes) | **Get** /admin/artifactTypes | List artifact types
-*ArtifactsApi* | [**CreateArtifact**](docs/ArtifactsApi.md#createartifact) | **Post** /groups/{groupId}/artifacts | Create artifact
-*ArtifactsApi* | [**DeleteArtifact**](docs/ArtifactsApi.md#deleteartifact) | **Delete** /groups/{groupId}/artifacts/{artifactId} | Delete artifact
-*ArtifactsApi* | [**DeleteArtifactsInGroup**](docs/ArtifactsApi.md#deleteartifactsingroup) | **Delete** /groups/{groupId}/artifacts | Delete artifacts in group
-*ArtifactsApi* | [**GetContentByGlobalId**](docs/ArtifactsApi.md#getcontentbyglobalid) | **Get** /ids/globalIds/{globalId} | Get artifact by global ID
-*ArtifactsApi* | [**GetContentByHash**](docs/ArtifactsApi.md#getcontentbyhash) | **Get** /ids/contentHashes/{contentHash}/ | Get artifact content by SHA-256 hash
-*ArtifactsApi* | [**GetContentById**](docs/ArtifactsApi.md#getcontentbyid) | **Get** /ids/contentIds/{contentId}/ | Get artifact content by ID
-*ArtifactsApi* | [**GetLatestArtifact**](docs/ArtifactsApi.md#getlatestartifact) | **Get** /groups/{groupId}/artifacts/{artifactId} | Get latest artifact
-*ArtifactsApi* | [**ListArtifactsInGroup**](docs/ArtifactsApi.md#listartifactsingroup) | **Get** /groups/{groupId}/artifacts | List artifacts in group
-*ArtifactsApi* | [**ReferencesByContentHash**](docs/ArtifactsApi.md#referencesbycontenthash) | **Get** /ids/contentHashes/{contentHash}/references | List artifact references by hash
-*ArtifactsApi* | [**ReferencesByContentId**](docs/ArtifactsApi.md#referencesbycontentid) | **Get** /ids/contentIds/{contentId}/references | List artifact references by content ID
-*ArtifactsApi* | [**ReferencesByGlobalId**](docs/ArtifactsApi.md#referencesbyglobalid) | **Get** /ids/globalIds/{globalId}/references | List artifact references by global ID
-*ArtifactsApi* | [**SearchArtifacts**](docs/ArtifactsApi.md#searchartifacts) | **Get** /search/artifacts | Search for artifacts
-*ArtifactsApi* | [**SearchArtifactsByContent**](docs/ArtifactsApi.md#searchartifactsbycontent) | **Post** /search/artifacts | Search for artifacts by content
-*ArtifactsApi* | [**UpdateArtifact**](docs/ArtifactsApi.md#updateartifact) | **Put** /groups/{groupId}/artifacts/{artifactId} | Update artifact
-*ArtifactsApi* | [**UpdateArtifactState**](docs/ArtifactsApi.md#updateartifactstate) | **Put** /groups/{groupId}/artifacts/{artifactId}/state | Update artifact state
-*GroupsApi* | [**CreateGroup**](docs/GroupsApi.md#creategroup) | **Post** /groups | Create a new group
-*GroupsApi* | [**DeleteGroupById**](docs/GroupsApi.md#deletegroupbyid) | **Delete** /groups/{groupId} | Delete a group by the specified ID.
-*GroupsApi* | [**GetGroupById**](docs/GroupsApi.md#getgroupbyid) | **Get** /groups/{groupId} | Get a group by the specified ID.
-*GroupsApi* | [**ListGroups**](docs/GroupsApi.md#listgroups) | **Get** /groups | List groups
-*MetadataApi* | [**DeleteArtifactVersionMetaData**](docs/MetadataApi.md#deleteartifactversionmetadata) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Delete artifact version metadata
-*MetadataApi* | [**GetArtifactMetaData**](docs/MetadataApi.md#getartifactmetadata) | **Get** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact metadata
-*MetadataApi* | [**GetArtifactOwner**](docs/MetadataApi.md#getartifactowner) | **Get** /groups/{groupId}/artifacts/{artifactId}/owner | Get artifact owner
-*MetadataApi* | [**GetArtifactVersionMetaData**](docs/MetadataApi.md#getartifactversionmetadata) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Get artifact version metadata
-*MetadataApi* | [**GetArtifactVersionMetaDataByContent**](docs/MetadataApi.md#getartifactversionmetadatabycontent) | **Post** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact version metadata by content
-*MetadataApi* | [**UpdateArtifactMetaData**](docs/MetadataApi.md#updateartifactmetadata) | **Put** /groups/{groupId}/artifacts/{artifactId}/meta | Update artifact metadata
-*MetadataApi* | [**UpdateArtifactOwner**](docs/MetadataApi.md#updateartifactowner) | **Put** /groups/{groupId}/artifacts/{artifactId}/owner | Update artifact owner
-*MetadataApi* | [**UpdateArtifactVersionMetaData**](docs/MetadataApi.md#updateartifactversionmetadata) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Update artifact version metadata
-*SystemApi* | [**GetResourceLimits**](docs/SystemApi.md#getresourcelimits) | **Get** /system/limits | Get resource limits information
-*SystemApi* | [**GetSystemInfo**](docs/SystemApi.md#getsysteminfo) | **Get** /system/info | Get system information
-*UsersApi* | [**GetCurrentUserInfo**](docs/UsersApi.md#getcurrentuserinfo) | **Get** /users/me | Get current user
-*VersionsApi* | [**CreateArtifactVersion**](docs/VersionsApi.md#createartifactversion) | **Post** /groups/{groupId}/artifacts/{artifactId}/versions | Create artifact version
-*VersionsApi* | [**DeleteArtifactVersion**](docs/VersionsApi.md#deleteartifactversion) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version} | Delete artifact version
-*VersionsApi* | [**GetArtifactVersion**](docs/VersionsApi.md#getartifactversion) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version} | Get artifact version
-*VersionsApi* | [**GetArtifactVersionReferences**](docs/VersionsApi.md#getartifactversionreferences) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/references | Get artifact version
-*VersionsApi* | [**ListArtifactVersions**](docs/VersionsApi.md#listartifactversions) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions | List artifact versions
-*VersionsApi* | [**UpdateArtifactVersionState**](docs/VersionsApi.md#updateartifactversionstate) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/state | Update artifact version state
+*AdminAPI* | [**CreateGlobalRule**](docs/AdminAPI.md#createglobalrule) | **Post** /admin/rules | Create global rule
+*AdminAPI* | [**CreateRoleMapping**](docs/AdminAPI.md#createrolemapping) | **Post** /admin/roleMappings | Create a new role mapping
+*AdminAPI* | [**DeleteAllGlobalRules**](docs/AdminAPI.md#deleteallglobalrules) | **Delete** /admin/rules | Delete all global rules
+*AdminAPI* | [**DeleteGlobalRule**](docs/AdminAPI.md#deleteglobalrule) | **Delete** /admin/rules/{rule} | Delete global rule
+*AdminAPI* | [**DeleteRoleMapping**](docs/AdminAPI.md#deleterolemapping) | **Delete** /admin/roleMappings/{principalId} | Delete a role mapping
+*AdminAPI* | [**ExportData**](docs/AdminAPI.md#exportdata) | **Get** /admin/export | Export registry data
+*AdminAPI* | [**GetConfigProperty**](docs/AdminAPI.md#getconfigproperty) | **Get** /admin/config/properties/{propertyName} | Get configuration property value
+*AdminAPI* | [**GetGlobalRuleConfig**](docs/AdminAPI.md#getglobalruleconfig) | **Get** /admin/rules/{rule} | Get global rule configuration
+*AdminAPI* | [**GetRoleMapping**](docs/AdminAPI.md#getrolemapping) | **Get** /admin/roleMappings/{principalId} | Return a single role mapping
+*AdminAPI* | [**ImportData**](docs/AdminAPI.md#importdata) | **Post** /admin/import | Import registry data
+*AdminAPI* | [**ListArtifactTypes**](docs/AdminAPI.md#listartifacttypes) | **Get** /admin/artifactTypes | List artifact types
+*AdminAPI* | [**ListConfigProperties**](docs/AdminAPI.md#listconfigproperties) | **Get** /admin/config/properties | List all configuration properties
+*AdminAPI* | [**ListGlobalRules**](docs/AdminAPI.md#listglobalrules) | **Get** /admin/rules | List global rules
+*AdminAPI* | [**ListRoleMappings**](docs/AdminAPI.md#listrolemappings) | **Get** /admin/roleMappings | List all role mappings
+*AdminAPI* | [**ResetConfigProperty**](docs/AdminAPI.md#resetconfigproperty) | **Delete** /admin/config/properties/{propertyName} | Reset a configuration property
+*AdminAPI* | [**UpdateConfigProperty**](docs/AdminAPI.md#updateconfigproperty) | **Put** /admin/config/properties/{propertyName} | Update a configuration property
+*AdminAPI* | [**UpdateGlobalRuleConfig**](docs/AdminAPI.md#updateglobalruleconfig) | **Put** /admin/rules/{rule} | Update global rule configuration
+*AdminAPI* | [**UpdateRoleMapping**](docs/AdminAPI.md#updaterolemapping) | **Put** /admin/roleMappings/{principalId} | Update a role mapping
+*ArtifactRulesAPI* | [**CreateArtifactRule**](docs/ArtifactRulesAPI.md#createartifactrule) | **Post** /groups/{groupId}/artifacts/{artifactId}/rules | Create artifact rule
+*ArtifactRulesAPI* | [**DeleteArtifactRule**](docs/ArtifactRulesAPI.md#deleteartifactrule) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Delete artifact rule
+*ArtifactRulesAPI* | [**DeleteArtifactRules**](docs/ArtifactRulesAPI.md#deleteartifactrules) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules | Delete artifact rules
+*ArtifactRulesAPI* | [**GetArtifactRuleConfig**](docs/ArtifactRulesAPI.md#getartifactruleconfig) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Get artifact rule configuration
+*ArtifactRulesAPI* | [**ListArtifactRules**](docs/ArtifactRulesAPI.md#listartifactrules) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules | List artifact rules
+*ArtifactRulesAPI* | [**TestUpdateArtifact**](docs/ArtifactRulesAPI.md#testupdateartifact) | **Put** /groups/{groupId}/artifacts/{artifactId}/test | Test update artifact
+*ArtifactRulesAPI* | [**UpdateArtifactRuleConfig**](docs/ArtifactRulesAPI.md#updateartifactruleconfig) | **Put** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Update artifact rule configuration
+*ArtifactTypeAPI* | [**ListArtifactTypes**](docs/ArtifactTypeAPI.md#listartifacttypes) | **Get** /admin/artifactTypes | List artifact types
+*ArtifactsAPI* | [**CreateArtifact**](docs/ArtifactsAPI.md#createartifact) | **Post** /groups/{groupId}/artifacts | Create artifact
+*ArtifactsAPI* | [**DeleteArtifact**](docs/ArtifactsAPI.md#deleteartifact) | **Delete** /groups/{groupId}/artifacts/{artifactId} | Delete artifact
+*ArtifactsAPI* | [**DeleteArtifactsInGroup**](docs/ArtifactsAPI.md#deleteartifactsingroup) | **Delete** /groups/{groupId}/artifacts | Delete artifacts in group
+*ArtifactsAPI* | [**GetContentByGlobalId**](docs/ArtifactsAPI.md#getcontentbyglobalid) | **Get** /ids/globalIds/{globalId} | Get artifact by global ID
+*ArtifactsAPI* | [**GetContentByHash**](docs/ArtifactsAPI.md#getcontentbyhash) | **Get** /ids/contentHashes/{contentHash}/ | Get artifact content by SHA-256 hash
+*ArtifactsAPI* | [**GetContentById**](docs/ArtifactsAPI.md#getcontentbyid) | **Get** /ids/contentIds/{contentId}/ | Get artifact content by ID
+*ArtifactsAPI* | [**GetLatestArtifact**](docs/ArtifactsAPI.md#getlatestartifact) | **Get** /groups/{groupId}/artifacts/{artifactId} | Get latest artifact
+*ArtifactsAPI* | [**ListArtifactsInGroup**](docs/ArtifactsAPI.md#listartifactsingroup) | **Get** /groups/{groupId}/artifacts | List artifacts in group
+*ArtifactsAPI* | [**ReferencesByContentHash**](docs/ArtifactsAPI.md#referencesbycontenthash) | **Get** /ids/contentHashes/{contentHash}/references | List artifact references by hash
+*ArtifactsAPI* | [**ReferencesByContentId**](docs/ArtifactsAPI.md#referencesbycontentid) | **Get** /ids/contentIds/{contentId}/references | List artifact references by content ID
+*ArtifactsAPI* | [**ReferencesByGlobalId**](docs/ArtifactsAPI.md#referencesbyglobalid) | **Get** /ids/globalIds/{globalId}/references | List artifact references by global ID
+*ArtifactsAPI* | [**SearchArtifacts**](docs/ArtifactsAPI.md#searchartifacts) | **Get** /search/artifacts | Search for artifacts
+*ArtifactsAPI* | [**SearchArtifactsByContent**](docs/ArtifactsAPI.md#searchartifactsbycontent) | **Post** /search/artifacts | Search for artifacts by content
+*ArtifactsAPI* | [**UpdateArtifact**](docs/ArtifactsAPI.md#updateartifact) | **Put** /groups/{groupId}/artifacts/{artifactId} | Update artifact
+*ArtifactsAPI* | [**UpdateArtifactState**](docs/ArtifactsAPI.md#updateartifactstate) | **Put** /groups/{groupId}/artifacts/{artifactId}/state | Update artifact state
+*GroupsAPI* | [**CreateGroup**](docs/GroupsAPI.md#creategroup) | **Post** /groups | Create a new group
+*GroupsAPI* | [**DeleteGroupById**](docs/GroupsAPI.md#deletegroupbyid) | **Delete** /groups/{groupId} | Delete a group by the specified ID.
+*GroupsAPI* | [**GetGroupById**](docs/GroupsAPI.md#getgroupbyid) | **Get** /groups/{groupId} | Get a group by the specified ID.
+*GroupsAPI* | [**ListGroups**](docs/GroupsAPI.md#listgroups) | **Get** /groups | List groups
+*MetadataAPI* | [**DeleteArtifactVersionMetaData**](docs/MetadataAPI.md#deleteartifactversionmetadata) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Delete artifact version metadata
+*MetadataAPI* | [**GetArtifactMetaData**](docs/MetadataAPI.md#getartifactmetadata) | **Get** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact metadata
+*MetadataAPI* | [**GetArtifactOwner**](docs/MetadataAPI.md#getartifactowner) | **Get** /groups/{groupId}/artifacts/{artifactId}/owner | Get artifact owner
+*MetadataAPI* | [**GetArtifactVersionMetaData**](docs/MetadataAPI.md#getartifactversionmetadata) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Get artifact version metadata
+*MetadataAPI* | [**GetArtifactVersionMetaDataByContent**](docs/MetadataAPI.md#getartifactversionmetadatabycontent) | **Post** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact version metadata by content
+*MetadataAPI* | [**UpdateArtifactMetaData**](docs/MetadataAPI.md#updateartifactmetadata) | **Put** /groups/{groupId}/artifacts/{artifactId}/meta | Update artifact metadata
+*MetadataAPI* | [**UpdateArtifactOwner**](docs/MetadataAPI.md#updateartifactowner) | **Put** /groups/{groupId}/artifacts/{artifactId}/owner | Update artifact owner
+*MetadataAPI* | [**UpdateArtifactVersionMetaData**](docs/MetadataAPI.md#updateartifactversionmetadata) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Update artifact version metadata
+*SystemAPI* | [**GetResourceLimits**](docs/SystemAPI.md#getresourcelimits) | **Get** /system/limits | Get resource limits information
+*SystemAPI* | [**GetSystemInfo**](docs/SystemAPI.md#getsysteminfo) | **Get** /system/info | Get system information
+*UsersAPI* | [**GetCurrentUserInfo**](docs/UsersAPI.md#getcurrentuserinfo) | **Get** /users/me | Get current user
+*VersionsAPI* | [**AddArtifactVersionComment**](docs/VersionsAPI.md#addartifactversioncomment) | **Post** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments | Add new comment
+*VersionsAPI* | [**CreateArtifactVersion**](docs/VersionsAPI.md#createartifactversion) | **Post** /groups/{groupId}/artifacts/{artifactId}/versions | Create artifact version
+*VersionsAPI* | [**DeleteArtifactVersion**](docs/VersionsAPI.md#deleteartifactversion) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version} | Delete artifact version
+*VersionsAPI* | [**DeleteArtifactVersionComment**](docs/VersionsAPI.md#deleteartifactversioncomment) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments/{commentId} | Delete a single comment
+*VersionsAPI* | [**GetArtifactVersion**](docs/VersionsAPI.md#getartifactversion) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version} | Get artifact version
+*VersionsAPI* | [**GetArtifactVersionComments**](docs/VersionsAPI.md#getartifactversioncomments) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments | Get artifact version comments
+*VersionsAPI* | [**GetArtifactVersionReferences**](docs/VersionsAPI.md#getartifactversionreferences) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/references | Get artifact version references
+*VersionsAPI* | [**ListArtifactVersions**](docs/VersionsAPI.md#listartifactversions) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions | List artifact versions
+*VersionsAPI* | [**UpdateArtifactVersionComment**](docs/VersionsAPI.md#updateartifactversioncomment) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments/{commentId} | Update a comment
+*VersionsAPI* | [**UpdateArtifactVersionState**](docs/VersionsAPI.md#updateartifactversionstate) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/state | Update artifact version state
 
 
 ## Documentation For Models
@@ -180,6 +180,7 @@ Class | Method | HTTP request | Description
  - [ArtifactSearchResults](docs/ArtifactSearchResults.md)
  - [ArtifactState](docs/ArtifactState.md)
  - [ArtifactTypeInfo](docs/ArtifactTypeInfo.md)
+ - [Comment](docs/Comment.md)
  - [ConfigurationProperty](docs/ConfigurationProperty.md)
  - [CreateGroupMetaData](docs/CreateGroupMetaData.md)
  - [DownloadRef](docs/DownloadRef.md)
@@ -187,19 +188,17 @@ Class | Method | HTTP request | Description
  - [Error](docs/Error.md)
  - [GroupMetaData](docs/GroupMetaData.md)
  - [GroupSearchResults](docs/GroupSearchResults.md)
+ - [HandleReferencesType](docs/HandleReferencesType.md)
  - [IfExists](docs/IfExists.md)
  - [Limits](docs/Limits.md)
- - [LogConfiguration](docs/LogConfiguration.md)
- - [LogLevel](docs/LogLevel.md)
- - [NamedLogConfiguration](docs/NamedLogConfiguration.md)
- - [NamedLogConfigurationAllOf](docs/NamedLogConfigurationAllOf.md)
+ - [NewComment](docs/NewComment.md)
+ - [ReferenceType](docs/ReferenceType.md)
  - [RoleMapping](docs/RoleMapping.md)
  - [RoleType](docs/RoleType.md)
  - [Rule](docs/Rule.md)
  - [RuleType](docs/RuleType.md)
  - [RuleViolationCause](docs/RuleViolationCause.md)
  - [RuleViolationError](docs/RuleViolationError.md)
- - [RuleViolationErrorAllOf](docs/RuleViolationErrorAllOf.md)
  - [SearchedArtifact](docs/SearchedArtifact.md)
  - [SearchedGroup](docs/SearchedGroup.md)
  - [SearchedVersion](docs/SearchedVersion.md)

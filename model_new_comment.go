@@ -15,57 +15,57 @@ import (
 	"encoding/json"
 )
 
-// checks if the LogConfiguration type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &LogConfiguration{}
+// checks if the NewComment type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NewComment{}
 
-// LogConfiguration 
-type LogConfiguration struct {
-	Level LogLevel `json:"level"`
+// NewComment 
+type NewComment struct {
+	Value string `json:"value"`
 }
 
-// NewLogConfiguration instantiates a new LogConfiguration object
+// NewNewComment instantiates a new NewComment object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLogConfiguration(level LogLevel) *LogConfiguration {
-	this := LogConfiguration{}
-	this.Level = level
+func NewNewComment(value string) *NewComment {
+	this := NewComment{}
+	this.Value = value
 	return &this
 }
 
-// NewLogConfigurationWithDefaults instantiates a new LogConfiguration object
+// NewNewCommentWithDefaults instantiates a new NewComment object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewLogConfigurationWithDefaults() *LogConfiguration {
-	this := LogConfiguration{}
+func NewNewCommentWithDefaults() *NewComment {
+	this := NewComment{}
 	return &this
 }
 
-// GetLevel returns the Level field value
-func (o *LogConfiguration) GetLevel() LogLevel {
+// GetValue returns the Value field value
+func (o *NewComment) GetValue() string {
 	if o == nil {
-		var ret LogLevel
+		var ret string
 		return ret
 	}
 
-	return o.Level
+	return o.Value
 }
 
-// GetLevelOk returns a tuple with the Level field value
+// GetValueOk returns a tuple with the Value field value
 // and a boolean to check if the value has been set.
-func (o *LogConfiguration) GetLevelOk() (*LogLevel, bool) {
+func (o *NewComment) GetValueOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Level, true
+	return &o.Value, true
 }
 
-// SetLevel sets field value
-func (o *LogConfiguration) SetLevel(v LogLevel) {
-	o.Level = v
+// SetValue sets field value
+func (o *NewComment) SetValue(v string) {
+	o.Value = v
 }
 
-func (o LogConfiguration) MarshalJSON() ([]byte, error) {
+func (o NewComment) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -73,44 +73,44 @@ func (o LogConfiguration) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o LogConfiguration) ToMap() (map[string]interface{}, error) {
+func (o NewComment) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["level"] = o.Level
+	toSerialize["value"] = o.Value
 	return toSerialize, nil
 }
 
-type NullableLogConfiguration struct {
-	value *LogConfiguration
+type NullableNewComment struct {
+	value *NewComment
 	isSet bool
 }
 
-func (v NullableLogConfiguration) Get() *LogConfiguration {
+func (v NullableNewComment) Get() *NewComment {
 	return v.value
 }
 
-func (v *NullableLogConfiguration) Set(val *LogConfiguration) {
+func (v *NullableNewComment) Set(val *NewComment) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableLogConfiguration) IsSet() bool {
+func (v NullableNewComment) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableLogConfiguration) Unset() {
+func (v *NullableNewComment) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableLogConfiguration(val *LogConfiguration) *NullableLogConfiguration {
-	return &NullableLogConfiguration{value: val, isSet: true}
+func NewNullableNewComment(val *NewComment) *NullableNewComment {
+	return &NullableNewComment{value: val, isSet: true}
 }
 
-func (v NullableLogConfiguration) MarshalJSON() ([]byte, error) {
+func (v NullableNewComment) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableLogConfiguration) UnmarshalJSON(src []byte) error {
+func (v *NullableNewComment) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

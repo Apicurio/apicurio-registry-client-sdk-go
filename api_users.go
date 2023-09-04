@@ -20,12 +20,12 @@ import (
 )
 
 
-// UsersApiService UsersApi service
-type UsersApiService service
+// UsersAPIService UsersAPI service
+type UsersAPIService service
 
 type ApiGetCurrentUserInfoRequest struct {
 	ctx context.Context
-	ApiService *UsersApiService
+	ApiService *UsersAPIService
 }
 
 func (r ApiGetCurrentUserInfoRequest) Execute() (*UserInfo, *http.Response, error) {
@@ -40,7 +40,7 @@ Returns information about the currently authenticated user.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetCurrentUserInfoRequest
 */
-func (a *UsersApiService) GetCurrentUserInfo(ctx context.Context) ApiGetCurrentUserInfoRequest {
+func (a *UsersAPIService) GetCurrentUserInfo(ctx context.Context) ApiGetCurrentUserInfoRequest {
 	return ApiGetCurrentUserInfoRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -49,7 +49,7 @@ func (a *UsersApiService) GetCurrentUserInfo(ctx context.Context) ApiGetCurrentU
 
 // Execute executes the request
 //  @return UserInfo
-func (a *UsersApiService) GetCurrentUserInfoExecute(r ApiGetCurrentUserInfoRequest) (*UserInfo, *http.Response, error) {
+func (a *UsersAPIService) GetCurrentUserInfoExecute(r ApiGetCurrentUserInfoRequest) (*UserInfo, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -57,7 +57,7 @@ func (a *UsersApiService) GetCurrentUserInfoExecute(r ApiGetCurrentUserInfoReque
 		localVarReturnValue  *UserInfo
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersApiService.GetCurrentUserInfo")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.GetCurrentUserInfo")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

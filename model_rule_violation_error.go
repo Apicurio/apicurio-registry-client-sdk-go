@@ -20,8 +20,6 @@ var _ MappedNullable = &RuleViolationError{}
 
 // RuleViolationError All error responses, whether `4xx` or `5xx` will include one of these as the response body.
 type RuleViolationError struct {
-	// List of rule violation causes.
-	Causes []RuleViolationCause `json:"causes"`
 	// The short error message.
 	Message *string `json:"message,omitempty"`
 	// The server-side error code.
@@ -30,6 +28,8 @@ type RuleViolationError struct {
 	Detail *string `json:"detail,omitempty"`
 	// The error name - typically the classname of the exception thrown by the server.
 	Name *string `json:"name,omitempty"`
+	// List of rule violation causes.
+	Causes []RuleViolationCause `json:"causes"`
 }
 
 // NewRuleViolationError instantiates a new RuleViolationError object
@@ -48,30 +48,6 @@ func NewRuleViolationError(causes []RuleViolationCause) *RuleViolationError {
 func NewRuleViolationErrorWithDefaults() *RuleViolationError {
 	this := RuleViolationError{}
 	return &this
-}
-
-// GetCauses returns the Causes field value
-func (o *RuleViolationError) GetCauses() []RuleViolationCause {
-	if o == nil {
-		var ret []RuleViolationCause
-		return ret
-	}
-
-	return o.Causes
-}
-
-// GetCausesOk returns a tuple with the Causes field value
-// and a boolean to check if the value has been set.
-func (o *RuleViolationError) GetCausesOk() ([]RuleViolationCause, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Causes, true
-}
-
-// SetCauses sets field value
-func (o *RuleViolationError) SetCauses(v []RuleViolationCause) {
-	o.Causes = v
 }
 
 // GetMessage returns the Message field value if set, zero value otherwise.
@@ -202,6 +178,30 @@ func (o *RuleViolationError) SetName(v string) {
 	o.Name = &v
 }
 
+// GetCauses returns the Causes field value
+func (o *RuleViolationError) GetCauses() []RuleViolationCause {
+	if o == nil {
+		var ret []RuleViolationCause
+		return ret
+	}
+
+	return o.Causes
+}
+
+// GetCausesOk returns a tuple with the Causes field value
+// and a boolean to check if the value has been set.
+func (o *RuleViolationError) GetCausesOk() ([]RuleViolationCause, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Causes, true
+}
+
+// SetCauses sets field value
+func (o *RuleViolationError) SetCauses(v []RuleViolationCause) {
+	o.Causes = v
+}
+
 func (o RuleViolationError) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -212,7 +212,6 @@ func (o RuleViolationError) MarshalJSON() ([]byte, error) {
 
 func (o RuleViolationError) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["causes"] = o.Causes
 	if !IsNil(o.Message) {
 		toSerialize["message"] = o.Message
 	}
@@ -225,6 +224,7 @@ func (o RuleViolationError) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
+	toSerialize["causes"] = o.Causes
 	return toSerialize, nil
 }
 

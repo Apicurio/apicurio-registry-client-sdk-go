@@ -1,11 +1,11 @@
-# \SystemApi
+# \SystemAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetResourceLimits**](SystemApi.md#GetResourceLimits) | **Get** /system/limits | Get resource limits information
-[**GetSystemInfo**](SystemApi.md#GetSystemInfo) | **Get** /system/info | Get system information
+[**GetResourceLimits**](SystemAPI.md#GetResourceLimits) | **Get** /system/limits | Get resource limits information
+[**GetSystemInfo**](SystemAPI.md#GetSystemInfo) | **Get** /system/info | Get system information
 
 
 
@@ -33,13 +33,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.SystemApi.GetResourceLimits(context.Background()).Execute()
+    resp, r, err := apiClient.SystemAPI.GetResourceLimits(context.Background()).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `SystemApi.GetResourceLimits``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `SystemAPI.GetResourceLimits``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetResourceLimits`: Limits
-    fmt.Fprintf(os.Stdout, "Response from `SystemApi.GetResourceLimits`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `SystemAPI.GetResourceLimits`: %v\n", resp)
 }
 ```
 
@@ -94,13 +94,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.SystemApi.GetSystemInfo(context.Background()).Execute()
+    resp, r, err := apiClient.SystemAPI.GetSystemInfo(context.Background()).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `SystemApi.GetSystemInfo``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `SystemAPI.GetSystemInfo``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetSystemInfo`: SystemInfo
-    fmt.Fprintf(os.Stdout, "Response from `SystemApi.GetSystemInfo`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `SystemAPI.GetSystemInfo`: %v\n", resp)
 }
 ```
 

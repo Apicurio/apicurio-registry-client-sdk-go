@@ -1,13 +1,13 @@
-# \GroupsApi
+# \GroupsAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateGroup**](GroupsApi.md#CreateGroup) | **Post** /groups | Create a new group
-[**DeleteGroupById**](GroupsApi.md#DeleteGroupById) | **Delete** /groups/{groupId} | Delete a group by the specified ID.
-[**GetGroupById**](GroupsApi.md#GetGroupById) | **Get** /groups/{groupId} | Get a group by the specified ID.
-[**ListGroups**](GroupsApi.md#ListGroups) | **Get** /groups | List groups
+[**CreateGroup**](GroupsAPI.md#CreateGroup) | **Post** /groups | Create a new group
+[**DeleteGroupById**](GroupsAPI.md#DeleteGroupById) | **Delete** /groups/{groupId} | Delete a group by the specified ID.
+[**GetGroupById**](GroupsAPI.md#GetGroupById) | **Get** /groups/{groupId} | Get a group by the specified ID.
+[**ListGroups**](GroupsAPI.md#ListGroups) | **Get** /groups | List groups
 
 
 
@@ -36,13 +36,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.GroupsApi.CreateGroup(context.Background()).CreateGroupMetaData(createGroupMetaData).Execute()
+    resp, r, err := apiClient.GroupsAPI.CreateGroup(context.Background()).CreateGroupMetaData(createGroupMetaData).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `GroupsApi.CreateGroup``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `GroupsAPI.CreateGroup``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `CreateGroup`: GroupMetaData
-    fmt.Fprintf(os.Stdout, "Response from `GroupsApi.CreateGroup`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `GroupsAPI.CreateGroup`: %v\n", resp)
 }
 ```
 
@@ -102,9 +102,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.GroupsApi.DeleteGroupById(context.Background(), groupId).Execute()
+    r, err := apiClient.GroupsAPI.DeleteGroupById(context.Background(), groupId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `GroupsApi.DeleteGroupById``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `GroupsAPI.DeleteGroupById``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -170,13 +170,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.GroupsApi.GetGroupById(context.Background(), groupId).Execute()
+    resp, r, err := apiClient.GroupsAPI.GetGroupById(context.Background(), groupId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `GroupsApi.GetGroupById``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `GroupsAPI.GetGroupById``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetGroupById`: GroupMetaData
-    fmt.Fprintf(os.Stdout, "Response from `GroupsApi.GetGroupById`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `GroupsAPI.GetGroupById`: %v\n", resp)
 }
 ```
 
@@ -243,13 +243,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.GroupsApi.ListGroups(context.Background()).Limit(limit).Offset(offset).Order(order).Orderby(orderby).Execute()
+    resp, r, err := apiClient.GroupsAPI.ListGroups(context.Background()).Limit(limit).Offset(offset).Order(order).Orderby(orderby).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `GroupsApi.ListGroups``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `GroupsAPI.ListGroups``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ListGroups`: GroupSearchResults
-    fmt.Fprintf(os.Stdout, "Response from `GroupsApi.ListGroups`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `GroupsAPI.ListGroups`: %v\n", resp)
 }
 ```
 

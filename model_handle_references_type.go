@@ -16,54 +16,54 @@ import (
 	"fmt"
 )
 
-// RuleType 
-type RuleType string
+// HandleReferencesType How to handle references when retrieving content.  References can either be left unchanged (`PRESERVE`), re-written so they are valid in the context of the registry (`REWRITE`), or fully dereferenced such that all externally referenced content is internalized (`DEREFERENCE`).
+type HandleReferencesType string
 
-// List of RuleType
+// List of HandleReferencesType
 const (
-	VALIDITY RuleType = "VALIDITY"
-	COMPATIBILITY RuleType = "COMPATIBILITY"
-	INTEGRITY RuleType = "INTEGRITY"
+	PRESERVE HandleReferencesType = "PRESERVE"
+	DEREFERENCE HandleReferencesType = "DEREFERENCE"
+	REWRITE HandleReferencesType = "REWRITE"
 )
 
-// All allowed values of RuleType enum
-var AllowedRuleTypeEnumValues = []RuleType{
-	"VALIDITY",
-	"COMPATIBILITY",
-	"INTEGRITY",
+// All allowed values of HandleReferencesType enum
+var AllowedHandleReferencesTypeEnumValues = []HandleReferencesType{
+	"PRESERVE",
+	"DEREFERENCE",
+	"REWRITE",
 }
 
-func (v *RuleType) UnmarshalJSON(src []byte) error {
+func (v *HandleReferencesType) UnmarshalJSON(src []byte) error {
 	var value string
 	err := json.Unmarshal(src, &value)
 	if err != nil {
 		return err
 	}
-	enumTypeValue := RuleType(value)
-	for _, existing := range AllowedRuleTypeEnumValues {
+	enumTypeValue := HandleReferencesType(value)
+	for _, existing := range AllowedHandleReferencesTypeEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
 		}
 	}
 
-	return fmt.Errorf("%+v is not a valid RuleType", value)
+	return fmt.Errorf("%+v is not a valid HandleReferencesType", value)
 }
 
-// NewRuleTypeFromValue returns a pointer to a valid RuleType
+// NewHandleReferencesTypeFromValue returns a pointer to a valid HandleReferencesType
 // for the value passed as argument, or an error if the value passed is not allowed by the enum
-func NewRuleTypeFromValue(v string) (*RuleType, error) {
-	ev := RuleType(v)
+func NewHandleReferencesTypeFromValue(v string) (*HandleReferencesType, error) {
+	ev := HandleReferencesType(v)
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for RuleType: valid values are %v", v, AllowedRuleTypeEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for HandleReferencesType: valid values are %v", v, AllowedHandleReferencesTypeEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
-func (v RuleType) IsValid() bool {
-	for _, existing := range AllowedRuleTypeEnumValues {
+func (v HandleReferencesType) IsValid() bool {
+	for _, existing := range AllowedHandleReferencesTypeEnumValues {
 		if existing == v {
 			return true
 		}
@@ -71,43 +71,43 @@ func (v RuleType) IsValid() bool {
 	return false
 }
 
-// Ptr returns reference to RuleType value
-func (v RuleType) Ptr() *RuleType {
+// Ptr returns reference to HandleReferencesType value
+func (v HandleReferencesType) Ptr() *HandleReferencesType {
 	return &v
 }
 
-type NullableRuleType struct {
-	value *RuleType
+type NullableHandleReferencesType struct {
+	value *HandleReferencesType
 	isSet bool
 }
 
-func (v NullableRuleType) Get() *RuleType {
+func (v NullableHandleReferencesType) Get() *HandleReferencesType {
 	return v.value
 }
 
-func (v *NullableRuleType) Set(val *RuleType) {
+func (v *NullableHandleReferencesType) Set(val *HandleReferencesType) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableRuleType) IsSet() bool {
+func (v NullableHandleReferencesType) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableRuleType) Unset() {
+func (v *NullableHandleReferencesType) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableRuleType(val *RuleType) *NullableRuleType {
-	return &NullableRuleType{value: val, isSet: true}
+func NewNullableHandleReferencesType(val *HandleReferencesType) *NullableHandleReferencesType {
+	return &NullableHandleReferencesType{value: val, isSet: true}
 }
 
-func (v NullableRuleType) MarshalJSON() ([]byte, error) {
+func (v NullableHandleReferencesType) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableRuleType) UnmarshalJSON(src []byte) error {
+func (v *NullableHandleReferencesType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

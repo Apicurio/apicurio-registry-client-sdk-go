@@ -1,17 +1,17 @@
-# \MetadataApi
+# \MetadataAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteArtifactVersionMetaData**](MetadataApi.md#DeleteArtifactVersionMetaData) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Delete artifact version metadata
-[**GetArtifactMetaData**](MetadataApi.md#GetArtifactMetaData) | **Get** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact metadata
-[**GetArtifactOwner**](MetadataApi.md#GetArtifactOwner) | **Get** /groups/{groupId}/artifacts/{artifactId}/owner | Get artifact owner
-[**GetArtifactVersionMetaData**](MetadataApi.md#GetArtifactVersionMetaData) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Get artifact version metadata
-[**GetArtifactVersionMetaDataByContent**](MetadataApi.md#GetArtifactVersionMetaDataByContent) | **Post** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact version metadata by content
-[**UpdateArtifactMetaData**](MetadataApi.md#UpdateArtifactMetaData) | **Put** /groups/{groupId}/artifacts/{artifactId}/meta | Update artifact metadata
-[**UpdateArtifactOwner**](MetadataApi.md#UpdateArtifactOwner) | **Put** /groups/{groupId}/artifacts/{artifactId}/owner | Update artifact owner
-[**UpdateArtifactVersionMetaData**](MetadataApi.md#UpdateArtifactVersionMetaData) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Update artifact version metadata
+[**DeleteArtifactVersionMetaData**](MetadataAPI.md#DeleteArtifactVersionMetaData) | **Delete** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Delete artifact version metadata
+[**GetArtifactMetaData**](MetadataAPI.md#GetArtifactMetaData) | **Get** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact metadata
+[**GetArtifactOwner**](MetadataAPI.md#GetArtifactOwner) | **Get** /groups/{groupId}/artifacts/{artifactId}/owner | Get artifact owner
+[**GetArtifactVersionMetaData**](MetadataAPI.md#GetArtifactVersionMetaData) | **Get** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Get artifact version metadata
+[**GetArtifactVersionMetaDataByContent**](MetadataAPI.md#GetArtifactVersionMetaDataByContent) | **Post** /groups/{groupId}/artifacts/{artifactId}/meta | Get artifact version metadata by content
+[**UpdateArtifactMetaData**](MetadataAPI.md#UpdateArtifactMetaData) | **Put** /groups/{groupId}/artifacts/{artifactId}/meta | Update artifact metadata
+[**UpdateArtifactOwner**](MetadataAPI.md#UpdateArtifactOwner) | **Put** /groups/{groupId}/artifacts/{artifactId}/owner | Update artifact owner
+[**UpdateArtifactVersionMetaData**](MetadataAPI.md#UpdateArtifactVersionMetaData) | **Put** /groups/{groupId}/artifacts/{artifactId}/versions/{version}/meta | Update artifact version metadata
 
 
 
@@ -42,9 +42,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MetadataApi.DeleteArtifactVersionMetaData(context.Background(), groupId, artifactId, version).Execute()
+    r, err := apiClient.MetadataAPI.DeleteArtifactVersionMetaData(context.Background(), groupId, artifactId, version).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.DeleteArtifactVersionMetaData``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.DeleteArtifactVersionMetaData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -115,13 +115,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.MetadataApi.GetArtifactMetaData(context.Background(), groupId, artifactId).Execute()
+    resp, r, err := apiClient.MetadataAPI.GetArtifactMetaData(context.Background(), groupId, artifactId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.GetArtifactMetaData``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.GetArtifactMetaData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetArtifactMetaData`: ArtifactMetaData
-    fmt.Fprintf(os.Stdout, "Response from `MetadataApi.GetArtifactMetaData`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `MetadataAPI.GetArtifactMetaData`: %v\n", resp)
 }
 ```
 
@@ -188,13 +188,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.MetadataApi.GetArtifactOwner(context.Background(), groupId, artifactId).Execute()
+    resp, r, err := apiClient.MetadataAPI.GetArtifactOwner(context.Background(), groupId, artifactId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.GetArtifactOwner``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.GetArtifactOwner``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetArtifactOwner`: ArtifactOwner
-    fmt.Fprintf(os.Stdout, "Response from `MetadataApi.GetArtifactOwner`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `MetadataAPI.GetArtifactOwner`: %v\n", resp)
 }
 ```
 
@@ -262,13 +262,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.MetadataApi.GetArtifactVersionMetaData(context.Background(), groupId, artifactId, version).Execute()
+    resp, r, err := apiClient.MetadataAPI.GetArtifactVersionMetaData(context.Background(), groupId, artifactId, version).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.GetArtifactVersionMetaData``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.GetArtifactVersionMetaData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetArtifactVersionMetaData`: VersionMetaData
-    fmt.Fprintf(os.Stdout, "Response from `MetadataApi.GetArtifactVersionMetaData`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `MetadataAPI.GetArtifactVersionMetaData`: %v\n", resp)
 }
 ```
 
@@ -339,13 +339,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.MetadataApi.GetArtifactVersionMetaDataByContent(context.Background(), groupId, artifactId).Body(body).Canonical(canonical).Execute()
+    resp, r, err := apiClient.MetadataAPI.GetArtifactVersionMetaDataByContent(context.Background(), groupId, artifactId).Body(body).Canonical(canonical).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.GetArtifactVersionMetaDataByContent``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.GetArtifactVersionMetaDataByContent``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetArtifactVersionMetaDataByContent`: VersionMetaData
-    fmt.Fprintf(os.Stdout, "Response from `MetadataApi.GetArtifactVersionMetaDataByContent`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `MetadataAPI.GetArtifactVersionMetaDataByContent`: %v\n", resp)
 }
 ```
 
@@ -415,9 +415,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MetadataApi.UpdateArtifactMetaData(context.Background(), groupId, artifactId).EditableMetaData(editableMetaData).Execute()
+    r, err := apiClient.MetadataAPI.UpdateArtifactMetaData(context.Background(), groupId, artifactId).EditableMetaData(editableMetaData).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.UpdateArtifactMetaData``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.UpdateArtifactMetaData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -488,9 +488,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MetadataApi.UpdateArtifactOwner(context.Background(), groupId, artifactId).ArtifactOwner(artifactOwner).Execute()
+    r, err := apiClient.MetadataAPI.UpdateArtifactOwner(context.Background(), groupId, artifactId).ArtifactOwner(artifactOwner).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.UpdateArtifactOwner``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.UpdateArtifactOwner``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -562,9 +562,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.MetadataApi.UpdateArtifactVersionMetaData(context.Background(), groupId, artifactId, version).EditableMetaData(editableMetaData).Execute()
+    r, err := apiClient.MetadataAPI.UpdateArtifactVersionMetaData(context.Background(), groupId, artifactId, version).EditableMetaData(editableMetaData).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `MetadataApi.UpdateArtifactVersionMetaData``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `MetadataAPI.UpdateArtifactVersionMetaData``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
