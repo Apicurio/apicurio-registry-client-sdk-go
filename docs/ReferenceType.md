@@ -1,13 +1,11 @@
-# RuleType
+# ReferenceType
 
 ## Enum
 
 
-* `VALIDITY` (value: `"VALIDITY"`)
+* `OUTBOUND` (value: `"OUTBOUND"`)
 
-* `COMPATIBILITY` (value: `"COMPATIBILITY"`)
-
-* `INTEGRITY` (value: `"INTEGRITY"`)
+* `INBOUND` (value: `"INBOUND"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

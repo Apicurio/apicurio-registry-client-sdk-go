@@ -22,12 +22,12 @@ import (
 )
 
 
-// AdminApiService AdminApi service
-type AdminApiService service
+// AdminAPIService AdminAPI service
+type AdminAPIService service
 
 type ApiCreateGlobalRuleRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	rule *Rule
 }
 
@@ -55,7 +55,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateGlobalRuleRequest
 */
-func (a *AdminApiService) CreateGlobalRule(ctx context.Context) ApiCreateGlobalRuleRequest {
+func (a *AdminAPIService) CreateGlobalRule(ctx context.Context) ApiCreateGlobalRuleRequest {
 	return ApiCreateGlobalRuleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -63,14 +63,14 @@ func (a *AdminApiService) CreateGlobalRule(ctx context.Context) ApiCreateGlobalR
 }
 
 // Execute executes the request
-func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) (*http.Response, error) {
+func (a *AdminAPIService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.CreateGlobalRule")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.CreateGlobalRule")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -165,7 +165,7 @@ func (a *AdminApiService) CreateGlobalRuleExecute(r ApiCreateGlobalRuleRequest) 
 
 type ApiCreateRoleMappingRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	roleMapping *RoleMapping
 }
 
@@ -192,7 +192,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateRoleMappingRequest
 */
-func (a *AdminApiService) CreateRoleMapping(ctx context.Context) ApiCreateRoleMappingRequest {
+func (a *AdminAPIService) CreateRoleMapping(ctx context.Context) ApiCreateRoleMappingRequest {
 	return ApiCreateRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -200,14 +200,14 @@ func (a *AdminApiService) CreateRoleMapping(ctx context.Context) ApiCreateRoleMa
 }
 
 // Execute executes the request
-func (a *AdminApiService) CreateRoleMappingExecute(r ApiCreateRoleMappingRequest) (*http.Response, error) {
+func (a *AdminAPIService) CreateRoleMappingExecute(r ApiCreateRoleMappingRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.CreateRoleMapping")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.CreateRoleMapping")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -280,7 +280,7 @@ func (a *AdminApiService) CreateRoleMappingExecute(r ApiCreateRoleMappingRequest
 
 type ApiDeleteAllGlobalRulesRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 }
 
 func (r ApiDeleteAllGlobalRulesRequest) Execute() (*http.Response, error) {
@@ -300,7 +300,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDeleteAllGlobalRulesRequest
 */
-func (a *AdminApiService) DeleteAllGlobalRules(ctx context.Context) ApiDeleteAllGlobalRulesRequest {
+func (a *AdminAPIService) DeleteAllGlobalRules(ctx context.Context) ApiDeleteAllGlobalRulesRequest {
 	return ApiDeleteAllGlobalRulesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -308,14 +308,14 @@ func (a *AdminApiService) DeleteAllGlobalRules(ctx context.Context) ApiDeleteAll
 }
 
 // Execute executes the request
-func (a *AdminApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesRequest) (*http.Response, error) {
+func (a *AdminAPIService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.DeleteAllGlobalRules")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.DeleteAllGlobalRules")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -383,7 +383,7 @@ func (a *AdminApiService) DeleteAllGlobalRulesExecute(r ApiDeleteAllGlobalRulesR
 
 type ApiDeleteGlobalRuleRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	rule RuleType
 }
 
@@ -409,7 +409,7 @@ This operation can fail for the following reasons:
  @param rule The unique name/type of a rule.
  @return ApiDeleteGlobalRuleRequest
 */
-func (a *AdminApiService) DeleteGlobalRule(ctx context.Context, rule RuleType) ApiDeleteGlobalRuleRequest {
+func (a *AdminAPIService) DeleteGlobalRule(ctx context.Context, rule RuleType) ApiDeleteGlobalRuleRequest {
 	return ApiDeleteGlobalRuleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -418,14 +418,14 @@ func (a *AdminApiService) DeleteGlobalRule(ctx context.Context, rule RuleType) A
 }
 
 // Execute executes the request
-func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) (*http.Response, error) {
+func (a *AdminAPIService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.DeleteGlobalRule")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.DeleteGlobalRule")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -505,7 +505,7 @@ func (a *AdminApiService) DeleteGlobalRuleExecute(r ApiDeleteGlobalRuleRequest) 
 
 type ApiDeleteRoleMappingRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	principalId string
 }
 
@@ -528,7 +528,7 @@ This operation can fail for the following reasons:
  @param principalId Unique id of a principal (typically either a user or service account).
  @return ApiDeleteRoleMappingRequest
 */
-func (a *AdminApiService) DeleteRoleMapping(ctx context.Context, principalId string) ApiDeleteRoleMappingRequest {
+func (a *AdminAPIService) DeleteRoleMapping(ctx context.Context, principalId string) ApiDeleteRoleMappingRequest {
 	return ApiDeleteRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -537,14 +537,14 @@ func (a *AdminApiService) DeleteRoleMapping(ctx context.Context, principalId str
 }
 
 // Execute executes the request
-func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest) (*http.Response, error) {
+func (a *AdminAPIService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.DeleteRoleMapping")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.DeleteRoleMapping")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -624,7 +624,7 @@ func (a *AdminApiService) DeleteRoleMappingExecute(r ApiDeleteRoleMappingRequest
 
 type ApiExportDataRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	forBrowser *bool
 }
 
@@ -646,7 +646,7 @@ Exports registry data as a ZIP archive.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiExportDataRequest
 */
-func (a *AdminApiService) ExportData(ctx context.Context) ApiExportDataRequest {
+func (a *AdminAPIService) ExportData(ctx context.Context) ApiExportDataRequest {
 	return ApiExportDataRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -655,7 +655,7 @@ func (a *AdminApiService) ExportData(ctx context.Context) ApiExportDataRequest {
 
 // Execute executes the request
 //  @return *os.File
-func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (*os.File, *http.Response, error) {
+func (a *AdminAPIService) ExportDataExecute(r ApiExportDataRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -663,7 +663,7 @@ func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (*os.File, *
 		localVarReturnValue  *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ExportData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.ExportData")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -743,7 +743,7 @@ func (a *AdminApiService) ExportDataExecute(r ApiExportDataRequest) (*os.File, *
 
 type ApiGetConfigPropertyRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	propertyName string
 }
 
@@ -766,7 +766,7 @@ This operation may fail for one of the following reasons:
  @param propertyName The name of a configuration property.
  @return ApiGetConfigPropertyRequest
 */
-func (a *AdminApiService) GetConfigProperty(ctx context.Context, propertyName string) ApiGetConfigPropertyRequest {
+func (a *AdminAPIService) GetConfigProperty(ctx context.Context, propertyName string) ApiGetConfigPropertyRequest {
 	return ApiGetConfigPropertyRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -776,7 +776,7 @@ func (a *AdminApiService) GetConfigProperty(ctx context.Context, propertyName st
 
 // Execute executes the request
 //  @return ConfigurationProperty
-func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest) (*ConfigurationProperty, *http.Response, error) {
+func (a *AdminAPIService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest) (*ConfigurationProperty, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -784,7 +784,7 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 		localVarReturnValue  *ConfigurationProperty
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.GetConfigProperty")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.GetConfigProperty")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -873,7 +873,7 @@ func (a *AdminApiService) GetConfigPropertyExecute(r ApiGetConfigPropertyRequest
 
 type ApiGetGlobalRuleConfigRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	rule RuleType
 }
 
@@ -897,7 +897,7 @@ This operation can fail for the following reasons:
  @param rule The unique name/type of a rule.
  @return ApiGetGlobalRuleConfigRequest
 */
-func (a *AdminApiService) GetGlobalRuleConfig(ctx context.Context, rule RuleType) ApiGetGlobalRuleConfigRequest {
+func (a *AdminAPIService) GetGlobalRuleConfig(ctx context.Context, rule RuleType) ApiGetGlobalRuleConfigRequest {
 	return ApiGetGlobalRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -907,7 +907,7 @@ func (a *AdminApiService) GetGlobalRuleConfig(ctx context.Context, rule RuleType
 
 // Execute executes the request
 //  @return Rule
-func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *AdminAPIService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -915,7 +915,7 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 		localVarReturnValue  *Rule
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.GetGlobalRuleConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.GetGlobalRuleConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1002,122 +1002,9 @@ func (a *AdminApiService) GetGlobalRuleConfigExecute(r ApiGetGlobalRuleConfigReq
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetLogConfigurationRequest struct {
-	ctx context.Context
-	ApiService *AdminApiService
-	logger string
-}
-
-func (r ApiGetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
-	return r.ApiService.GetLogConfigurationExecute(r)
-}
-
-/*
-GetLogConfiguration Get a single logger configuration
-
-Returns the configured logger configuration for the provided logger name, if no logger configuration is persisted it will return the current default log configuration in the system.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param logger The name of a single logger.
- @return ApiGetLogConfigurationRequest
-*/
-func (a *AdminApiService) GetLogConfiguration(ctx context.Context, logger string) ApiGetLogConfigurationRequest {
-	return ApiGetLogConfigurationRequest{
-		ApiService: a,
-		ctx: ctx,
-		logger: logger,
-	}
-}
-
-// Execute executes the request
-//  @return NamedLogConfiguration
-func (a *AdminApiService) GetLogConfigurationExecute(r ApiGetLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *NamedLogConfiguration
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.GetLogConfiguration")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/admin/loggers/{logger}"
-	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterValueToString(r.logger, "logger")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 500 {
-			var v Error
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiGetRoleMappingRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	principalId string
 }
 
@@ -1140,7 +1027,7 @@ This operation can fail for the following reasons:
  @param principalId Unique id of a principal (typically either a user or service account).
  @return ApiGetRoleMappingRequest
 */
-func (a *AdminApiService) GetRoleMapping(ctx context.Context, principalId string) ApiGetRoleMappingRequest {
+func (a *AdminAPIService) GetRoleMapping(ctx context.Context, principalId string) ApiGetRoleMappingRequest {
 	return ApiGetRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1150,7 +1037,7 @@ func (a *AdminApiService) GetRoleMapping(ctx context.Context, principalId string
 
 // Execute executes the request
 //  @return RoleMapping
-func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*RoleMapping, *http.Response, error) {
+func (a *AdminAPIService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*RoleMapping, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1158,7 +1045,7 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 		localVarReturnValue  *RoleMapping
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.GetRoleMapping")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.GetRoleMapping")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1247,7 +1134,7 @@ func (a *AdminApiService) GetRoleMappingExecute(r ApiGetRoleMappingRequest) (*Ro
 
 type ApiImportDataRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	body *os.File
 	xRegistryPreserveGlobalId *bool
 	xRegistryPreserveContentId *bool
@@ -1283,7 +1170,7 @@ Imports registry data that was previously exported using the `/admin/export` ope
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiImportDataRequest
 */
-func (a *AdminApiService) ImportData(ctx context.Context) ApiImportDataRequest {
+func (a *AdminAPIService) ImportData(ctx context.Context) ApiImportDataRequest {
 	return ApiImportDataRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1291,14 +1178,14 @@ func (a *AdminApiService) ImportData(ctx context.Context) ApiImportDataRequest {
 }
 
 // Execute executes the request
-func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Response, error) {
+func (a *AdminAPIService) ImportDataExecute(r ApiImportDataRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ImportData")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.ImportData")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1377,7 +1264,7 @@ func (a *AdminApiService) ImportDataExecute(r ApiImportDataRequest) (*http.Respo
 
 type ApiListArtifactTypesRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 }
 
 func (r ApiListArtifactTypesRequest) Execute() ([]ArtifactTypeInfo, *http.Response, error) {
@@ -1397,7 +1284,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListArtifactTypesRequest
 */
-func (a *AdminApiService) ListArtifactTypes(ctx context.Context) ApiListArtifactTypesRequest {
+func (a *AdminAPIService) ListArtifactTypes(ctx context.Context) ApiListArtifactTypesRequest {
 	return ApiListArtifactTypesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1406,7 +1293,7 @@ func (a *AdminApiService) ListArtifactTypes(ctx context.Context) ApiListArtifact
 
 // Execute executes the request
 //  @return []ArtifactTypeInfo
-func (a *AdminApiService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest) ([]ArtifactTypeInfo, *http.Response, error) {
+func (a *AdminAPIService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest) ([]ArtifactTypeInfo, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1414,7 +1301,7 @@ func (a *AdminApiService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest
 		localVarReturnValue  []ArtifactTypeInfo
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ListArtifactTypes")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.ListArtifactTypes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1491,7 +1378,7 @@ func (a *AdminApiService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest
 
 type ApiListConfigPropertiesRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 }
 
 func (r ApiListConfigPropertiesRequest) Execute() ([]ConfigurationProperty, *http.Response, error) {
@@ -1511,7 +1398,7 @@ This operation may fail for one of the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListConfigPropertiesRequest
 */
-func (a *AdminApiService) ListConfigProperties(ctx context.Context) ApiListConfigPropertiesRequest {
+func (a *AdminAPIService) ListConfigProperties(ctx context.Context) ApiListConfigPropertiesRequest {
 	return ApiListConfigPropertiesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1520,7 +1407,7 @@ func (a *AdminApiService) ListConfigProperties(ctx context.Context) ApiListConfi
 
 // Execute executes the request
 //  @return []ConfigurationProperty
-func (a *AdminApiService) ListConfigPropertiesExecute(r ApiListConfigPropertiesRequest) ([]ConfigurationProperty, *http.Response, error) {
+func (a *AdminAPIService) ListConfigPropertiesExecute(r ApiListConfigPropertiesRequest) ([]ConfigurationProperty, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1528,7 +1415,7 @@ func (a *AdminApiService) ListConfigPropertiesExecute(r ApiListConfigPropertiesR
 		localVarReturnValue  []ConfigurationProperty
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ListConfigProperties")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.ListConfigProperties")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1605,7 +1492,7 @@ func (a *AdminApiService) ListConfigPropertiesExecute(r ApiListConfigPropertiesR
 
 type ApiListGlobalRulesRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 }
 
 func (r ApiListGlobalRulesRequest) Execute() ([]RuleType, *http.Response, error) {
@@ -1625,7 +1512,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListGlobalRulesRequest
 */
-func (a *AdminApiService) ListGlobalRules(ctx context.Context) ApiListGlobalRulesRequest {
+func (a *AdminAPIService) ListGlobalRules(ctx context.Context) ApiListGlobalRulesRequest {
 	return ApiListGlobalRulesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1634,7 +1521,7 @@ func (a *AdminApiService) ListGlobalRules(ctx context.Context) ApiListGlobalRule
 
 // Execute executes the request
 //  @return []RuleType
-func (a *AdminApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([]RuleType, *http.Response, error) {
+func (a *AdminAPIService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([]RuleType, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1642,7 +1529,7 @@ func (a *AdminApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([
 		localVarReturnValue  []RuleType
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ListGlobalRules")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.ListGlobalRules")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1717,119 +1604,9 @@ func (a *AdminApiService) ListGlobalRulesExecute(r ApiListGlobalRulesRequest) ([
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiListLogConfigurationsRequest struct {
-	ctx context.Context
-	ApiService *AdminApiService
-}
-
-func (r ApiListLogConfigurationsRequest) Execute() ([]NamedLogConfiguration, *http.Response, error) {
-	return r.ApiService.ListLogConfigurationsExecute(r)
-}
-
-/*
-ListLogConfigurations List logging configurations
-
-List all of the configured logging levels.  These override the default
-logging configuration.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiListLogConfigurationsRequest
-*/
-func (a *AdminApiService) ListLogConfigurations(ctx context.Context) ApiListLogConfigurationsRequest {
-	return ApiListLogConfigurationsRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return []NamedLogConfiguration
-func (a *AdminApiService) ListLogConfigurationsExecute(r ApiListLogConfigurationsRequest) ([]NamedLogConfiguration, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []NamedLogConfiguration
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ListLogConfigurations")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/admin/loggers"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 500 {
-			var v Error
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiListRoleMappingsRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 }
 
 func (r ApiListRoleMappingsRequest) Execute() ([]RoleMapping, *http.Response, error) {
@@ -1849,7 +1626,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListRoleMappingsRequest
 */
-func (a *AdminApiService) ListRoleMappings(ctx context.Context) ApiListRoleMappingsRequest {
+func (a *AdminAPIService) ListRoleMappings(ctx context.Context) ApiListRoleMappingsRequest {
 	return ApiListRoleMappingsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -1858,7 +1635,7 @@ func (a *AdminApiService) ListRoleMappings(ctx context.Context) ApiListRoleMappi
 
 // Execute executes the request
 //  @return []RoleMapping
-func (a *AdminApiService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) ([]RoleMapping, *http.Response, error) {
+func (a *AdminAPIService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) ([]RoleMapping, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1866,7 +1643,7 @@ func (a *AdminApiService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) 
 		localVarReturnValue  []RoleMapping
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ListRoleMappings")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.ListRoleMappings")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1941,122 +1718,9 @@ func (a *AdminApiService) ListRoleMappingsExecute(r ApiListRoleMappingsRequest) 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRemoveLogConfigurationRequest struct {
-	ctx context.Context
-	ApiService *AdminApiService
-	logger string
-}
-
-func (r ApiRemoveLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
-	return r.ApiService.RemoveLogConfigurationExecute(r)
-}
-
-/*
-RemoveLogConfiguration Removes logger configuration
-
-Removes the configured logger configuration (if any) for the given logger.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param logger The name of a single logger.
- @return ApiRemoveLogConfigurationRequest
-*/
-func (a *AdminApiService) RemoveLogConfiguration(ctx context.Context, logger string) ApiRemoveLogConfigurationRequest {
-	return ApiRemoveLogConfigurationRequest{
-		ApiService: a,
-		ctx: ctx,
-		logger: logger,
-	}
-}
-
-// Execute executes the request
-//  @return NamedLogConfiguration
-func (a *AdminApiService) RemoveLogConfigurationExecute(r ApiRemoveLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *NamedLogConfiguration
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.RemoveLogConfiguration")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/admin/loggers/{logger}"
-	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterValueToString(r.logger, "logger")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 500 {
-			var v Error
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiResetConfigPropertyRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	propertyName string
 }
 
@@ -2081,7 +1745,7 @@ This operation may fail for one of the following reasons:
  @param propertyName The name of a configuration property.
  @return ApiResetConfigPropertyRequest
 */
-func (a *AdminApiService) ResetConfigProperty(ctx context.Context, propertyName string) ApiResetConfigPropertyRequest {
+func (a *AdminAPIService) ResetConfigProperty(ctx context.Context, propertyName string) ApiResetConfigPropertyRequest {
 	return ApiResetConfigPropertyRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2090,14 +1754,14 @@ func (a *AdminApiService) ResetConfigProperty(ctx context.Context, propertyName 
 }
 
 // Execute executes the request
-func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyRequest) (*http.Response, error) {
+func (a *AdminAPIService) ResetConfigPropertyExecute(r ApiResetConfigPropertyRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.ResetConfigProperty")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.ResetConfigProperty")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2175,134 +1839,9 @@ func (a *AdminApiService) ResetConfigPropertyExecute(r ApiResetConfigPropertyReq
 	return localVarHTTPResponse, nil
 }
 
-type ApiSetLogConfigurationRequest struct {
-	ctx context.Context
-	ApiService *AdminApiService
-	logger string
-	logConfiguration *LogConfiguration
-}
-
-// The new logger configuration.
-func (r ApiSetLogConfigurationRequest) LogConfiguration(logConfiguration LogConfiguration) ApiSetLogConfigurationRequest {
-	r.logConfiguration = &logConfiguration
-	return r
-}
-
-func (r ApiSetLogConfigurationRequest) Execute() (*NamedLogConfiguration, *http.Response, error) {
-	return r.ApiService.SetLogConfigurationExecute(r)
-}
-
-/*
-SetLogConfiguration Set a logger's configuration
-
-Configures the logger referenced by the provided logger name with the given configuration.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param logger The name of a single logger.
- @return ApiSetLogConfigurationRequest
-*/
-func (a *AdminApiService) SetLogConfiguration(ctx context.Context, logger string) ApiSetLogConfigurationRequest {
-	return ApiSetLogConfigurationRequest{
-		ApiService: a,
-		ctx: ctx,
-		logger: logger,
-	}
-}
-
-// Execute executes the request
-//  @return NamedLogConfiguration
-func (a *AdminApiService) SetLogConfigurationExecute(r ApiSetLogConfigurationRequest) (*NamedLogConfiguration, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *NamedLogConfiguration
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.SetLogConfiguration")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/admin/loggers/{logger}"
-	localVarPath = strings.Replace(localVarPath, "{"+"logger"+"}", url.PathEscape(parameterValueToString(r.logger, "logger")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.logConfiguration == nil {
-		return localVarReturnValue, nil, reportError("logConfiguration is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.logConfiguration
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 500 {
-			var v Error
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUpdateConfigPropertyRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	propertyName string
 	updateConfigurationProperty *UpdateConfigurationProperty
 }
@@ -2331,7 +1870,7 @@ This operation may fail for one of the following reasons:
  @param propertyName The name of a configuration property.
  @return ApiUpdateConfigPropertyRequest
 */
-func (a *AdminApiService) UpdateConfigProperty(ctx context.Context, propertyName string) ApiUpdateConfigPropertyRequest {
+func (a *AdminAPIService) UpdateConfigProperty(ctx context.Context, propertyName string) ApiUpdateConfigPropertyRequest {
 	return ApiUpdateConfigPropertyRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2340,14 +1879,14 @@ func (a *AdminApiService) UpdateConfigProperty(ctx context.Context, propertyName
 }
 
 // Execute executes the request
-func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyRequest) (*http.Response, error) {
+func (a *AdminAPIService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.UpdateConfigProperty")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.UpdateConfigProperty")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2432,7 +1971,7 @@ func (a *AdminApiService) UpdateConfigPropertyExecute(r ApiUpdateConfigPropertyR
 
 type ApiUpdateGlobalRuleConfigRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	rule RuleType
 	rule2 *Rule
 }
@@ -2462,7 +2001,7 @@ This operation can fail for the following reasons:
  @param rule The unique name/type of a rule.
  @return ApiUpdateGlobalRuleConfigRequest
 */
-func (a *AdminApiService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleType) ApiUpdateGlobalRuleConfigRequest {
+func (a *AdminAPIService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleType) ApiUpdateGlobalRuleConfigRequest {
 	return ApiUpdateGlobalRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2472,7 +2011,7 @@ func (a *AdminApiService) UpdateGlobalRuleConfig(ctx context.Context, rule RuleT
 
 // Execute executes the request
 //  @return Rule
-func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *AdminAPIService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -2480,7 +2019,7 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 		localVarReturnValue  *Rule
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.UpdateGlobalRuleConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.UpdateGlobalRuleConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -2574,7 +2113,7 @@ func (a *AdminApiService) UpdateGlobalRuleConfigExecute(r ApiUpdateGlobalRuleCon
 
 type ApiUpdateRoleMappingRequest struct {
 	ctx context.Context
-	ApiService *AdminApiService
+	ApiService *AdminAPIService
 	principalId string
 	updateRole *UpdateRole
 }
@@ -2603,7 +2142,7 @@ This operation can fail for the following reasons:
  @param principalId Unique id of a principal (typically either a user or service account).
  @return ApiUpdateRoleMappingRequest
 */
-func (a *AdminApiService) UpdateRoleMapping(ctx context.Context, principalId string) ApiUpdateRoleMappingRequest {
+func (a *AdminAPIService) UpdateRoleMapping(ctx context.Context, principalId string) ApiUpdateRoleMappingRequest {
 	return ApiUpdateRoleMappingRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -2612,14 +2151,14 @@ func (a *AdminApiService) UpdateRoleMapping(ctx context.Context, principalId str
 }
 
 // Execute executes the request
-func (a *AdminApiService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest) (*http.Response, error) {
+func (a *AdminAPIService) UpdateRoleMappingExecute(r ApiUpdateRoleMappingRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminApiService.UpdateRoleMapping")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAPIService.UpdateRoleMapping")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}

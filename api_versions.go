@@ -22,12 +22,163 @@ import (
 )
 
 
-// VersionsApiService VersionsApi service
-type VersionsApiService service
+// VersionsAPIService VersionsAPI service
+type VersionsAPIService service
+
+type ApiAddArtifactVersionCommentRequest struct {
+	ctx context.Context
+	ApiService *VersionsAPIService
+	groupId string
+	artifactId string
+	version string
+	newComment *NewComment
+}
+
+func (r ApiAddArtifactVersionCommentRequest) NewComment(newComment NewComment) ApiAddArtifactVersionCommentRequest {
+	r.newComment = &newComment
+	return r
+}
+
+func (r ApiAddArtifactVersionCommentRequest) Execute() (*Comment, *http.Response, error) {
+	return r.ApiService.AddArtifactVersionCommentExecute(r)
+}
+
+/*
+AddArtifactVersionComment Add new comment
+
+Adds a new comment to the artifact version.  Both the `artifactId` and the
+unique `version` number must be provided.
+
+This operation can fail for the following reasons:
+
+* No artifact with this `artifactId` exists (HTTP error `404`)
+* No version with this `version` exists (HTTP error `404`)
+* A server error occurred (HTTP error `500`)
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
+ @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
+ @param version The unique identifier of a specific version of the artifact content.
+ @return ApiAddArtifactVersionCommentRequest
+*/
+func (a *VersionsAPIService) AddArtifactVersionComment(ctx context.Context, groupId string, artifactId string, version string) ApiAddArtifactVersionCommentRequest {
+	return ApiAddArtifactVersionCommentRequest{
+		ApiService: a,
+		ctx: ctx,
+		groupId: groupId,
+		artifactId: artifactId,
+		version: version,
+	}
+}
+
+// Execute executes the request
+//  @return Comment
+func (a *VersionsAPIService) AddArtifactVersionCommentExecute(r ApiAddArtifactVersionCommentRequest) (*Comment, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Comment
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.AddArtifactVersionComment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments"
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterValueToString(r.version, "version")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.newComment == nil {
+		return localVarReturnValue, nil, reportError("newComment is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.newComment
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreateArtifactVersionRequest struct {
 	ctx context.Context
-	ApiService *VersionsApiService
+	ApiService *VersionsAPIService
 	groupId string
 	artifactId string
 	body *os.File
@@ -103,7 +254,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiCreateArtifactVersionRequest
 */
-func (a *VersionsApiService) CreateArtifactVersion(ctx context.Context, groupId string, artifactId string) ApiCreateArtifactVersionRequest {
+func (a *VersionsAPIService) CreateArtifactVersion(ctx context.Context, groupId string, artifactId string) ApiCreateArtifactVersionRequest {
 	return ApiCreateArtifactVersionRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -114,7 +265,7 @@ func (a *VersionsApiService) CreateArtifactVersion(ctx context.Context, groupId 
 
 // Execute executes the request
 //  @return VersionMetaData
-func (a *VersionsApiService) CreateArtifactVersionExecute(r ApiCreateArtifactVersionRequest) (*VersionMetaData, *http.Response, error) {
+func (a *VersionsAPIService) CreateArtifactVersionExecute(r ApiCreateArtifactVersionRequest) (*VersionMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -122,7 +273,7 @@ func (a *VersionsApiService) CreateArtifactVersionExecute(r ApiCreateArtifactVer
 		localVarReturnValue  *VersionMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsApiService.CreateArtifactVersion")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.CreateArtifactVersion")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -243,7 +394,7 @@ func (a *VersionsApiService) CreateArtifactVersionExecute(r ApiCreateArtifactVer
 
 type ApiDeleteArtifactVersionRequest struct {
 	ctx context.Context
-	ApiService *VersionsApiService
+	ApiService *VersionsAPIService
 	groupId string
 	artifactId string
 	version string
@@ -274,7 +425,7 @@ This feature is disabled by default and it's discouraged for normal usage. To en
  @param version The unique identifier of a specific version of the artifact content.
  @return ApiDeleteArtifactVersionRequest
 */
-func (a *VersionsApiService) DeleteArtifactVersion(ctx context.Context, groupId string, artifactId string, version string) ApiDeleteArtifactVersionRequest {
+func (a *VersionsAPIService) DeleteArtifactVersion(ctx context.Context, groupId string, artifactId string, version string) ApiDeleteArtifactVersionRequest {
 	return ApiDeleteArtifactVersionRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -285,14 +436,14 @@ func (a *VersionsApiService) DeleteArtifactVersion(ctx context.Context, groupId 
 }
 
 // Execute executes the request
-func (a *VersionsApiService) DeleteArtifactVersionExecute(r ApiDeleteArtifactVersionRequest) (*http.Response, error) {
+func (a *VersionsAPIService) DeleteArtifactVersionExecute(r ApiDeleteArtifactVersionRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsApiService.DeleteArtifactVersion")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.DeleteArtifactVersion")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -383,18 +534,153 @@ func (a *VersionsApiService) DeleteArtifactVersionExecute(r ApiDeleteArtifactVer
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetArtifactVersionRequest struct {
+type ApiDeleteArtifactVersionCommentRequest struct {
 	ctx context.Context
-	ApiService *VersionsApiService
+	ApiService *VersionsAPIService
 	groupId string
 	artifactId string
 	version string
-	dereference *bool
+	commentId string
 }
 
-// Allows the user to specify if the content should be dereferenced when being returned
-func (r ApiGetArtifactVersionRequest) Dereference(dereference bool) ApiGetArtifactVersionRequest {
-	r.dereference = &dereference
+func (r ApiDeleteArtifactVersionCommentRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteArtifactVersionCommentExecute(r)
+}
+
+/*
+DeleteArtifactVersionComment Delete a single comment
+
+Deletes a single comment in an artifact version.  Only the owner of the
+comment can delete it.  The `artifactId`, unique `version` number, and `commentId` 
+must be provided.
+
+This operation can fail for the following reasons:
+
+* No artifact with this `artifactId` exists (HTTP error `404`)
+* No version with this `version` exists (HTTP error `404`)
+* No comment with this `commentId` exists (HTTP error `404`)
+* A server error occurred (HTTP error `500`)
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
+ @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
+ @param version The unique identifier of a specific version of the artifact content.
+ @param commentId The unique identifier of a single comment.
+ @return ApiDeleteArtifactVersionCommentRequest
+*/
+func (a *VersionsAPIService) DeleteArtifactVersionComment(ctx context.Context, groupId string, artifactId string, version string, commentId string) ApiDeleteArtifactVersionCommentRequest {
+	return ApiDeleteArtifactVersionCommentRequest{
+		ApiService: a,
+		ctx: ctx,
+		groupId: groupId,
+		artifactId: artifactId,
+		version: version,
+		commentId: commentId,
+	}
+}
+
+// Execute executes the request
+func (a *VersionsAPIService) DeleteArtifactVersionCommentExecute(r ApiDeleteArtifactVersionCommentRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.DeleteArtifactVersionComment")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments/{commentId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterValueToString(r.version, "version")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"commentId"+"}", url.PathEscape(parameterValueToString(r.commentId, "commentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetArtifactVersionRequest struct {
+	ctx context.Context
+	ApiService *VersionsAPIService
+	groupId string
+	artifactId string
+	version string
+	references *HandleReferencesType
+}
+
+// Allows the user to specify how references in the content should be treated.
+func (r ApiGetArtifactVersionRequest) References(references HandleReferencesType) ApiGetArtifactVersionRequest {
+	r.references = &references
 	return r
 }
 
@@ -423,7 +709,7 @@ This operation can fail for the following reasons:
  @param version The unique identifier of a specific version of the artifact content.
  @return ApiGetArtifactVersionRequest
 */
-func (a *VersionsApiService) GetArtifactVersion(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionRequest {
+func (a *VersionsAPIService) GetArtifactVersion(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionRequest {
 	return ApiGetArtifactVersionRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -435,7 +721,7 @@ func (a *VersionsApiService) GetArtifactVersion(ctx context.Context, groupId str
 
 // Execute executes the request
 //  @return *os.File
-func (a *VersionsApiService) GetArtifactVersionExecute(r ApiGetArtifactVersionRequest) (*os.File, *http.Response, error) {
+func (a *VersionsAPIService) GetArtifactVersionExecute(r ApiGetArtifactVersionRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -443,7 +729,7 @@ func (a *VersionsApiService) GetArtifactVersionExecute(r ApiGetArtifactVersionRe
 		localVarReturnValue  *os.File
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsApiService.GetArtifactVersion")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.GetArtifactVersion")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -457,8 +743,8 @@ func (a *VersionsApiService) GetArtifactVersionExecute(r ApiGetArtifactVersionRe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.dereference != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "dereference", r.dereference, "")
+	if r.references != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "references", r.references, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -535,25 +821,23 @@ func (a *VersionsApiService) GetArtifactVersionExecute(r ApiGetArtifactVersionRe
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetArtifactVersionReferencesRequest struct {
+type ApiGetArtifactVersionCommentsRequest struct {
 	ctx context.Context
-	ApiService *VersionsApiService
+	ApiService *VersionsAPIService
 	groupId string
 	artifactId string
 	version string
 }
 
-func (r ApiGetArtifactVersionReferencesRequest) Execute() ([]ArtifactReference, *http.Response, error) {
-	return r.ApiService.GetArtifactVersionReferencesExecute(r)
+func (r ApiGetArtifactVersionCommentsRequest) Execute() ([]Comment, *http.Response, error) {
+	return r.ApiService.GetArtifactVersionCommentsExecute(r)
 }
 
 /*
-GetArtifactVersionReferences Get artifact version
+GetArtifactVersionComments Get artifact version comments
 
-Retrieves a single version of the artifact content.  Both the `artifactId` and the
-unique `version` number must be provided.  The `Content-Type` of the response depends 
-on the artifact type.  In most cases, this is `application/json`, but for some types 
-it may be different (for example, `PROTOBUF`).
+Retrieves all comments for a version of an artifact.  Both the `artifactId` and the
+unique `version` number must be provided.
 
 This operation can fail for the following reasons:
 
@@ -566,10 +850,10 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @param version The unique identifier of a specific version of the artifact content.
- @return ApiGetArtifactVersionReferencesRequest
+ @return ApiGetArtifactVersionCommentsRequest
 */
-func (a *VersionsApiService) GetArtifactVersionReferences(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionReferencesRequest {
-	return ApiGetArtifactVersionReferencesRequest{
+func (a *VersionsAPIService) GetArtifactVersionComments(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionCommentsRequest {
+	return ApiGetArtifactVersionCommentsRequest{
 		ApiService: a,
 		ctx: ctx,
 		groupId: groupId,
@@ -579,21 +863,21 @@ func (a *VersionsApiService) GetArtifactVersionReferences(ctx context.Context, g
 }
 
 // Execute executes the request
-//  @return []ArtifactReference
-func (a *VersionsApiService) GetArtifactVersionReferencesExecute(r ApiGetArtifactVersionReferencesRequest) ([]ArtifactReference, *http.Response, error) {
+//  @return []Comment
+func (a *VersionsAPIService) GetArtifactVersionCommentsExecute(r ApiGetArtifactVersionCommentsRequest) ([]Comment, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []ArtifactReference
+		localVarReturnValue  []Comment
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsApiService.GetArtifactVersionReferences")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.GetArtifactVersionComments")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}/versions/{version}/references"
+	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments"
 	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterValueToString(r.version, "version")), -1)
@@ -677,9 +961,160 @@ func (a *VersionsApiService) GetArtifactVersionReferencesExecute(r ApiGetArtifac
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetArtifactVersionReferencesRequest struct {
+	ctx context.Context
+	ApiService *VersionsAPIService
+	groupId string
+	artifactId string
+	version string
+	refType *ReferenceType
+}
+
+// Determines the type of reference to return, either INBOUND or OUTBOUND.  Defaults to OUTBOUND.
+func (r ApiGetArtifactVersionReferencesRequest) RefType(refType ReferenceType) ApiGetArtifactVersionReferencesRequest {
+	r.refType = &refType
+	return r
+}
+
+func (r ApiGetArtifactVersionReferencesRequest) Execute() ([]ArtifactReference, *http.Response, error) {
+	return r.ApiService.GetArtifactVersionReferencesExecute(r)
+}
+
+/*
+GetArtifactVersionReferences Get artifact version references
+
+Retrieves all references for a single version of an artifact.  Both the `artifactId` and the
+unique `version` number must be provided.  Using the `refType` query parameter, it is possible
+to retrieve an array of either the inbound or outbound references.
+
+This operation can fail for the following reasons:
+
+* No artifact with this `artifactId` exists (HTTP error `404`)
+* No version with this `version` exists (HTTP error `404`)
+* A server error occurred (HTTP error `500`)
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
+ @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
+ @param version The unique identifier of a specific version of the artifact content.
+ @return ApiGetArtifactVersionReferencesRequest
+*/
+func (a *VersionsAPIService) GetArtifactVersionReferences(ctx context.Context, groupId string, artifactId string, version string) ApiGetArtifactVersionReferencesRequest {
+	return ApiGetArtifactVersionReferencesRequest{
+		ApiService: a,
+		ctx: ctx,
+		groupId: groupId,
+		artifactId: artifactId,
+		version: version,
+	}
+}
+
+// Execute executes the request
+//  @return []ArtifactReference
+func (a *VersionsAPIService) GetArtifactVersionReferencesExecute(r ApiGetArtifactVersionReferencesRequest) ([]ArtifactReference, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ArtifactReference
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.GetArtifactVersionReferences")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}/versions/{version}/references"
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterValueToString(r.version, "version")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.refType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "refType", r.refType, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListArtifactVersionsRequest struct {
 	ctx context.Context
-	ApiService *VersionsApiService
+	ApiService *VersionsAPIService
 	groupId string
 	artifactId string
 	offset *int32
@@ -718,7 +1153,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiListArtifactVersionsRequest
 */
-func (a *VersionsApiService) ListArtifactVersions(ctx context.Context, groupId string, artifactId string) ApiListArtifactVersionsRequest {
+func (a *VersionsAPIService) ListArtifactVersions(ctx context.Context, groupId string, artifactId string) ApiListArtifactVersionsRequest {
 	return ApiListArtifactVersionsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -729,7 +1164,7 @@ func (a *VersionsApiService) ListArtifactVersions(ctx context.Context, groupId s
 
 // Execute executes the request
 //  @return VersionSearchResults
-func (a *VersionsApiService) ListArtifactVersionsExecute(r ApiListArtifactVersionsRequest) (*VersionSearchResults, *http.Response, error) {
+func (a *VersionsAPIService) ListArtifactVersionsExecute(r ApiListArtifactVersionsRequest) (*VersionSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -737,7 +1172,7 @@ func (a *VersionsApiService) ListArtifactVersionsExecute(r ApiListArtifactVersio
 		localVarReturnValue  *VersionSearchResults
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsApiService.ListArtifactVersions")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.ListArtifactVersions")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -831,9 +1266,155 @@ func (a *VersionsApiService) ListArtifactVersionsExecute(r ApiListArtifactVersio
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiUpdateArtifactVersionCommentRequest struct {
+	ctx context.Context
+	ApiService *VersionsAPIService
+	groupId string
+	artifactId string
+	version string
+	commentId string
+	newComment *NewComment
+}
+
+func (r ApiUpdateArtifactVersionCommentRequest) NewComment(newComment NewComment) ApiUpdateArtifactVersionCommentRequest {
+	r.newComment = &newComment
+	return r
+}
+
+func (r ApiUpdateArtifactVersionCommentRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateArtifactVersionCommentExecute(r)
+}
+
+/*
+UpdateArtifactVersionComment Update a comment
+
+Updates the value of a single comment in an artifact version.  Only the owner of the
+comment can modify it.  The `artifactId`, unique `version` number, and `commentId` 
+must be provided.
+
+This operation can fail for the following reasons:
+
+* No artifact with this `artifactId` exists (HTTP error `404`)
+* No version with this `version` exists (HTTP error `404`)
+* No comment with this `commentId` exists (HTTP error `404`)
+* A server error occurred (HTTP error `500`)
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
+ @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
+ @param version The unique identifier of a specific version of the artifact content.
+ @param commentId The unique identifier of a single comment.
+ @return ApiUpdateArtifactVersionCommentRequest
+*/
+func (a *VersionsAPIService) UpdateArtifactVersionComment(ctx context.Context, groupId string, artifactId string, version string, commentId string) ApiUpdateArtifactVersionCommentRequest {
+	return ApiUpdateArtifactVersionCommentRequest{
+		ApiService: a,
+		ctx: ctx,
+		groupId: groupId,
+		artifactId: artifactId,
+		version: version,
+		commentId: commentId,
+	}
+}
+
+// Execute executes the request
+func (a *VersionsAPIService) UpdateArtifactVersionCommentExecute(r ApiUpdateArtifactVersionCommentRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.UpdateArtifactVersionComment")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/groups/{groupId}/artifacts/{artifactId}/versions/{version}/comments/{commentId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"artifactId"+"}", url.PathEscape(parameterValueToString(r.artifactId, "artifactId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterValueToString(r.version, "version")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"commentId"+"}", url.PathEscape(parameterValueToString(r.commentId, "commentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.newComment == nil {
+		return nil, reportError("newComment is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.newComment
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiUpdateArtifactVersionStateRequest struct {
 	ctx context.Context
-	ApiService *VersionsApiService
+	ApiService *VersionsAPIService
 	groupId string
 	artifactId string
 	version string
@@ -868,7 +1449,7 @@ This operation can fail for the following reasons:
  @param version The unique identifier of a specific version of the artifact content.
  @return ApiUpdateArtifactVersionStateRequest
 */
-func (a *VersionsApiService) UpdateArtifactVersionState(ctx context.Context, groupId string, artifactId string, version string) ApiUpdateArtifactVersionStateRequest {
+func (a *VersionsAPIService) UpdateArtifactVersionState(ctx context.Context, groupId string, artifactId string, version string) ApiUpdateArtifactVersionStateRequest {
 	return ApiUpdateArtifactVersionStateRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -879,14 +1460,14 @@ func (a *VersionsApiService) UpdateArtifactVersionState(ctx context.Context, gro
 }
 
 // Execute executes the request
-func (a *VersionsApiService) UpdateArtifactVersionStateExecute(r ApiUpdateArtifactVersionStateRequest) (*http.Response, error) {
+func (a *VersionsAPIService) UpdateArtifactVersionStateExecute(r ApiUpdateArtifactVersionStateRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsApiService.UpdateArtifactVersionState")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VersionsAPIService.UpdateArtifactVersionState")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}

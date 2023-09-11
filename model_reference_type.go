@@ -16,70 +16,52 @@ import (
 	"fmt"
 )
 
-// LogLevel 
-type LogLevel string
+// ReferenceType 
+type ReferenceType string
 
-// List of LogLevel
+// List of ReferenceType
 const (
-	DEBUG LogLevel = "DEBUG"
-	TRACE LogLevel = "TRACE"
-	WARN LogLevel = "WARN"
-	ERROR LogLevel = "ERROR"
-	SEVERE LogLevel = "SEVERE"
-	WARNING LogLevel = "WARNING"
-	INFO LogLevel = "INFO"
-	CONFIG LogLevel = "CONFIG"
-	FINE LogLevel = "FINE"
-	FINER LogLevel = "FINER"
-	FINEST LogLevel = "FINEST"
+	OUTBOUND ReferenceType = "OUTBOUND"
+	INBOUND ReferenceType = "INBOUND"
 )
 
-// All allowed values of LogLevel enum
-var AllowedLogLevelEnumValues = []LogLevel{
-	"DEBUG",
-	"TRACE",
-	"WARN",
-	"ERROR",
-	"SEVERE",
-	"WARNING",
-	"INFO",
-	"CONFIG",
-	"FINE",
-	"FINER",
-	"FINEST",
+// All allowed values of ReferenceType enum
+var AllowedReferenceTypeEnumValues = []ReferenceType{
+	"OUTBOUND",
+	"INBOUND",
 }
 
-func (v *LogLevel) UnmarshalJSON(src []byte) error {
+func (v *ReferenceType) UnmarshalJSON(src []byte) error {
 	var value string
 	err := json.Unmarshal(src, &value)
 	if err != nil {
 		return err
 	}
-	enumTypeValue := LogLevel(value)
-	for _, existing := range AllowedLogLevelEnumValues {
+	enumTypeValue := ReferenceType(value)
+	for _, existing := range AllowedReferenceTypeEnumValues {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil
 		}
 	}
 
-	return fmt.Errorf("%+v is not a valid LogLevel", value)
+	return fmt.Errorf("%+v is not a valid ReferenceType", value)
 }
 
-// NewLogLevelFromValue returns a pointer to a valid LogLevel
+// NewReferenceTypeFromValue returns a pointer to a valid ReferenceType
 // for the value passed as argument, or an error if the value passed is not allowed by the enum
-func NewLogLevelFromValue(v string) (*LogLevel, error) {
-	ev := LogLevel(v)
+func NewReferenceTypeFromValue(v string) (*ReferenceType, error) {
+	ev := ReferenceType(v)
 	if ev.IsValid() {
 		return &ev, nil
 	} else {
-		return nil, fmt.Errorf("invalid value '%v' for LogLevel: valid values are %v", v, AllowedLogLevelEnumValues)
+		return nil, fmt.Errorf("invalid value '%v' for ReferenceType: valid values are %v", v, AllowedReferenceTypeEnumValues)
 	}
 }
 
 // IsValid return true if the value is valid for the enum, false otherwise
-func (v LogLevel) IsValid() bool {
-	for _, existing := range AllowedLogLevelEnumValues {
+func (v ReferenceType) IsValid() bool {
+	for _, existing := range AllowedReferenceTypeEnumValues {
 		if existing == v {
 			return true
 		}
@@ -87,43 +69,43 @@ func (v LogLevel) IsValid() bool {
 	return false
 }
 
-// Ptr returns reference to LogLevel value
-func (v LogLevel) Ptr() *LogLevel {
+// Ptr returns reference to ReferenceType value
+func (v ReferenceType) Ptr() *ReferenceType {
 	return &v
 }
 
-type NullableLogLevel struct {
-	value *LogLevel
+type NullableReferenceType struct {
+	value *ReferenceType
 	isSet bool
 }
 
-func (v NullableLogLevel) Get() *LogLevel {
+func (v NullableReferenceType) Get() *ReferenceType {
 	return v.value
 }
 
-func (v *NullableLogLevel) Set(val *LogLevel) {
+func (v *NullableReferenceType) Set(val *ReferenceType) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableLogLevel) IsSet() bool {
+func (v NullableReferenceType) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableLogLevel) Unset() {
+func (v *NullableReferenceType) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableLogLevel(val *LogLevel) *NullableLogLevel {
-	return &NullableLogLevel{value: val, isSet: true}
+func NewNullableReferenceType(val *ReferenceType) *NullableReferenceType {
+	return &NullableReferenceType{value: val, isSet: true}
 }
 
-func (v NullableLogLevel) MarshalJSON() ([]byte, error) {
+func (v NullableReferenceType) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableLogLevel) UnmarshalJSON(src []byte) error {
+func (v *NullableReferenceType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -22,12 +22,12 @@ import (
 )
 
 
-// ArtifactRulesApiService ArtifactRulesApi service
-type ArtifactRulesApiService service
+// ArtifactRulesAPIService ArtifactRulesAPI service
+type ArtifactRulesAPIService service
 
 type ApiCreateArtifactRuleRequest struct {
 	ctx context.Context
-	ApiService *ArtifactRulesApiService
+	ApiService *ArtifactRulesAPIService
 	groupId string
 	artifactId string
 	rule *Rule
@@ -59,7 +59,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiCreateArtifactRuleRequest
 */
-func (a *ArtifactRulesApiService) CreateArtifactRule(ctx context.Context, groupId string, artifactId string) ApiCreateArtifactRuleRequest {
+func (a *ArtifactRulesAPIService) CreateArtifactRule(ctx context.Context, groupId string, artifactId string) ApiCreateArtifactRuleRequest {
 	return ApiCreateArtifactRuleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -69,14 +69,14 @@ func (a *ArtifactRulesApiService) CreateArtifactRule(ctx context.Context, groupI
 }
 
 // Execute executes the request
-func (a *ArtifactRulesApiService) CreateArtifactRuleExecute(r ApiCreateArtifactRuleRequest) (*http.Response, error) {
+func (a *ArtifactRulesAPIService) CreateArtifactRuleExecute(r ApiCreateArtifactRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesApiService.CreateArtifactRule")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesAPIService.CreateArtifactRule")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -173,7 +173,7 @@ func (a *ArtifactRulesApiService) CreateArtifactRuleExecute(r ApiCreateArtifactR
 
 type ApiDeleteArtifactRuleRequest struct {
 	ctx context.Context
-	ApiService *ArtifactRulesApiService
+	ApiService *ArtifactRulesAPIService
 	groupId string
 	artifactId string
 	rule string
@@ -204,7 +204,7 @@ This operation can fail for the following reasons:
  @param rule The unique name/type of a rule.
  @return ApiDeleteArtifactRuleRequest
 */
-func (a *ArtifactRulesApiService) DeleteArtifactRule(ctx context.Context, groupId string, artifactId string, rule string) ApiDeleteArtifactRuleRequest {
+func (a *ArtifactRulesAPIService) DeleteArtifactRule(ctx context.Context, groupId string, artifactId string, rule string) ApiDeleteArtifactRuleRequest {
 	return ApiDeleteArtifactRuleRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -215,14 +215,14 @@ func (a *ArtifactRulesApiService) DeleteArtifactRule(ctx context.Context, groupI
 }
 
 // Execute executes the request
-func (a *ArtifactRulesApiService) DeleteArtifactRuleExecute(r ApiDeleteArtifactRuleRequest) (*http.Response, error) {
+func (a *ArtifactRulesAPIService) DeleteArtifactRuleExecute(r ApiDeleteArtifactRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesApiService.DeleteArtifactRule")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesAPIService.DeleteArtifactRule")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -304,7 +304,7 @@ func (a *ArtifactRulesApiService) DeleteArtifactRuleExecute(r ApiDeleteArtifactR
 
 type ApiDeleteArtifactRulesRequest struct {
 	ctx context.Context
-	ApiService *ArtifactRulesApiService
+	ApiService *ArtifactRulesAPIService
 	groupId string
 	artifactId string
 }
@@ -329,7 +329,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiDeleteArtifactRulesRequest
 */
-func (a *ArtifactRulesApiService) DeleteArtifactRules(ctx context.Context, groupId string, artifactId string) ApiDeleteArtifactRulesRequest {
+func (a *ArtifactRulesAPIService) DeleteArtifactRules(ctx context.Context, groupId string, artifactId string) ApiDeleteArtifactRulesRequest {
 	return ApiDeleteArtifactRulesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -339,14 +339,14 @@ func (a *ArtifactRulesApiService) DeleteArtifactRules(ctx context.Context, group
 }
 
 // Execute executes the request
-func (a *ArtifactRulesApiService) DeleteArtifactRulesExecute(r ApiDeleteArtifactRulesRequest) (*http.Response, error) {
+func (a *ArtifactRulesAPIService) DeleteArtifactRulesExecute(r ApiDeleteArtifactRulesRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesApiService.DeleteArtifactRules")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesAPIService.DeleteArtifactRules")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -427,7 +427,7 @@ func (a *ArtifactRulesApiService) DeleteArtifactRulesExecute(r ApiDeleteArtifact
 
 type ApiGetArtifactRuleConfigRequest struct {
 	ctx context.Context
-	ApiService *ArtifactRulesApiService
+	ApiService *ArtifactRulesAPIService
 	groupId string
 	artifactId string
 	rule string
@@ -456,7 +456,7 @@ This operation can fail for the following reasons:
  @param rule The unique name/type of a rule.
  @return ApiGetArtifactRuleConfigRequest
 */
-func (a *ArtifactRulesApiService) GetArtifactRuleConfig(ctx context.Context, groupId string, artifactId string, rule string) ApiGetArtifactRuleConfigRequest {
+func (a *ArtifactRulesAPIService) GetArtifactRuleConfig(ctx context.Context, groupId string, artifactId string, rule string) ApiGetArtifactRuleConfigRequest {
 	return ApiGetArtifactRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -468,7 +468,7 @@ func (a *ArtifactRulesApiService) GetArtifactRuleConfig(ctx context.Context, gro
 
 // Execute executes the request
 //  @return Rule
-func (a *ArtifactRulesApiService) GetArtifactRuleConfigExecute(r ApiGetArtifactRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *ArtifactRulesAPIService) GetArtifactRuleConfigExecute(r ApiGetArtifactRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -476,7 +476,7 @@ func (a *ArtifactRulesApiService) GetArtifactRuleConfigExecute(r ApiGetArtifactR
 		localVarReturnValue  *Rule
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesApiService.GetArtifactRuleConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesAPIService.GetArtifactRuleConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -567,7 +567,7 @@ func (a *ArtifactRulesApiService) GetArtifactRuleConfigExecute(r ApiGetArtifactR
 
 type ApiListArtifactRulesRequest struct {
 	ctx context.Context
-	ApiService *ArtifactRulesApiService
+	ApiService *ArtifactRulesAPIService
 	groupId string
 	artifactId string
 }
@@ -594,7 +594,7 @@ This operation can fail for the following reasons:
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiListArtifactRulesRequest
 */
-func (a *ArtifactRulesApiService) ListArtifactRules(ctx context.Context, groupId string, artifactId string) ApiListArtifactRulesRequest {
+func (a *ArtifactRulesAPIService) ListArtifactRules(ctx context.Context, groupId string, artifactId string) ApiListArtifactRulesRequest {
 	return ApiListArtifactRulesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -605,7 +605,7 @@ func (a *ArtifactRulesApiService) ListArtifactRules(ctx context.Context, groupId
 
 // Execute executes the request
 //  @return []RuleType
-func (a *ArtifactRulesApiService) ListArtifactRulesExecute(r ApiListArtifactRulesRequest) ([]RuleType, *http.Response, error) {
+func (a *ArtifactRulesAPIService) ListArtifactRulesExecute(r ApiListArtifactRulesRequest) ([]RuleType, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -613,7 +613,7 @@ func (a *ArtifactRulesApiService) ListArtifactRulesExecute(r ApiListArtifactRule
 		localVarReturnValue  []RuleType
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesApiService.ListArtifactRules")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesAPIService.ListArtifactRules")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -703,7 +703,7 @@ func (a *ArtifactRulesApiService) ListArtifactRulesExecute(r ApiListArtifactRule
 
 type ApiTestUpdateArtifactRequest struct {
 	ctx context.Context
-	ApiService *ArtifactRulesApiService
+	ApiService *ArtifactRulesAPIService
 	groupId string
 	artifactId string
 	body *os.File
@@ -748,7 +748,7 @@ artifact (or the global rules if no artifact rules are enabled).
  @param artifactId The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
  @return ApiTestUpdateArtifactRequest
 */
-func (a *ArtifactRulesApiService) TestUpdateArtifact(ctx context.Context, groupId string, artifactId string) ApiTestUpdateArtifactRequest {
+func (a *ArtifactRulesAPIService) TestUpdateArtifact(ctx context.Context, groupId string, artifactId string) ApiTestUpdateArtifactRequest {
 	return ApiTestUpdateArtifactRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -758,14 +758,14 @@ func (a *ArtifactRulesApiService) TestUpdateArtifact(ctx context.Context, groupI
 }
 
 // Execute executes the request
-func (a *ArtifactRulesApiService) TestUpdateArtifactExecute(r ApiTestUpdateArtifactRequest) (*http.Response, error) {
+func (a *ArtifactRulesAPIService) TestUpdateArtifactExecute(r ApiTestUpdateArtifactRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesApiService.TestUpdateArtifact")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesAPIService.TestUpdateArtifact")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -862,7 +862,7 @@ func (a *ArtifactRulesApiService) TestUpdateArtifactExecute(r ApiTestUpdateArtif
 
 type ApiUpdateArtifactRuleConfigRequest struct {
 	ctx context.Context
-	ApiService *ArtifactRulesApiService
+	ApiService *ArtifactRulesAPIService
 	groupId string
 	artifactId string
 	rule string
@@ -899,7 +899,7 @@ This operation can fail for the following reasons:
  @param rule The unique name/type of a rule.
  @return ApiUpdateArtifactRuleConfigRequest
 */
-func (a *ArtifactRulesApiService) UpdateArtifactRuleConfig(ctx context.Context, groupId string, artifactId string, rule string) ApiUpdateArtifactRuleConfigRequest {
+func (a *ArtifactRulesAPIService) UpdateArtifactRuleConfig(ctx context.Context, groupId string, artifactId string, rule string) ApiUpdateArtifactRuleConfigRequest {
 	return ApiUpdateArtifactRuleConfigRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -911,7 +911,7 @@ func (a *ArtifactRulesApiService) UpdateArtifactRuleConfig(ctx context.Context, 
 
 // Execute executes the request
 //  @return Rule
-func (a *ArtifactRulesApiService) UpdateArtifactRuleConfigExecute(r ApiUpdateArtifactRuleConfigRequest) (*Rule, *http.Response, error) {
+func (a *ArtifactRulesAPIService) UpdateArtifactRuleConfigExecute(r ApiUpdateArtifactRuleConfigRequest) (*Rule, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
@@ -919,7 +919,7 @@ func (a *ArtifactRulesApiService) UpdateArtifactRuleConfigExecute(r ApiUpdateArt
 		localVarReturnValue  *Rule
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesApiService.UpdateArtifactRuleConfig")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactRulesAPIService.UpdateArtifactRuleConfig")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

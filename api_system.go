@@ -20,12 +20,12 @@ import (
 )
 
 
-// SystemApiService SystemApi service
-type SystemApiService service
+// SystemAPIService SystemAPI service
+type SystemAPIService service
 
 type ApiGetResourceLimitsRequest struct {
 	ctx context.Context
-	ApiService *SystemApiService
+	ApiService *SystemAPIService
 }
 
 func (r ApiGetResourceLimitsRequest) Execute() (*Limits, *http.Response, error) {
@@ -40,7 +40,7 @@ This operation retrieves the list of limitations on used resources, that are app
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetResourceLimitsRequest
 */
-func (a *SystemApiService) GetResourceLimits(ctx context.Context) ApiGetResourceLimitsRequest {
+func (a *SystemAPIService) GetResourceLimits(ctx context.Context) ApiGetResourceLimitsRequest {
 	return ApiGetResourceLimitsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -49,7 +49,7 @@ func (a *SystemApiService) GetResourceLimits(ctx context.Context) ApiGetResource
 
 // Execute executes the request
 //  @return Limits
-func (a *SystemApiService) GetResourceLimitsExecute(r ApiGetResourceLimitsRequest) (*Limits, *http.Response, error) {
+func (a *SystemAPIService) GetResourceLimitsExecute(r ApiGetResourceLimitsRequest) (*Limits, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -57,7 +57,7 @@ func (a *SystemApiService) GetResourceLimitsExecute(r ApiGetResourceLimitsReques
 		localVarReturnValue  *Limits
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SystemApiService.GetResourceLimits")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SystemAPIService.GetResourceLimits")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -134,7 +134,7 @@ func (a *SystemApiService) GetResourceLimitsExecute(r ApiGetResourceLimitsReques
 
 type ApiGetSystemInfoRequest struct {
 	ctx context.Context
-	ApiService *SystemApiService
+	ApiService *SystemAPIService
 }
 
 func (r ApiGetSystemInfoRequest) Execute() (*SystemInfo, *http.Response, error) {
@@ -150,7 +150,7 @@ of the software and when it was built.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetSystemInfoRequest
 */
-func (a *SystemApiService) GetSystemInfo(ctx context.Context) ApiGetSystemInfoRequest {
+func (a *SystemAPIService) GetSystemInfo(ctx context.Context) ApiGetSystemInfoRequest {
 	return ApiGetSystemInfoRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -159,7 +159,7 @@ func (a *SystemApiService) GetSystemInfo(ctx context.Context) ApiGetSystemInfoRe
 
 // Execute executes the request
 //  @return SystemInfo
-func (a *SystemApiService) GetSystemInfoExecute(r ApiGetSystemInfoRequest) (*SystemInfo, *http.Response, error) {
+func (a *SystemAPIService) GetSystemInfoExecute(r ApiGetSystemInfoRequest) (*SystemInfo, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -167,7 +167,7 @@ func (a *SystemApiService) GetSystemInfoExecute(r ApiGetSystemInfoRequest) (*Sys
 		localVarReturnValue  *SystemInfo
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SystemApiService.GetSystemInfo")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SystemAPIService.GetSystemInfo")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

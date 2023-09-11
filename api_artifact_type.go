@@ -20,12 +20,12 @@ import (
 )
 
 
-// ArtifactTypeApiService ArtifactTypeApi service
-type ArtifactTypeApiService service
+// ArtifactTypeAPIService ArtifactTypeAPI service
+type ArtifactTypeAPIService service
 
 type ApiListArtifactTypesRequest struct {
 	ctx context.Context
-	ApiService *ArtifactTypeApiService
+	ApiService *ArtifactTypeAPIService
 }
 
 func (r ApiListArtifactTypesRequest) Execute() ([]ArtifactTypeInfo, *http.Response, error) {
@@ -45,7 +45,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListArtifactTypesRequest
 */
-func (a *ArtifactTypeApiService) ListArtifactTypes(ctx context.Context) ApiListArtifactTypesRequest {
+func (a *ArtifactTypeAPIService) ListArtifactTypes(ctx context.Context) ApiListArtifactTypesRequest {
 	return ApiListArtifactTypesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -54,7 +54,7 @@ func (a *ArtifactTypeApiService) ListArtifactTypes(ctx context.Context) ApiListA
 
 // Execute executes the request
 //  @return []ArtifactTypeInfo
-func (a *ArtifactTypeApiService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest) ([]ArtifactTypeInfo, *http.Response, error) {
+func (a *ArtifactTypeAPIService) ListArtifactTypesExecute(r ApiListArtifactTypesRequest) ([]ArtifactTypeInfo, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -62,7 +62,7 @@ func (a *ArtifactTypeApiService) ListArtifactTypesExecute(r ApiListArtifactTypes
 		localVarReturnValue  []ArtifactTypeInfo
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactTypeApiService.ListArtifactTypes")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactTypeAPIService.ListArtifactTypes")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

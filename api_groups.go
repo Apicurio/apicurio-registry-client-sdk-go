@@ -21,12 +21,12 @@ import (
 )
 
 
-// GroupsApiService GroupsApi service
-type GroupsApiService service
+// GroupsAPIService GroupsAPI service
+type GroupsAPIService service
 
 type ApiCreateGroupRequest struct {
 	ctx context.Context
-	ApiService *GroupsApiService
+	ApiService *GroupsAPIService
 	createGroupMetaData *CreateGroupMetaData
 }
 
@@ -53,7 +53,7 @@ This operation can fail for the following reasons:
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateGroupRequest
 */
-func (a *GroupsApiService) CreateGroup(ctx context.Context) ApiCreateGroupRequest {
+func (a *GroupsAPIService) CreateGroup(ctx context.Context) ApiCreateGroupRequest {
 	return ApiCreateGroupRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -62,7 +62,7 @@ func (a *GroupsApiService) CreateGroup(ctx context.Context) ApiCreateGroupReques
 
 // Execute executes the request
 //  @return GroupMetaData
-func (a *GroupsApiService) CreateGroupExecute(r ApiCreateGroupRequest) (*GroupMetaData, *http.Response, error) {
+func (a *GroupsAPIService) CreateGroupExecute(r ApiCreateGroupRequest) (*GroupMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -70,7 +70,7 @@ func (a *GroupsApiService) CreateGroupExecute(r ApiCreateGroupRequest) (*GroupMe
 		localVarReturnValue  *GroupMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsApiService.CreateGroup")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsAPIService.CreateGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -163,7 +163,7 @@ func (a *GroupsApiService) CreateGroupExecute(r ApiCreateGroupRequest) (*GroupMe
 
 type ApiDeleteGroupByIdRequest struct {
 	ctx context.Context
-	ApiService *GroupsApiService
+	ApiService *GroupsAPIService
 	groupId string
 }
 
@@ -186,7 +186,7 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiDeleteGroupByIdRequest
 */
-func (a *GroupsApiService) DeleteGroupById(ctx context.Context, groupId string) ApiDeleteGroupByIdRequest {
+func (a *GroupsAPIService) DeleteGroupById(ctx context.Context, groupId string) ApiDeleteGroupByIdRequest {
 	return ApiDeleteGroupByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -195,14 +195,14 @@ func (a *GroupsApiService) DeleteGroupById(ctx context.Context, groupId string) 
 }
 
 // Execute executes the request
-func (a *GroupsApiService) DeleteGroupByIdExecute(r ApiDeleteGroupByIdRequest) (*http.Response, error) {
+func (a *GroupsAPIService) DeleteGroupByIdExecute(r ApiDeleteGroupByIdRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsApiService.DeleteGroupById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsAPIService.DeleteGroupById")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -282,7 +282,7 @@ func (a *GroupsApiService) DeleteGroupByIdExecute(r ApiDeleteGroupByIdRequest) (
 
 type ApiGetGroupByIdRequest struct {
 	ctx context.Context
-	ApiService *GroupsApiService
+	ApiService *GroupsAPIService
 	groupId string
 }
 
@@ -304,7 +304,7 @@ This operation can fail for the following reasons:
  @param groupId The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
  @return ApiGetGroupByIdRequest
 */
-func (a *GroupsApiService) GetGroupById(ctx context.Context, groupId string) ApiGetGroupByIdRequest {
+func (a *GroupsAPIService) GetGroupById(ctx context.Context, groupId string) ApiGetGroupByIdRequest {
 	return ApiGetGroupByIdRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -314,7 +314,7 @@ func (a *GroupsApiService) GetGroupById(ctx context.Context, groupId string) Api
 
 // Execute executes the request
 //  @return GroupMetaData
-func (a *GroupsApiService) GetGroupByIdExecute(r ApiGetGroupByIdRequest) (*GroupMetaData, *http.Response, error) {
+func (a *GroupsAPIService) GetGroupByIdExecute(r ApiGetGroupByIdRequest) (*GroupMetaData, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -322,7 +322,7 @@ func (a *GroupsApiService) GetGroupByIdExecute(r ApiGetGroupByIdRequest) (*Group
 		localVarReturnValue  *GroupMetaData
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsApiService.GetGroupById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsAPIService.GetGroupById")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -411,7 +411,7 @@ func (a *GroupsApiService) GetGroupByIdExecute(r ApiGetGroupByIdRequest) (*Group
 
 type ApiListGroupsRequest struct {
 	ctx context.Context
-	ApiService *GroupsApiService
+	ApiService *GroupsAPIService
 	limit *int32
 	offset *int32
 	order *SortOrder
@@ -454,7 +454,7 @@ Returns a list of all groups.  This list is paged.
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListGroupsRequest
 */
-func (a *GroupsApiService) ListGroups(ctx context.Context) ApiListGroupsRequest {
+func (a *GroupsAPIService) ListGroups(ctx context.Context) ApiListGroupsRequest {
 	return ApiListGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -463,7 +463,7 @@ func (a *GroupsApiService) ListGroups(ctx context.Context) ApiListGroupsRequest 
 
 // Execute executes the request
 //  @return GroupSearchResults
-func (a *GroupsApiService) ListGroupsExecute(r ApiListGroupsRequest) (*GroupSearchResults, *http.Response, error) {
+func (a *GroupsAPIService) ListGroupsExecute(r ApiListGroupsRequest) (*GroupSearchResults, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -471,7 +471,7 @@ func (a *GroupsApiService) ListGroupsExecute(r ApiListGroupsRequest) (*GroupSear
 		localVarReturnValue  *GroupSearchResults
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsApiService.ListGroups")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GroupsAPIService.ListGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

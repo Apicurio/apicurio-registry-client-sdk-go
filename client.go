@@ -50,23 +50,23 @@ type APIClient struct {
 
 	// API Services
 
-	AdminApi *AdminApiService
+	AdminAPI *AdminAPIService
 
-	ArtifactRulesApi *ArtifactRulesApiService
+	ArtifactRulesAPI *ArtifactRulesAPIService
 
-	ArtifactTypeApi *ArtifactTypeApiService
+	ArtifactTypeAPI *ArtifactTypeAPIService
 
-	ArtifactsApi *ArtifactsApiService
+	ArtifactsAPI *ArtifactsAPIService
 
-	GroupsApi *GroupsApiService
+	GroupsAPI *GroupsAPIService
 
-	MetadataApi *MetadataApiService
+	MetadataAPI *MetadataAPIService
 
-	SystemApi *SystemApiService
+	SystemAPI *SystemAPIService
 
-	UsersApi *UsersApiService
+	UsersAPI *UsersAPIService
 
-	VersionsApi *VersionsApiService
+	VersionsAPI *VersionsAPIService
 }
 
 type service struct {
@@ -85,15 +85,15 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
-	c.AdminApi = (*AdminApiService)(&c.common)
-	c.ArtifactRulesApi = (*ArtifactRulesApiService)(&c.common)
-	c.ArtifactTypeApi = (*ArtifactTypeApiService)(&c.common)
-	c.ArtifactsApi = (*ArtifactsApiService)(&c.common)
-	c.GroupsApi = (*GroupsApiService)(&c.common)
-	c.MetadataApi = (*MetadataApiService)(&c.common)
-	c.SystemApi = (*SystemApiService)(&c.common)
-	c.UsersApi = (*UsersApiService)(&c.common)
-	c.VersionsApi = (*VersionsApiService)(&c.common)
+	c.AdminAPI = (*AdminAPIService)(&c.common)
+	c.ArtifactRulesAPI = (*ArtifactRulesAPIService)(&c.common)
+	c.ArtifactTypeAPI = (*ArtifactTypeAPIService)(&c.common)
+	c.ArtifactsAPI = (*ArtifactsAPIService)(&c.common)
+	c.GroupsAPI = (*GroupsAPIService)(&c.common)
+	c.MetadataAPI = (*MetadataAPIService)(&c.common)
+	c.SystemAPI = (*SystemAPIService)(&c.common)
+	c.UsersAPI = (*UsersAPIService)(&c.common)
+	c.VersionsAPI = (*VersionsAPIService)(&c.common)
 
 	return c
 }
@@ -461,6 +461,7 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 			return
 		}
 		_, err = f.Seek(0, io.SeekStart)
+		err = os.Remove(f.Name())
 		return
 	}
 	if f, ok := v.(**os.File); ok {
@@ -473,6 +474,7 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 			return
 		}
 		_, err = (*f).Seek(0, io.SeekStart)
+		err = os.Remove((*f).Name())
 		return
 	}
 	if xmlCheck.MatchString(contentType) {
@@ -549,7 +551,11 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 	} else if jsonCheck.MatchString(contentType) {
 		err = json.NewEncoder(bodyBuf).Encode(body)
 	} else if xmlCheck.MatchString(contentType) {
-		err = xml.NewEncoder(bodyBuf).Encode(body)
+		var bs []byte
+		bs, err = xml.Marshal(body)
+		if err == nil {
+			bodyBuf.Write(bs)
+		}
 	}
 
 	if err != nil {
@@ -665,16 +671,17 @@ func formatErrorMessage(status string, v interface{}) string {
 	str := ""
 	metaValue := reflect.ValueOf(v).Elem()
 
-	field := metaValue.FieldByName("Title")
-	if field != (reflect.Value{}) {
-		str = fmt.Sprintf("%s", field.Interface())
+	if metaValue.Kind() == reflect.Struct {
+		field := metaValue.FieldByName("Title")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s", field.Interface())
+		}
+
+		field = metaValue.FieldByName("Detail")
+		if field != (reflect.Value{}) {
+			str = fmt.Sprintf("%s (%s)", str, field.Interface())
+		}
 	}
 
-	field = metaValue.FieldByName("Detail")
-	if field != (reflect.Value{}) {
-		str = fmt.Sprintf("%s (%s)", str, field.Interface())
-	}
-
-	// status title (detail)
 	return strings.TrimSpace(fmt.Sprintf("%s %s", status, str))
 }

@@ -1,24 +1,24 @@
-# \ArtifactsApi
+# \ArtifactsAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateArtifact**](ArtifactsApi.md#CreateArtifact) | **Post** /groups/{groupId}/artifacts | Create artifact
-[**DeleteArtifact**](ArtifactsApi.md#DeleteArtifact) | **Delete** /groups/{groupId}/artifacts/{artifactId} | Delete artifact
-[**DeleteArtifactsInGroup**](ArtifactsApi.md#DeleteArtifactsInGroup) | **Delete** /groups/{groupId}/artifacts | Delete artifacts in group
-[**GetContentByGlobalId**](ArtifactsApi.md#GetContentByGlobalId) | **Get** /ids/globalIds/{globalId} | Get artifact by global ID
-[**GetContentByHash**](ArtifactsApi.md#GetContentByHash) | **Get** /ids/contentHashes/{contentHash}/ | Get artifact content by SHA-256 hash
-[**GetContentById**](ArtifactsApi.md#GetContentById) | **Get** /ids/contentIds/{contentId}/ | Get artifact content by ID
-[**GetLatestArtifact**](ArtifactsApi.md#GetLatestArtifact) | **Get** /groups/{groupId}/artifacts/{artifactId} | Get latest artifact
-[**ListArtifactsInGroup**](ArtifactsApi.md#ListArtifactsInGroup) | **Get** /groups/{groupId}/artifacts | List artifacts in group
-[**ReferencesByContentHash**](ArtifactsApi.md#ReferencesByContentHash) | **Get** /ids/contentHashes/{contentHash}/references | List artifact references by hash
-[**ReferencesByContentId**](ArtifactsApi.md#ReferencesByContentId) | **Get** /ids/contentIds/{contentId}/references | List artifact references by content ID
-[**ReferencesByGlobalId**](ArtifactsApi.md#ReferencesByGlobalId) | **Get** /ids/globalIds/{globalId}/references | List artifact references by global ID
-[**SearchArtifacts**](ArtifactsApi.md#SearchArtifacts) | **Get** /search/artifacts | Search for artifacts
-[**SearchArtifactsByContent**](ArtifactsApi.md#SearchArtifactsByContent) | **Post** /search/artifacts | Search for artifacts by content
-[**UpdateArtifact**](ArtifactsApi.md#UpdateArtifact) | **Put** /groups/{groupId}/artifacts/{artifactId} | Update artifact
-[**UpdateArtifactState**](ArtifactsApi.md#UpdateArtifactState) | **Put** /groups/{groupId}/artifacts/{artifactId}/state | Update artifact state
+[**CreateArtifact**](ArtifactsAPI.md#CreateArtifact) | **Post** /groups/{groupId}/artifacts | Create artifact
+[**DeleteArtifact**](ArtifactsAPI.md#DeleteArtifact) | **Delete** /groups/{groupId}/artifacts/{artifactId} | Delete artifact
+[**DeleteArtifactsInGroup**](ArtifactsAPI.md#DeleteArtifactsInGroup) | **Delete** /groups/{groupId}/artifacts | Delete artifacts in group
+[**GetContentByGlobalId**](ArtifactsAPI.md#GetContentByGlobalId) | **Get** /ids/globalIds/{globalId} | Get artifact by global ID
+[**GetContentByHash**](ArtifactsAPI.md#GetContentByHash) | **Get** /ids/contentHashes/{contentHash}/ | Get artifact content by SHA-256 hash
+[**GetContentById**](ArtifactsAPI.md#GetContentById) | **Get** /ids/contentIds/{contentId}/ | Get artifact content by ID
+[**GetLatestArtifact**](ArtifactsAPI.md#GetLatestArtifact) | **Get** /groups/{groupId}/artifacts/{artifactId} | Get latest artifact
+[**ListArtifactsInGroup**](ArtifactsAPI.md#ListArtifactsInGroup) | **Get** /groups/{groupId}/artifacts | List artifacts in group
+[**ReferencesByContentHash**](ArtifactsAPI.md#ReferencesByContentHash) | **Get** /ids/contentHashes/{contentHash}/references | List artifact references by hash
+[**ReferencesByContentId**](ArtifactsAPI.md#ReferencesByContentId) | **Get** /ids/contentIds/{contentId}/references | List artifact references by content ID
+[**ReferencesByGlobalId**](ArtifactsAPI.md#ReferencesByGlobalId) | **Get** /ids/globalIds/{globalId}/references | List artifact references by global ID
+[**SearchArtifacts**](ArtifactsAPI.md#SearchArtifacts) | **Get** /search/artifacts | Search for artifacts
+[**SearchArtifactsByContent**](ArtifactsAPI.md#SearchArtifactsByContent) | **Post** /search/artifacts | Search for artifacts by content
+[**UpdateArtifact**](ArtifactsAPI.md#UpdateArtifact) | **Put** /groups/{groupId}/artifacts/{artifactId} | Update artifact
+[**UpdateArtifactState**](ArtifactsAPI.md#UpdateArtifactState) | **Put** /groups/{groupId}/artifacts/{artifactId}/state | Update artifact state
 
 
 
@@ -59,13 +59,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.CreateArtifact(context.Background(), groupId).Body(body).XRegistryArtifactType(xRegistryArtifactType).XRegistryArtifactId(xRegistryArtifactId).XRegistryVersion(xRegistryVersion).IfExists(ifExists).Canonical(canonical).XRegistryDescription(xRegistryDescription).XRegistryDescriptionEncoded(xRegistryDescriptionEncoded).XRegistryName(xRegistryName).XRegistryNameEncoded(xRegistryNameEncoded).XRegistryContentHash(xRegistryContentHash).XRegistryHashAlgorithm(xRegistryHashAlgorithm).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.CreateArtifact(context.Background(), groupId).Body(body).XRegistryArtifactType(xRegistryArtifactType).XRegistryArtifactId(xRegistryArtifactId).XRegistryVersion(xRegistryVersion).IfExists(ifExists).Canonical(canonical).XRegistryDescription(xRegistryDescription).XRegistryDescriptionEncoded(xRegistryDescriptionEncoded).XRegistryName(xRegistryName).XRegistryNameEncoded(xRegistryNameEncoded).XRegistryContentHash(xRegistryContentHash).XRegistryHashAlgorithm(xRegistryHashAlgorithm).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.CreateArtifact``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.CreateArtifact``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `CreateArtifact`: ArtifactMetaData
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.CreateArtifact`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.CreateArtifact`: %v\n", resp)
 }
 ```
 
@@ -142,9 +142,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ArtifactsApi.DeleteArtifact(context.Background(), groupId, artifactId).Execute()
+    r, err := apiClient.ArtifactsAPI.DeleteArtifact(context.Background(), groupId, artifactId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.DeleteArtifact``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.DeleteArtifact``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -212,9 +212,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ArtifactsApi.DeleteArtifactsInGroup(context.Background(), groupId).Execute()
+    r, err := apiClient.ArtifactsAPI.DeleteArtifactsInGroup(context.Background(), groupId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.DeleteArtifactsInGroup``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.DeleteArtifactsInGroup``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -257,7 +257,7 @@ No authorization required
 
 ## GetContentByGlobalId
 
-> *os.File GetContentByGlobalId(ctx, globalId).Dereference(dereference).Execute()
+> *os.File GetContentByGlobalId(ctx, globalId).References(references).Execute()
 
 Get artifact by global ID
 
@@ -277,17 +277,17 @@ import (
 
 func main() {
     globalId := int64(789) // int64 | Global identifier for an artifact version.
-    dereference := true // bool | Allows the user to specify if the content should be dereferenced when being returned (optional)
+    references := openapiclient.HandleReferencesType("PRESERVE") // HandleReferencesType | Allows the user to specify how references in the content should be treated. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.GetContentByGlobalId(context.Background(), globalId).Dereference(dereference).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.GetContentByGlobalId(context.Background(), globalId).References(references).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.GetContentByGlobalId``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.GetContentByGlobalId``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetContentByGlobalId`: *os.File
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.GetContentByGlobalId`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.GetContentByGlobalId`: %v\n", resp)
 }
 ```
 
@@ -307,7 +307,7 @@ Other parameters are passed through a pointer to a apiGetContentByGlobalIdReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **dereference** | **bool** | Allows the user to specify if the content should be dereferenced when being returned | 
+ **references** | [**HandleReferencesType**](HandleReferencesType.md) | Allows the user to specify how references in the content should be treated. | 
 
 ### Return type
 
@@ -352,13 +352,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.GetContentByHash(context.Background(), contentHash).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.GetContentByHash(context.Background(), contentHash).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.GetContentByHash``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.GetContentByHash``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetContentByHash`: *os.File
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.GetContentByHash`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.GetContentByHash`: %v\n", resp)
 }
 ```
 
@@ -422,13 +422,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.GetContentById(context.Background(), contentId).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.GetContentById(context.Background(), contentId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.GetContentById``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.GetContentById``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetContentById`: *os.File
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.GetContentById`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.GetContentById`: %v\n", resp)
 }
 ```
 
@@ -469,7 +469,7 @@ No authorization required
 
 ## GetLatestArtifact
 
-> *os.File GetLatestArtifact(ctx, groupId, artifactId).Dereference(dereference).Execute()
+> *os.File GetLatestArtifact(ctx, groupId, artifactId).References(references).Execute()
 
 Get latest artifact
 
@@ -490,17 +490,17 @@ import (
 func main() {
     groupId := "groupId_example" // string | The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts.
     artifactId := "artifactId_example" // string | The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier.
-    dereference := true // bool | Allows the user to specify if the content should be dereferenced when being returned (optional)
+    references := openapiclient.HandleReferencesType("PRESERVE") // HandleReferencesType | Allows the user to specify how references in the content should be treated. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.GetLatestArtifact(context.Background(), groupId, artifactId).Dereference(dereference).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.GetLatestArtifact(context.Background(), groupId, artifactId).References(references).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.GetLatestArtifact``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.GetLatestArtifact``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetLatestArtifact`: *os.File
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.GetLatestArtifact`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.GetLatestArtifact`: %v\n", resp)
 }
 ```
 
@@ -522,7 +522,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **dereference** | **bool** | Allows the user to specify if the content should be dereferenced when being returned | 
+ **references** | [**HandleReferencesType**](HandleReferencesType.md) | Allows the user to specify how references in the content should be treated. | 
 
 ### Return type
 
@@ -571,13 +571,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.ListArtifactsInGroup(context.Background(), groupId).Limit(limit).Offset(offset).Order(order).Orderby(orderby).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.ListArtifactsInGroup(context.Background(), groupId).Limit(limit).Offset(offset).Order(order).Orderby(orderby).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.ListArtifactsInGroup``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.ListArtifactsInGroup``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ListArtifactsInGroup`: ArtifactSearchResults
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.ListArtifactsInGroup`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.ListArtifactsInGroup`: %v\n", resp)
 }
 ```
 
@@ -645,13 +645,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.ReferencesByContentHash(context.Background(), contentHash).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.ReferencesByContentHash(context.Background(), contentHash).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.ReferencesByContentHash``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.ReferencesByContentHash``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ReferencesByContentHash`: []ArtifactReference
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.ReferencesByContentHash`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.ReferencesByContentHash`: %v\n", resp)
 }
 ```
 
@@ -715,13 +715,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.ReferencesByContentId(context.Background(), contentId).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.ReferencesByContentId(context.Background(), contentId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.ReferencesByContentId``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.ReferencesByContentId``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ReferencesByContentId`: []ArtifactReference
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.ReferencesByContentId`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.ReferencesByContentId`: %v\n", resp)
 }
 ```
 
@@ -762,7 +762,7 @@ No authorization required
 
 ## ReferencesByGlobalId
 
-> []ArtifactReference ReferencesByGlobalId(ctx, globalId).Execute()
+> []ArtifactReference ReferencesByGlobalId(ctx, globalId).RefType(refType).Execute()
 
 List artifact references by global ID
 
@@ -782,16 +782,17 @@ import (
 
 func main() {
     globalId := int64(789) // int64 | Global identifier for an artifact version.
+    refType := openapiclient.ReferenceType("OUTBOUND") // ReferenceType | Determines the type of reference to return, either INBOUND or OUTBOUND.  Defaults to OUTBOUND. (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.ReferencesByGlobalId(context.Background(), globalId).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.ReferencesByGlobalId(context.Background(), globalId).RefType(refType).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.ReferencesByGlobalId``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.ReferencesByGlobalId``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ReferencesByGlobalId`: []ArtifactReference
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.ReferencesByGlobalId`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.ReferencesByGlobalId`: %v\n", resp)
 }
 ```
 
@@ -811,6 +812,7 @@ Other parameters are passed through a pointer to a apiReferencesByGlobalIdReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **refType** | [**ReferenceType**](ReferenceType.md) | Determines the type of reference to return, either INBOUND or OUTBOUND.  Defaults to OUTBOUND. | 
 
 ### Return type
 
@@ -865,13 +867,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.SearchArtifacts(context.Background()).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).GlobalId(globalId).ContentId(contentId).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.SearchArtifacts(context.Background()).Name(name).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Labels(labels).Properties(properties).Description(description).Group(group).GlobalId(globalId).ContentId(contentId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.SearchArtifacts``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.SearchArtifacts``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `SearchArtifacts`: ArtifactSearchResults
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.SearchArtifacts`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.SearchArtifacts`: %v\n", resp)
 }
 ```
 
@@ -947,13 +949,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.SearchArtifactsByContent(context.Background()).Body(body).Canonical(canonical).ArtifactType(artifactType).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.SearchArtifactsByContent(context.Background()).Body(body).Canonical(canonical).ArtifactType(artifactType).Offset(offset).Limit(limit).Order(order).Orderby(orderby).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.SearchArtifactsByContent``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.SearchArtifactsByContent``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `SearchArtifactsByContent`: ArtifactSearchResults
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.SearchArtifactsByContent`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.SearchArtifactsByContent`: %v\n", resp)
 }
 ```
 
@@ -1026,13 +1028,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactsApi.UpdateArtifact(context.Background(), groupId, artifactId).Body(body).XRegistryVersion(xRegistryVersion).XRegistryName(xRegistryName).XRegistryNameEncoded(xRegistryNameEncoded).XRegistryDescription(xRegistryDescription).XRegistryDescriptionEncoded(xRegistryDescriptionEncoded).Execute()
+    resp, r, err := apiClient.ArtifactsAPI.UpdateArtifact(context.Background(), groupId, artifactId).Body(body).XRegistryVersion(xRegistryVersion).XRegistryName(xRegistryName).XRegistryNameEncoded(xRegistryNameEncoded).XRegistryDescription(xRegistryDescription).XRegistryDescriptionEncoded(xRegistryDescriptionEncoded).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.UpdateArtifact``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.UpdateArtifact``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `UpdateArtifact`: ArtifactMetaData
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactsApi.UpdateArtifact`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactsAPI.UpdateArtifact`: %v\n", resp)
 }
 ```
 
@@ -1106,9 +1108,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ArtifactsApi.UpdateArtifactState(context.Background(), groupId, artifactId).UpdateState(updateState).Execute()
+    r, err := apiClient.ArtifactsAPI.UpdateArtifactState(context.Background(), groupId, artifactId).UpdateState(updateState).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsApi.UpdateArtifactState``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactsAPI.UpdateArtifactState``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }

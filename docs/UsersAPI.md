@@ -1,18 +1,18 @@
-# \ArtifactTypeApi
+# \UsersAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ListArtifactTypes**](ArtifactTypeApi.md#ListArtifactTypes) | **Get** /admin/artifactTypes | List artifact types
+[**GetCurrentUserInfo**](UsersAPI.md#GetCurrentUserInfo) | **Get** /users/me | Get current user
 
 
 
-## ListArtifactTypes
+## GetCurrentUserInfo
 
-> []ArtifactTypeInfo ListArtifactTypes(ctx).Execute()
+> UserInfo GetCurrentUserInfo(ctx).Execute()
 
-List artifact types
+Get current user
 
 
 
@@ -32,13 +32,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactTypeApi.ListArtifactTypes(context.Background()).Execute()
+    resp, r, err := apiClient.UsersAPI.GetCurrentUserInfo(context.Background()).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactTypeApi.ListArtifactTypes``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetCurrentUserInfo``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `ListArtifactTypes`: []ArtifactTypeInfo
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactTypeApi.ListArtifactTypes`: %v\n", resp)
+    // response from `GetCurrentUserInfo`: UserInfo
+    fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetCurrentUserInfo`: %v\n", resp)
 }
 ```
 
@@ -48,12 +48,12 @@ This endpoint does not need any parameter.
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiListArtifactTypesRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiGetCurrentUserInfoRequest struct via the builder pattern
 
 
 ### Return type
 
-[**[]ArtifactTypeInfo**](ArtifactTypeInfo.md)
+[**UserInfo**](UserInfo.md)
 
 ### Authorization
 

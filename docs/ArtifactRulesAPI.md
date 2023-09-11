@@ -1,16 +1,16 @@
-# \ArtifactRulesApi
+# \ArtifactRulesAPI
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateArtifactRule**](ArtifactRulesApi.md#CreateArtifactRule) | **Post** /groups/{groupId}/artifacts/{artifactId}/rules | Create artifact rule
-[**DeleteArtifactRule**](ArtifactRulesApi.md#DeleteArtifactRule) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Delete artifact rule
-[**DeleteArtifactRules**](ArtifactRulesApi.md#DeleteArtifactRules) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules | Delete artifact rules
-[**GetArtifactRuleConfig**](ArtifactRulesApi.md#GetArtifactRuleConfig) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Get artifact rule configuration
-[**ListArtifactRules**](ArtifactRulesApi.md#ListArtifactRules) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules | List artifact rules
-[**TestUpdateArtifact**](ArtifactRulesApi.md#TestUpdateArtifact) | **Put** /groups/{groupId}/artifacts/{artifactId}/test | Test update artifact
-[**UpdateArtifactRuleConfig**](ArtifactRulesApi.md#UpdateArtifactRuleConfig) | **Put** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Update artifact rule configuration
+[**CreateArtifactRule**](ArtifactRulesAPI.md#CreateArtifactRule) | **Post** /groups/{groupId}/artifacts/{artifactId}/rules | Create artifact rule
+[**DeleteArtifactRule**](ArtifactRulesAPI.md#DeleteArtifactRule) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Delete artifact rule
+[**DeleteArtifactRules**](ArtifactRulesAPI.md#DeleteArtifactRules) | **Delete** /groups/{groupId}/artifacts/{artifactId}/rules | Delete artifact rules
+[**GetArtifactRuleConfig**](ArtifactRulesAPI.md#GetArtifactRuleConfig) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Get artifact rule configuration
+[**ListArtifactRules**](ArtifactRulesAPI.md#ListArtifactRules) | **Get** /groups/{groupId}/artifacts/{artifactId}/rules | List artifact rules
+[**TestUpdateArtifact**](ArtifactRulesAPI.md#TestUpdateArtifact) | **Put** /groups/{groupId}/artifacts/{artifactId}/test | Test update artifact
+[**UpdateArtifactRuleConfig**](ArtifactRulesAPI.md#UpdateArtifactRuleConfig) | **Put** /groups/{groupId}/artifacts/{artifactId}/rules/{rule} | Update artifact rule configuration
 
 
 
@@ -41,9 +41,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ArtifactRulesApi.CreateArtifactRule(context.Background(), groupId, artifactId).Rule(rule).Execute()
+    r, err := apiClient.ArtifactRulesAPI.CreateArtifactRule(context.Background(), groupId, artifactId).Rule(rule).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesApi.CreateArtifactRule``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesAPI.CreateArtifactRule``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -114,9 +114,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ArtifactRulesApi.DeleteArtifactRule(context.Background(), groupId, artifactId, rule).Execute()
+    r, err := apiClient.ArtifactRulesAPI.DeleteArtifactRule(context.Background(), groupId, artifactId, rule).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesApi.DeleteArtifactRule``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesAPI.DeleteArtifactRule``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -187,9 +187,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ArtifactRulesApi.DeleteArtifactRules(context.Background(), groupId, artifactId).Execute()
+    r, err := apiClient.ArtifactRulesAPI.DeleteArtifactRules(context.Background(), groupId, artifactId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesApi.DeleteArtifactRules``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesAPI.DeleteArtifactRules``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -259,13 +259,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactRulesApi.GetArtifactRuleConfig(context.Background(), groupId, artifactId, rule).Execute()
+    resp, r, err := apiClient.ArtifactRulesAPI.GetArtifactRuleConfig(context.Background(), groupId, artifactId, rule).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesApi.GetArtifactRuleConfig``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesAPI.GetArtifactRuleConfig``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetArtifactRuleConfig`: Rule
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactRulesApi.GetArtifactRuleConfig`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactRulesAPI.GetArtifactRuleConfig`: %v\n", resp)
 }
 ```
 
@@ -334,13 +334,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactRulesApi.ListArtifactRules(context.Background(), groupId, artifactId).Execute()
+    resp, r, err := apiClient.ArtifactRulesAPI.ListArtifactRules(context.Background(), groupId, artifactId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesApi.ListArtifactRules``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesAPI.ListArtifactRules``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ListArtifactRules`: []RuleType
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactRulesApi.ListArtifactRules`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactRulesAPI.ListArtifactRules`: %v\n", resp)
 }
 ```
 
@@ -408,9 +408,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ArtifactRulesApi.TestUpdateArtifact(context.Background(), groupId, artifactId).Body(body).Execute()
+    r, err := apiClient.ArtifactRulesAPI.TestUpdateArtifact(context.Background(), groupId, artifactId).Body(body).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesApi.TestUpdateArtifact``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesAPI.TestUpdateArtifact``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -482,13 +482,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ArtifactRulesApi.UpdateArtifactRuleConfig(context.Background(), groupId, artifactId, rule).Rule2(rule2).Execute()
+    resp, r, err := apiClient.ArtifactRulesAPI.UpdateArtifactRuleConfig(context.Background(), groupId, artifactId, rule).Rule2(rule2).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesApi.UpdateArtifactRuleConfig``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ArtifactRulesAPI.UpdateArtifactRuleConfig``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `UpdateArtifactRuleConfig`: Rule
-    fmt.Fprintf(os.Stdout, "Response from `ArtifactRulesApi.UpdateArtifactRuleConfig`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ArtifactRulesAPI.UpdateArtifactRuleConfig`: %v\n", resp)
 }
 ```
 
