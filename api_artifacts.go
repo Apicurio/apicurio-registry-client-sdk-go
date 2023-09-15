@@ -1,7 +1,7 @@
 /*
 Apicurio Registry API [v2]
 
-Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
+Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`.
 
 API version: 2.2.4-SNAPSHOT
 Contact: apicurio@lists.jboss.org
@@ -17,9 +17,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"strings"
 	"os"
 	"reflect"
+	"strings"
 )
 
 // Linger please
@@ -31,66 +31,75 @@ var (
 type ArtifactsApiService service
 
 type ApiCreateArtifactRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
-	groupId string
-	body *interface{}
-	xRegistryArtifactType *ArtifactType
-	xRegistryArtifactId *string
-	xRegistryVersion *string
-	ifExists *IfExists
-	canonical *bool
-	xRegistryDescription *string
+	ctx                         context.Context
+	ApiService                  *ArtifactsApiService
+	groupId                     string
+	body                        *interface{}
+	xRegistryArtifactType       *ArtifactType
+	xRegistryArtifactId         *string
+	xRegistryVersion            *string
+	ifExists                    *IfExists
+	canonical                   *bool
+	xRegistryDescription        *string
 	xRegistryDescriptionEncoded *string
-	xRegistryName *string
-	xRegistryNameEncoded *string
+	xRegistryName               *string
+	xRegistryNameEncoded        *string
 }
 
-// The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
+// The content of the artifact being created. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
 func (r ApiCreateArtifactRequest) Body(body interface{}) ApiCreateArtifactRequest {
 	r.body = &body
 	return r
 }
+
 // Specifies the type of the artifact being added. Possible values include:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
 func (r ApiCreateArtifactRequest) XRegistryArtifactType(xRegistryArtifactType ArtifactType) ApiCreateArtifactRequest {
 	r.xRegistryArtifactType = &xRegistryArtifactType
 	return r
 }
+
 // A client-provided, globally unique identifier for the new artifact.
 func (r ApiCreateArtifactRequest) XRegistryArtifactId(xRegistryArtifactId string) ApiCreateArtifactRequest {
 	r.xRegistryArtifactId = &xRegistryArtifactId
 	return r
 }
+
 // Specifies the version number of this initial version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically (starting with version &#x60;1&#x60;).
 func (r ApiCreateArtifactRequest) XRegistryVersion(xRegistryVersion string) ApiCreateArtifactRequest {
 	r.xRegistryVersion = &xRegistryVersion
 	return r
 }
+
 // Set this option to instruct the server on what to do if the artifact already exists.
 func (r ApiCreateArtifactRequest) IfExists(ifExists IfExists) ApiCreateArtifactRequest {
 	r.ifExists = &ifExists
 	return r
 }
+
 // Used only when the &#x60;ifExists&#x60; query parameter is set to &#x60;RETURN_OR_UPDATE&#x60;, this parameter can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for a matching version.  The canonicalization algorithm is unique to each artifact type, but typically involves removing extra whitespace and formatting the content in a consistent manner.
 func (r ApiCreateArtifactRequest) Canonical(canonical bool) ApiCreateArtifactRequest {
 	r.canonical = &canonical
 	return r
 }
+
 // Specifies the description of artifact being added. Description must be ASCII-only string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryDescription(xRegistryDescription string) ApiCreateArtifactRequest {
 	r.xRegistryDescription = &xRegistryDescription
 	return r
 }
+
 // Specifies the description of artifact being added. Value of this must be Base64 encoded string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryDescriptionEncoded(xRegistryDescriptionEncoded string) ApiCreateArtifactRequest {
 	r.xRegistryDescriptionEncoded = &xRegistryDescriptionEncoded
 	return r
 }
+
 // Specifies the name of artifact being added. Name must be ASCII-only string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryName(xRegistryName string) ApiCreateArtifactRequest {
 	r.xRegistryName = &xRegistryName
 	return r
 }
+
 // Specifies the name of artifact being added. Value of this must be Base64 encoded string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiCreateArtifactRequest) XRegistryNameEncoded(xRegistryNameEncoded string) ApiCreateArtifactRequest {
 	r.xRegistryNameEncoded = &xRegistryNameEncoded
@@ -105,7 +114,7 @@ func (r ApiCreateArtifactRequest) Execute() (*ArtifactMetaData, *http.Response, 
 CreateArtifact Create artifact
 
 Creates a new artifact by posting the artifact content.  The body of the request should
-be the raw content of the artifact.  This is typically in JSON format for *most* of the 
+be the raw content of the artifact.  This is typically in JSON format for *most* of the
 supported types, but may be in another format for a few (for example, `PROTOBUF`).
 
 The registry attempts to figure out what kind of artifact is being added from the
@@ -121,7 +130,7 @@ following supported list:
 * Web Services Description Language (`WSDL`)
 * XML Schema (`XSD`)
 
-Alternatively, you can specify the artifact type using the `X-Registry-ArtifactType` 
+Alternatively, you can specify the artifact type using the `X-Registry-ArtifactType`
 HTTP request header, or include a hint in the request's `Content-Type`.  For example:
 
 ```
@@ -132,7 +141,7 @@ An artifact is created using the content provided in the body of the request.  T
 content is created under a unique artifact ID that can be provided in the request
 using the `X-Registry-ArtifactId` request header.  If not provided in the request,
 the server generates a unique ID for the artifact.  It is typically recommended
-that callers provide the ID, because this is typically a meaningful identifier, 
+that callers provide the ID, because this is typically a meaningful identifier,
 and for most use cases should be supplied by the caller.
 
 If an artifact with the provided artifact ID already exists, the default behavior
@@ -142,9 +151,9 @@ query parameter can have one of the following values:
 
 * `FAIL` (*default*) - server rejects the content with a 409 error
 * `UPDATE` - server updates the existing artifact and returns the new metadata
-* `RETURN` - server does not create or add content to the server, but instead 
+* `RETURN` - server does not create or add content to the server, but instead
 returns the metadata for the existing artifact
-* `RETURN_OR_UPDATE` - server returns an existing **version** that matches the 
+* `RETURN_OR_UPDATE` - server returns an existing **version** that matches the
 provided content if such a version exists, otherwise a new version is created
 
 This operation may fail for one of the following reasons:
@@ -164,8 +173,8 @@ This operation may fail for one of the following reasons:
 func (a *ArtifactsApiService) CreateArtifact(ctx context.Context, groupId string) ApiCreateArtifactRequest {
 	return ApiCreateArtifactRequest{
 		ApiService: a,
-		ctx: ctx,
-		groupId: groupId,
+		ctx:        ctx,
+		groupId:    groupId,
 	}
 }
 
@@ -173,10 +182,10 @@ func (a *ArtifactsApiService) CreateArtifact(ctx context.Context, groupId string
 //  @return ArtifactMetaData
 func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) (*ArtifactMetaData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ArtifactMetaData
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ArtifactMetaData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.CreateArtifact")
@@ -307,12 +316,11 @@ func (a *ArtifactsApiService) CreateArtifactExecute(r ApiCreateArtifactRequest) 
 }
 
 type ApiDeleteArtifactRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ArtifactsApiService
-	groupId string
+	groupId    string
 	artifactId string
 }
-
 
 func (r ApiDeleteArtifactRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteArtifactExecute(r)
@@ -335,8 +343,8 @@ deleted.  This may fail for one of the following reasons:
 func (a *ArtifactsApiService) DeleteArtifact(ctx context.Context, groupId string, artifactId string) ApiDeleteArtifactRequest {
 	return ApiDeleteArtifactRequest{
 		ApiService: a,
-		ctx: ctx,
-		groupId: groupId,
+		ctx:        ctx,
+		groupId:    groupId,
 		artifactId: artifactId,
 	}
 }
@@ -344,9 +352,9 @@ func (a *ArtifactsApiService) DeleteArtifact(ctx context.Context, groupId string
 // Execute executes the request
 func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.DeleteArtifact")
@@ -427,11 +435,10 @@ func (a *ArtifactsApiService) DeleteArtifactExecute(r ApiDeleteArtifactRequest) 
 }
 
 type ApiDeleteArtifactsInGroupRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ArtifactsApiService
-	groupId string
+	groupId    string
 }
-
 
 func (r ApiDeleteArtifactsInGroupRequest) Execute() (*http.Response, error) {
 	return r.ApiService.DeleteArtifactsInGroupExecute(r)
@@ -449,17 +456,17 @@ Deletes all of the artifacts that exist in a given group.
 func (a *ArtifactsApiService) DeleteArtifactsInGroup(ctx context.Context, groupId string) ApiDeleteArtifactsInGroupRequest {
 	return ApiDeleteArtifactsInGroupRequest{
 		ApiService: a,
-		ctx: ctx,
-		groupId: groupId,
+		ctx:        ctx,
+		groupId:    groupId,
 	}
 }
 
 // Execute executes the request
 func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifactsInGroupRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.DeleteArtifactsInGroup")
@@ -529,9 +536,9 @@ func (a *ArtifactsApiService) DeleteArtifactsInGroupExecute(r ApiDeleteArtifacts
 }
 
 type ApiGetContentByGlobalIdRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
-	globalId int64
+	ctx         context.Context
+	ApiService  *ArtifactsApiService
+	globalId    int64
 	dereference *bool
 }
 
@@ -564,8 +571,8 @@ This operation may fail for one of the following reasons:
 func (a *ArtifactsApiService) GetContentByGlobalId(ctx context.Context, globalId int64) ApiGetContentByGlobalIdRequest {
 	return ApiGetContentByGlobalIdRequest{
 		ApiService: a,
-		ctx: ctx,
-		globalId: globalId,
+		ctx:        ctx,
+		globalId:   globalId,
 	}
 }
 
@@ -573,10 +580,10 @@ func (a *ArtifactsApiService) GetContentByGlobalId(ctx context.Context, globalId
 //  @return *os.File
 func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGlobalIdRequest) (**os.File, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue **os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentByGlobalId")
@@ -668,11 +675,10 @@ func (a *ArtifactsApiService) GetContentByGlobalIdExecute(r ApiGetContentByGloba
 }
 
 type ApiGetContentByHashRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
+	ctx         context.Context
+	ApiService  *ArtifactsApiService
 	contentHash string
 }
-
 
 func (r ApiGetContentByHashRequest) Execute() (**os.File, *http.Response, error) {
 	return r.ApiService.GetContentByHashExecute(r)
@@ -681,7 +687,7 @@ func (r ApiGetContentByHashRequest) Execute() (**os.File, *http.Response, error)
 /*
 GetContentByHash Get artifact content by SHA-256 hash
 
-Gets the content for an artifact version in the registry using the 
+Gets the content for an artifact version in the registry using the
 SHA-256 hash of the content.  This content hash may be shared by multiple artifact
 versions in the case where the artifact versions have identical content.
 
@@ -697,8 +703,8 @@ This operation may fail for one of the following reasons:
 */
 func (a *ArtifactsApiService) GetContentByHash(ctx context.Context, contentHash string) ApiGetContentByHashRequest {
 	return ApiGetContentByHashRequest{
-		ApiService: a,
-		ctx: ctx,
+		ApiService:  a,
+		ctx:         ctx,
 		contentHash: contentHash,
 	}
 }
@@ -707,10 +713,10 @@ func (a *ArtifactsApiService) GetContentByHash(ctx context.Context, contentHash 
 //  @return *os.File
 func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashRequest) (**os.File, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue **os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentByHash")
@@ -799,11 +805,10 @@ func (a *ArtifactsApiService) GetContentByHashExecute(r ApiGetContentByHashReque
 }
 
 type ApiGetContentByIdRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ArtifactsApiService
-	contentId int64
+	contentId  int64
 }
-
 
 func (r ApiGetContentByIdRequest) Execute() (**os.File, *http.Response, error) {
 	return r.ApiService.GetContentByIdExecute(r)
@@ -829,8 +834,8 @@ This operation may fail for one of the following reasons:
 func (a *ArtifactsApiService) GetContentById(ctx context.Context, contentId int64) ApiGetContentByIdRequest {
 	return ApiGetContentByIdRequest{
 		ApiService: a,
-		ctx: ctx,
-		contentId: contentId,
+		ctx:        ctx,
+		contentId:  contentId,
 	}
 }
 
@@ -838,10 +843,10 @@ func (a *ArtifactsApiService) GetContentById(ctx context.Context, contentId int6
 //  @return *os.File
 func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) (**os.File, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue **os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetContentById")
@@ -930,10 +935,10 @@ func (a *ArtifactsApiService) GetContentByIdExecute(r ApiGetContentByIdRequest) 
 }
 
 type ApiGetLatestArtifactRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
-	groupId string
-	artifactId string
+	ctx         context.Context
+	ApiService  *ArtifactsApiService
+	groupId     string
+	artifactId  string
 	dereference *bool
 }
 
@@ -951,7 +956,7 @@ func (r ApiGetLatestArtifactRequest) Execute() (**os.File, *http.Response, error
 GetLatestArtifact Get latest artifact
 
 Returns the latest version of the artifact in its raw form.  The `Content-Type` of the
-response depends on the artifact type.  In most cases, this is `application/json`, but 
+response depends on the artifact type.  In most cases, this is `application/json`, but
 for some types it may be different (for example, `PROTOBUF`).
 
 This operation may fail for one of the following reasons:
@@ -968,8 +973,8 @@ This operation may fail for one of the following reasons:
 func (a *ArtifactsApiService) GetLatestArtifact(ctx context.Context, groupId string, artifactId string) ApiGetLatestArtifactRequest {
 	return ApiGetLatestArtifactRequest{
 		ApiService: a,
-		ctx: ctx,
-		groupId: groupId,
+		ctx:        ctx,
+		groupId:    groupId,
 		artifactId: artifactId,
 	}
 }
@@ -978,10 +983,10 @@ func (a *ArtifactsApiService) GetLatestArtifact(ctx context.Context, groupId str
 //  @return *os.File
 func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactRequest) (**os.File, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  **os.File
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue **os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.GetLatestArtifact")
@@ -1074,13 +1079,13 @@ func (a *ArtifactsApiService) GetLatestArtifactExecute(r ApiGetLatestArtifactReq
 }
 
 type ApiListArtifactsInGroupRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ArtifactsApiService
-	groupId string
-	limit *int32
-	offset *int32
-	order *SortOrder
-	orderby *SortBy
+	groupId    string
+	limit      *int32
+	offset     *int32
+	order      *SortOrder
+	orderby    *SortBy
 }
 
 // The number of artifacts to return.  Defaults to 20.
@@ -1088,17 +1093,20 @@ func (r ApiListArtifactsInGroupRequest) Limit(limit int32) ApiListArtifactsInGro
 	r.limit = &limit
 	return r
 }
+
 // The number of artifacts to skip before starting the result set.  Defaults to 0.
 func (r ApiListArtifactsInGroupRequest) Offset(offset int32) ApiListArtifactsInGroupRequest {
 	r.offset = &offset
 	return r
 }
+
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
 func (r ApiListArtifactsInGroupRequest) Order(order SortOrder) ApiListArtifactsInGroupRequest {
 	r.order = &order
 	return r
 }
-// The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
+
+// The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60;
 func (r ApiListArtifactsInGroupRequest) Orderby(orderby SortBy) ApiListArtifactsInGroupRequest {
 	r.orderby = &orderby
 	return r
@@ -1120,8 +1128,8 @@ Returns a list of all artifacts in the group.  This list is paged.
 func (a *ArtifactsApiService) ListArtifactsInGroup(ctx context.Context, groupId string) ApiListArtifactsInGroupRequest {
 	return ApiListArtifactsInGroupRequest{
 		ApiService: a,
-		ctx: ctx,
-		groupId: groupId,
+		ctx:        ctx,
+		groupId:    groupId,
 	}
 }
 
@@ -1129,10 +1137,10 @@ func (a *ArtifactsApiService) ListArtifactsInGroup(ctx context.Context, groupId 
 //  @return ArtifactSearchResults
 func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGroupRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ArtifactSearchResults
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ArtifactSearchResults
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ListArtifactsInGroup")
@@ -1223,11 +1231,10 @@ func (a *ArtifactsApiService) ListArtifactsInGroupExecute(r ApiListArtifactsInGr
 }
 
 type ApiReferencesByContentHashRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
+	ctx         context.Context
+	ApiService  *ArtifactsApiService
 	contentHash string
 }
-
 
 func (r ApiReferencesByContentHashRequest) Execute() ([]ArtifactReference, *http.Response, error) {
 	return r.ApiService.ReferencesByContentHashExecute(r)
@@ -1249,8 +1256,8 @@ This operation may fail for one of the following reasons:
 */
 func (a *ArtifactsApiService) ReferencesByContentHash(ctx context.Context, contentHash string) ApiReferencesByContentHashRequest {
 	return ApiReferencesByContentHashRequest{
-		ApiService: a,
-		ctx: ctx,
+		ApiService:  a,
+		ctx:         ctx,
 		contentHash: contentHash,
 	}
 }
@@ -1259,10 +1266,10 @@ func (a *ArtifactsApiService) ReferencesByContentHash(ctx context.Context, conte
 //  @return []ArtifactReference
 func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByContentHashRequest) ([]ArtifactReference, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []ArtifactReference
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []ArtifactReference
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByContentHash")
@@ -1332,11 +1339,10 @@ func (a *ArtifactsApiService) ReferencesByContentHashExecute(r ApiReferencesByCo
 }
 
 type ApiReferencesByContentIdRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ArtifactsApiService
-	contentId int64
+	contentId  int64
 }
-
 
 func (r ApiReferencesByContentIdRequest) Execute() ([]ArtifactReference, *http.Response, error) {
 	return r.ApiService.ReferencesByContentIdExecute(r)
@@ -1358,8 +1364,8 @@ This operation may fail for one of the following reasons:
 func (a *ArtifactsApiService) ReferencesByContentId(ctx context.Context, contentId int64) ApiReferencesByContentIdRequest {
 	return ApiReferencesByContentIdRequest{
 		ApiService: a,
-		ctx: ctx,
-		contentId: contentId,
+		ctx:        ctx,
+		contentId:  contentId,
 	}
 }
 
@@ -1367,10 +1373,10 @@ func (a *ArtifactsApiService) ReferencesByContentId(ctx context.Context, content
 //  @return []ArtifactReference
 func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByContentIdRequest) ([]ArtifactReference, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []ArtifactReference
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []ArtifactReference
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByContentId")
@@ -1440,11 +1446,10 @@ func (a *ArtifactsApiService) ReferencesByContentIdExecute(r ApiReferencesByCont
 }
 
 type ApiReferencesByGlobalIdRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ArtifactsApiService
-	globalId int64
+	globalId   int64
 }
-
 
 func (r ApiReferencesByGlobalIdRequest) Execute() ([]ArtifactReference, *http.Response, error) {
 	return r.ApiService.ReferencesByGlobalIdExecute(r)
@@ -1466,8 +1471,8 @@ This operation may fail for one of the following reasons:
 func (a *ArtifactsApiService) ReferencesByGlobalId(ctx context.Context, globalId int64) ApiReferencesByGlobalIdRequest {
 	return ApiReferencesByGlobalIdRequest{
 		ApiService: a,
-		ctx: ctx,
-		globalId: globalId,
+		ctx:        ctx,
+		globalId:   globalId,
 	}
 }
 
@@ -1475,10 +1480,10 @@ func (a *ArtifactsApiService) ReferencesByGlobalId(ctx context.Context, globalId
 //  @return []ArtifactReference
 func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGlobalIdRequest) ([]ArtifactReference, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []ArtifactReference
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []ArtifactReference
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.ReferencesByGlobalId")
@@ -1548,19 +1553,19 @@ func (a *ArtifactsApiService) ReferencesByGlobalIdExecute(r ApiReferencesByGloba
 }
 
 type ApiSearchArtifactsRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
-	name *string
-	offset *int32
-	limit *int32
-	order *SortOrder
-	orderby *SortBy
-	labels *[]string
-	properties *[]string
+	ctx         context.Context
+	ApiService  *ArtifactsApiService
+	name        *string
+	offset      *int32
+	limit       *int32
+	order       *SortOrder
+	orderby     *SortBy
+	labels      *[]string
+	properties  *[]string
 	description *string
-	group *string
-	globalId *int64
-	contentId *int64
+	group       *string
+	globalId    *int64
+	contentId   *int64
 }
 
 // Filter by artifact name.
@@ -1568,51 +1573,61 @@ func (r ApiSearchArtifactsRequest) Name(name string) ApiSearchArtifactsRequest {
 	r.name = &name
 	return r
 }
+
 // The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
 func (r ApiSearchArtifactsRequest) Offset(offset int32) ApiSearchArtifactsRequest {
 	r.offset = &offset
 	return r
 }
+
 // The number of artifacts to return.  Defaults to 20.
 func (r ApiSearchArtifactsRequest) Limit(limit int32) ApiSearchArtifactsRequest {
 	r.limit = &limit
 	return r
 }
+
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
 func (r ApiSearchArtifactsRequest) Order(order SortOrder) ApiSearchArtifactsRequest {
 	r.order = &order
 	return r
 }
-// The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
+
+// The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60;
 func (r ApiSearchArtifactsRequest) Orderby(orderby SortBy) ApiSearchArtifactsRequest {
 	r.orderby = &orderby
 	return r
 }
+
 // Filter by label.  Include one or more label to only return artifacts containing all of the specified labels.
 func (r ApiSearchArtifactsRequest) Labels(labels []string) ApiSearchArtifactsRequest {
 	r.labels = &labels
 	return r
 }
+
 // Filter by one or more name/value property.  Separate each name/value pair using a colon.  For example &#x60;properties&#x3D;foo:bar&#x60; will return only artifacts with a custom property named &#x60;foo&#x60; and value &#x60;bar&#x60;.
 func (r ApiSearchArtifactsRequest) Properties(properties []string) ApiSearchArtifactsRequest {
 	r.properties = &properties
 	return r
 }
+
 // Filter by description.
 func (r ApiSearchArtifactsRequest) Description(description string) ApiSearchArtifactsRequest {
 	r.description = &description
 	return r
 }
+
 // Filter by artifact group.
 func (r ApiSearchArtifactsRequest) Group(group string) ApiSearchArtifactsRequest {
 	r.group = &group
 	return r
 }
+
 // Filter by globalId.
 func (r ApiSearchArtifactsRequest) GlobalId(globalId int64) ApiSearchArtifactsRequest {
 	r.globalId = &globalId
 	return r
 }
+
 // Filter by contentId.
 func (r ApiSearchArtifactsRequest) ContentId(contentId int64) ApiSearchArtifactsRequest {
 	r.contentId = &contentId
@@ -1635,7 +1650,7 @@ Returns a paginated list of all artifacts that match the provided filter criteri
 func (a *ArtifactsApiService) SearchArtifacts(ctx context.Context) ApiSearchArtifactsRequest {
 	return ApiSearchArtifactsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -1643,10 +1658,10 @@ func (a *ArtifactsApiService) SearchArtifacts(ctx context.Context) ApiSearchArti
 //  @return ArtifactSearchResults
 func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ArtifactSearchResults
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ArtifactSearchResults
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.SearchArtifacts")
@@ -1773,15 +1788,15 @@ func (a *ArtifactsApiService) SearchArtifactsExecute(r ApiSearchArtifactsRequest
 }
 
 type ApiSearchArtifactsByContentRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
-	body **os.File
-	canonical *bool
+	ctx          context.Context
+	ApiService   *ArtifactsApiService
+	body         **os.File
+	canonical    *bool
 	artifactType *ArtifactType
-	offset *int32
-	limit *int32
-	order *string
-	orderby *string
+	offset       *int32
+	limit        *int32
+	order        *string
+	orderby      *string
 }
 
 // The content to search for.
@@ -1789,32 +1804,38 @@ func (r ApiSearchArtifactsByContentRequest) Body(body *os.File) ApiSearchArtifac
 	r.body = &body
 	return r
 }
+
 // Parameter that can be set to &#x60;true&#x60; to indicate that the server should \&quot;canonicalize\&quot; the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the &#x60;artifactType&#x60; query parameter.
 func (r ApiSearchArtifactsByContentRequest) Canonical(canonical bool) ApiSearchArtifactsByContentRequest {
 	r.canonical = &canonical
 	return r
 }
+
 // Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the &#x60;canonical&#x60; query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
 func (r ApiSearchArtifactsByContentRequest) ArtifactType(artifactType ArtifactType) ApiSearchArtifactsByContentRequest {
 	r.artifactType = &artifactType
 	return r
 }
+
 // The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
 func (r ApiSearchArtifactsByContentRequest) Offset(offset int32) ApiSearchArtifactsByContentRequest {
 	r.offset = &offset
 	return r
 }
+
 // The number of artifacts to return.  Defaults to 20.
 func (r ApiSearchArtifactsByContentRequest) Limit(limit int32) ApiSearchArtifactsByContentRequest {
 	r.limit = &limit
 	return r
 }
+
 // Sort order, ascending (&#x60;asc&#x60;) or descending (&#x60;desc&#x60;).
 func (r ApiSearchArtifactsByContentRequest) Order(order string) ApiSearchArtifactsByContentRequest {
 	r.order = &order
 	return r
 }
-// The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60; 
+
+// The field to sort by.  Can be one of:  * &#x60;name&#x60; * &#x60;createdOn&#x60;
 func (r ApiSearchArtifactsByContentRequest) Orderby(orderby string) ApiSearchArtifactsByContentRequest {
 	r.orderby = &orderby
 	return r
@@ -1837,7 +1858,7 @@ posted content.
 func (a *ArtifactsApiService) SearchArtifactsByContent(ctx context.Context) ApiSearchArtifactsByContentRequest {
 	return ApiSearchArtifactsByContentRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -1845,10 +1866,10 @@ func (a *ArtifactsApiService) SearchArtifactsByContent(ctx context.Context) ApiS
 //  @return ArtifactSearchResults
 func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifactsByContentRequest) (*ArtifactSearchResults, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ArtifactSearchResults
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ArtifactSearchResults
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.SearchArtifactsByContent")
@@ -1901,7 +1922,7 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = *r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1949,43 +1970,48 @@ func (a *ArtifactsApiService) SearchArtifactsByContentExecute(r ApiSearchArtifac
 }
 
 type ApiUpdateArtifactRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
-	groupId string
-	artifactId string
-	body *interface{}
-	xRegistryVersion *string
-	xRegistryName *string
-	xRegistryNameEncoded *string
-	xRegistryDescription *string
+	ctx                         context.Context
+	ApiService                  *ArtifactsApiService
+	groupId                     string
+	artifactId                  string
+	body                        *interface{}
+	xRegistryVersion            *string
+	xRegistryName               *string
+	xRegistryNameEncoded        *string
+	xRegistryDescription        *string
 	xRegistryDescriptionEncoded *string
 }
 
-// The new content of the artifact being updated. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;) 
+// The new content of the artifact being updated. This is often, but not always, JSON data representing one of the supported artifact types:  * Avro (&#x60;AVRO&#x60;) * Protobuf (&#x60;PROTOBUF&#x60;) * JSON Schema (&#x60;JSON&#x60;) * Kafka Connect (&#x60;KCONNECT&#x60;) * OpenAPI (&#x60;OPENAPI&#x60;) * AsyncAPI (&#x60;ASYNCAPI&#x60;) * GraphQL (&#x60;GRAPHQL&#x60;) * Web Services Description Language (&#x60;WSDL&#x60;) * XML Schema (&#x60;XSD&#x60;)
 func (r ApiUpdateArtifactRequest) Body(body interface{}) ApiUpdateArtifactRequest {
 	r.body = &body
 	return r
 }
+
 // Specifies the version number of this new version of the artifact content.  This would typically be a simple integer or a SemVer value.  If not provided, the server will assign a version number automatically.
 func (r ApiUpdateArtifactRequest) XRegistryVersion(xRegistryVersion string) ApiUpdateArtifactRequest {
 	r.xRegistryVersion = &xRegistryVersion
 	return r
 }
+
 // Specifies the artifact name of this new version of the artifact content. Name must be ASCII-only string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryName(xRegistryName string) ApiUpdateArtifactRequest {
 	r.xRegistryName = &xRegistryName
 	return r
 }
+
 // Specifies the artifact name of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the name from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryNameEncoded(xRegistryNameEncoded string) ApiUpdateArtifactRequest {
 	r.xRegistryNameEncoded = &xRegistryNameEncoded
 	return r
 }
+
 // Specifies the artifact description of this new version of the artifact content. Description must be ASCII-only string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryDescription(xRegistryDescription string) ApiUpdateArtifactRequest {
 	r.xRegistryDescription = &xRegistryDescription
 	return r
 }
+
 // Specifies the artifact description of this new version of the artifact content. Value of this must be Base64 encoded string. If this is not provided, the server will extract the description from the artifact content.
 func (r ApiUpdateArtifactRequest) XRegistryDescriptionEncoded(xRegistryDescriptionEncoded string) ApiUpdateArtifactRequest {
 	r.xRegistryDescriptionEncoded = &xRegistryDescriptionEncoded
@@ -2024,8 +2050,8 @@ When successful, this creates a new version of the artifact, making it the most 
 func (a *ArtifactsApiService) UpdateArtifact(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactRequest {
 	return ApiUpdateArtifactRequest{
 		ApiService: a,
-		ctx: ctx,
-		groupId: groupId,
+		ctx:        ctx,
+		groupId:    groupId,
 		artifactId: artifactId,
 	}
 }
@@ -2034,10 +2060,10 @@ func (a *ArtifactsApiService) UpdateArtifact(ctx context.Context, groupId string
 //  @return ArtifactMetaData
 func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) (*ArtifactMetaData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ArtifactMetaData
+		localVarHTTPMethod  = http.MethodPut
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ArtifactMetaData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.UpdateArtifact")
@@ -2089,7 +2115,7 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 		localVarHeaderParams["X-Registry-Description-Encoded"] = parameterToString(*r.xRegistryDescriptionEncoded, "")
 	}
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = *r.body
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -2157,10 +2183,10 @@ func (a *ArtifactsApiService) UpdateArtifactExecute(r ApiUpdateArtifactRequest) 
 }
 
 type ApiUpdateArtifactStateRequest struct {
-	ctx context.Context
-	ApiService *ArtifactsApiService
-	groupId string
-	artifactId string
+	ctx         context.Context
+	ApiService  *ArtifactsApiService
+	groupId     string
+	artifactId  string
 	updateState *UpdateState
 }
 
@@ -2177,7 +2203,7 @@ func (r ApiUpdateArtifactStateRequest) Execute() (*http.Response, error) {
 UpdateArtifactState Update artifact state
 
 Updates the state of the artifact.  For example, you can use this to mark the latest
-version of an artifact as `DEPRECATED`.  The operation changes the state of the latest 
+version of an artifact as `DEPRECATED`.  The operation changes the state of the latest
 version of the artifact.  If multiple versions exist, only the most recent is changed.
 
 This operation can fail for the following reasons:
@@ -2194,8 +2220,8 @@ This operation can fail for the following reasons:
 func (a *ArtifactsApiService) UpdateArtifactState(ctx context.Context, groupId string, artifactId string) ApiUpdateArtifactStateRequest {
 	return ApiUpdateArtifactStateRequest{
 		ApiService: a,
-		ctx: ctx,
-		groupId: groupId,
+		ctx:        ctx,
+		groupId:    groupId,
 		artifactId: artifactId,
 	}
 }
@@ -2203,9 +2229,9 @@ func (a *ArtifactsApiService) UpdateArtifactState(ctx context.Context, groupId s
 // Execute executes the request
 func (a *ArtifactsApiService) UpdateArtifactStateExecute(r ApiUpdateArtifactStateRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ArtifactsApiService.UpdateArtifactState")
