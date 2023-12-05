@@ -1,9 +1,9 @@
 /*
-Apicurio Registry API [v2]
+Apicurio Registry API [v3]
 
-Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
+Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v3` by default. Therefore you must prefix all API operation paths with `../apis/registry/v3` in this case. For example: `../apis/registry/v3/ids/globalIds/{globalId}`. 
 
-API version: 2.4.x
+API version: 3.0.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -13,6 +13,7 @@ package registryclient
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ArtifactMetaData type satisfies the MappedNullable interface at compile time
@@ -46,6 +47,8 @@ type ArtifactMetaData struct {
 	// 
 	References []ArtifactReference `json:"references,omitempty"`
 }
+
+type _ArtifactMetaData ArtifactMetaData
 
 // NewArtifactMetaData instantiates a new ArtifactMetaData object
 // This constructor will assign default values to properties that have it defined,
@@ -545,6 +548,50 @@ func (o ArtifactMetaData) ToMap() (map[string]interface{}, error) {
 		toSerialize["references"] = o.References
 	}
 	return toSerialize, nil
+}
+
+func (o *ArtifactMetaData) UnmarshalJSON(bytes []byte) (err error) {
+    // This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"createdBy",
+		"createdOn",
+		"modifiedBy",
+		"modifiedOn",
+		"id",
+		"version",
+		"type",
+		"globalId",
+		"state",
+		"contentId",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varArtifactMetaData := _ArtifactMetaData{}
+
+	err = json.Unmarshal(bytes, &varArtifactMetaData)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ArtifactMetaData(varArtifactMetaData)
+
+	return err
 }
 
 type NullableArtifactMetaData struct {

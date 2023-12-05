@@ -1,9 +1,9 @@
 /*
-Apicurio Registry API [v2]
+Apicurio Registry API [v3]
 
-Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
+Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v3` by default. Therefore you must prefix all API operation paths with `../apis/registry/v3` in this case. For example: `../apis/registry/v3/ids/globalIds/{globalId}`. 
 
-API version: 2.4.x
+API version: 3.0.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -36,13 +36,13 @@ import (
 )
 
 var (
-	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	JsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?json)`)
+	XmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/(?:[^;]+\+)?xml)`)
 	queryParamSplit = regexp.MustCompile(`(^|&)([^&]+)`)
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the Apicurio Registry API [v2] API v2.4.x
+// APIClient manages communication with the Apicurio Registry API [v3] API v3.0.x
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -461,7 +461,6 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 			return
 		}
 		_, err = f.Seek(0, io.SeekStart)
-		err = os.Remove(f.Name())
 		return
 	}
 	if f, ok := v.(**os.File); ok {
@@ -474,16 +473,15 @@ func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err err
 			return
 		}
 		_, err = (*f).Seek(0, io.SeekStart)
-		err = os.Remove((*f).Name())
 		return
 	}
-	if xmlCheck.MatchString(contentType) {
+	if XmlCheck.MatchString(contentType) {
 		if err = xml.Unmarshal(b, v); err != nil {
 			return err
 		}
 		return nil
 	}
-	if jsonCheck.MatchString(contentType) {
+	if JsonCheck.MatchString(contentType) {
 		if actualObj, ok := v.(interface{ GetActualInstance() interface{} }); ok { // oneOf, anyOf schemas
 			if unmarshalObj, ok := actualObj.(interface{ UnmarshalJSON([]byte) error }); ok { // make sure it has UnmarshalJSON defined
 				if err = unmarshalObj.UnmarshalJSON(b); err != nil {
@@ -548,9 +546,9 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 		_, err = bodyBuf.WriteString(s)
 	} else if s, ok := body.(*string); ok {
 		_, err = bodyBuf.WriteString(*s)
-	} else if jsonCheck.MatchString(contentType) {
+	} else if JsonCheck.MatchString(contentType) {
 		err = json.NewEncoder(bodyBuf).Encode(body)
-	} else if xmlCheck.MatchString(contentType) {
+	} else if XmlCheck.MatchString(contentType) {
 		var bs []byte
 		bs, err = xml.Marshal(body)
 		if err == nil {

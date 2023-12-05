@@ -1,9 +1,9 @@
 /*
-Apicurio Registry API [v2]
+Apicurio Registry API [v3]
 
-Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v2` by default. Therefore you must prefix all API operation paths with `../apis/registry/v2` in this case. For example: `../apis/registry/v2/ids/globalIds/{globalId}`. 
+Apicurio Registry is a datastore for standard event schemas and API designs. Apicurio Registry enables developers to manage and share the structure of their data using a REST interface. For example, client applications can dynamically push or pull the latest updates to or from the registry without needing to redeploy. Apicurio Registry also enables developers to create rules that govern how registry content can evolve over time. For example, this includes rules for content validation and version compatibility.  The Apicurio Registry REST API enables client applications to manage the artifacts in the registry. This API provides create, read, update, and delete operations for schema and API artifacts, rules, versions, and metadata.   The supported artifact types include: - Apache Avro schema - AsyncAPI specification - Google protocol buffers - GraphQL schema - JSON Schema - Kafka Connect schema - OpenAPI specification - Web Services Description Language - XML Schema Definition   **Important**: The Apicurio Registry REST API is available from `https://MY-REGISTRY-URL/apis/registry/v3` by default. Therefore you must prefix all API operation paths with `../apis/registry/v3` in this case. For example: `../apis/registry/v3/ids/globalIds/{globalId}`. 
 
-API version: 2.4.x
+API version: 3.0.x
 Contact: apicurio@lists.jboss.org
 */
 
@@ -13,6 +13,7 @@ package registryclient
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the ConfigurationProperty type satisfies the MappedNullable interface at compile time
@@ -29,6 +30,8 @@ type ConfigurationProperty struct {
 	// 
 	Description string `json:"description"`
 }
+
+type _ConfigurationProperty ConfigurationProperty
 
 // NewConfigurationProperty instantiates a new ConfigurationProperty object
 // This constructor will assign default values to properties that have it defined,
@@ -188,6 +191,45 @@ func (o ConfigurationProperty) ToMap() (map[string]interface{}, error) {
 	toSerialize["label"] = o.Label
 	toSerialize["description"] = o.Description
 	return toSerialize, nil
+}
+
+func (o *ConfigurationProperty) UnmarshalJSON(bytes []byte) (err error) {
+    // This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"value",
+		"type",
+		"label",
+		"description",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varConfigurationProperty := _ConfigurationProperty{}
+
+	err = json.Unmarshal(bytes, &varConfigurationProperty)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ConfigurationProperty(varConfigurationProperty)
+
+	return err
 }
 
 type NullableConfigurationProperty struct {
